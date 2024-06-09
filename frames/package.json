@@ -10,18 +10,20 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@frames.js/debugger": "^0.2.12",
     "@types/node": "^18.17.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "@frames.js/debugger": "^0.2.12",
     "concurrently": "^8.2.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vercel": "^34.2.6"
   },
   "scripts": {
     "dev": "concurrently \"next dev\" \"frames --url http://localhost:3000\"",
     "start": "next start",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "vercel --prod --token $(grep VERCEL_TOKEN .env | cut -d '=' -f2)"
   },
   "engines": {
     "node": ">=18.17.0"
