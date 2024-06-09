@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@frames.js/render": "^0.2.12",
     "@nivo/bar": "^0.87.0",
     "@nivo/line": "^0.87.0",
     "@privy-io/react-auth": "^1.68.0",
+    "frames.js": "^0.16.5",
+    "lucide-react": "^0.390.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
