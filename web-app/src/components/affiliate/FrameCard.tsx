@@ -37,7 +37,7 @@ export function FrameCard() {
   });
 
   return (
-    <div className="max-w-screen-md">
+    <div className="max-w-screen-md w-full bg-white">
       <FrameUI frameState={frameState} theme={{}} FrameImage={FrameImageNext} />
     </div>
   );

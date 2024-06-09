@@ -112,7 +112,7 @@ export default function Affiliate() {
                   <CardDescription>Frames</CardDescription>
                   <CardTitle>Your Far-reaching Frames</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex flex-col space-y-8 items-center">
                   <FrameCard />
                   <FrameCard />
                   <FrameCard />
