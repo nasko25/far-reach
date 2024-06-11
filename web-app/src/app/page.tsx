@@ -1,32 +1,31 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import { usePrivy } from "@privy-io/react-auth";
-import Head from "next/head";
 import Image from "next/image";
 import { ReactTyped } from "react-typed";
-import rodrigo from "../../public/bruh.jpg";
+import LandingPageImage from "../../public/farclanding.png";
 import Link from "next/link";
 
 export default function Landing() {
   return (
     <>
-      <Navbar />
       <div>
         <div className="flex justify-start items-center px-8">
-          <div className="flex justify-start items-center text-5xl ">
-            <p className="w-1/2">
-              Hire Far-Reaching Affiliates and Influencers to Help You Sell
-              <ReactTyped
-                strings={["Shoes", "Perfumes", "Candles"]}
-                typeSpeed={40}
-                backSpeed={50}
-                loop
-                className="font-semibold text-[#8A63D2]"
-              >
-                <input type="text" />
-              </ReactTyped>
-            </p>
+          <div className="flex justify-center items-center text-7xl ">
+            <div className="flex justify-center items-center">
+              <p className="w-1/2 mr-8">
+                Find Affiliates to Help You Sell
+                <ReactTyped
+                  strings={["Shoes", "Perfumes", "Candles"]}
+                  typeSpeed={40}
+                  backSpeed={50}
+                  loop
+                  className="font-semibold text-[#8A63D2] bg-transparent"
+                >
+                  <input type="text" className="bg-transparent" />
+                </ReactTyped>
+              </p>
+              <Image src={LandingPageImage} alt="landing page image" className="w-1/4 h-1/4" />
+            </div>
           </div>
         </div>
         <div className="flex justify-center space-x-4 max-w-screen-sm mx-auto py-4">

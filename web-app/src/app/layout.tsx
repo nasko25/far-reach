@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import PrivyProviderWrapper from "@/components/privy-provider-wrapper";
-
-const inter = Inter({ subsets: ["latin"] });
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={inter.className}>
-        <PrivyProviderWrapper>{children}</PrivyProviderWrapper>
+      <body suppressHydrationWarning={true} className={`${GeistMono.className} moving-gradient h-screen`}>
+        <PrivyProviderWrapper>
+          <>
+            <Navbar />
+            {children}
+          </>
+        </PrivyProviderWrapper>
       </body>
     </html>
   );
