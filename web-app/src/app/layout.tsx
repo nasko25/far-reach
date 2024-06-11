@@ -17,12 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={`${GeistMono.className} moving-gradient h-screen`}>
+      <body suppressHydrationWarning={true} className={`${GeistMono.className}`}>
         <PrivyProviderWrapper>
-          <>
-            <Navbar />
-            {children}
-          </>
+          <>{children}</>
         </PrivyProviderWrapper>
       </body>
     </html>
