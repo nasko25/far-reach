@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AffiliateDashboard } from "./dashboard";
 import { useState } from "react";
 import { AffiliateOffers } from "./offers";
+import { AffiliateProfile } from "./profile";
 
 export default function Affiliate() {
   const [page, setPage] = useState("dashboard");
@@ -34,6 +35,14 @@ export default function Affiliate() {
               >
                 Offers
               </button>
+              <button
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 ${
+                  page === "profile" && "bg-gray-100"
+                }`}
+                onClick={() => setPage("profile")}
+              >
+                Profile
+              </button>
             </nav>
           </div>
         </div>
@@ -51,6 +60,7 @@ export default function Affiliate() {
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           {page === "dashboard" && <AffiliateDashboard />}
           {page === "offers" && <AffiliateOffers />}
+          {page === "profile" && <AffiliateProfile />}
         </main>
       </div>
     </div>
