@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { URL } from "url";
 import { Url } from "next/dist/shared/lib/router/router";
+import { ProfileStatCard } from "@/components/affiliate/ProfileStatCard";
 // use warpcast url
 
 type UserProfile = {
@@ -58,7 +59,7 @@ export function AffiliateProfile() {
 
             <div className="flex items-center justify-center gap-4">
               {profile && profile.links && profile.links.farcaster && (
-                <Link href={profile.links.farcaster.link as Url}>
+                <Link target="_blank" href={profile.links.farcaster.link}>
                   <Image src={farcasterIcon} alt="Farcaster Icon" className="w-6 h-6" />
                 </Link>
               )}
@@ -69,30 +70,11 @@ export function AffiliateProfile() {
           <div>
             <h3 className="text-xl md:text-2xl font-bold mb-4">Performance Metrics</h3>
             <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-gray-100 rounded-lg p-4 space-y-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Total Sales</div>
-                <div className="text-2xl font-bold text-right">$12,345</div>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-4 space-y-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Commission Earned</div>
-                <div className="text-2xl font-bold text-right">$1,234</div>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-4 space-y-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Conversion Rate</div>
-                <div className="text-2xl font-bold text-right">15%</div>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-4 space-y-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Average Order Value</div>
-                <div className="text-2xl font-bold text-right">$75</div>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-4 space-y-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Total Referrals</div>
-                <div className="text-2xl font-bold text-right">2,345</div>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-4 space-y-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Repeat Purchase Rate</div>
-                <div className="text-2xl font-bold text-right">25%</div>
-              </div>
+              <ProfileStatCard name="Total Earned" value={"$10,250"} />
+              <ProfileStatCard name="Commission Earned" value={"$1,250"} />
+              <ProfileStatCard name="Conversion Rate" value={"4.7%"} />
+              <ProfileStatCard name="Average Order Value" value={"$120"} />
+              <ProfileStatCard name="Total Referrals" value={"574"} />
             </div>
           </div>
         </div>
@@ -101,9 +83,8 @@ export function AffiliateProfile() {
         <h3 className="text-xl md:text-2xl font-bold mb-4">Recent Social Posts</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <FarcasterEmbed url="https://warpcast.com/builderszn.eth/0x01dc8cad" />
-          <FarcasterEmbed url="https://warpcast.com/gaonuk/0x41f836c5" />
-          <FarcasterEmbed url="https://warpcast.com/nxs/0x124a2834" />
-          <FarcasterEmbed url="https://warpcast.com/gkas23.eth/0x807da1c4" />
+          <FarcasterEmbed url="https://warpcast.com/builderszn.eth/0x454c104a" />
+          <FarcasterEmbed url="https://warpcast.com/builderszn.eth/0x7729bb66" />
         </div>
       </div>
     </div>
