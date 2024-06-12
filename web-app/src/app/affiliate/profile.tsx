@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 import "react-farcaster-embed/dist/styles.css"; // include default styles or write your own
 import farcasterIcon from "../../../public/farcastericon.svg";
@@ -8,6 +8,8 @@ import Link from "next/link";
 import { URL } from "url";
 import { Url } from "next/dist/shared/lib/router/router";
 import { ProfileStatCard } from "@/components/affiliate/ProfileStatCard";
+import { useUserProfile } from "../providers/profileProvider";
+import { User } from "lucide-react";
 // use warpcast url
 
 type UserProfile = {
@@ -30,20 +32,8 @@ type UserProfile = {
 };
 
 export function AffiliateProfile() {
-  const [profile, setProfile] = useState<UserProfile>({} as UserProfile);
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: { accept: "application/json" },
-    };
+  const { userProfile: profile } = useUserProfile();
 
-    fetch(`https://api.web3.bio/profile/farcaster/builderszn.eth`, options)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("results", result);
-        setProfile(result);
-      });
-  }, []);
   return (
     <div className="w-full max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-20">
       <div className="grid md:grid-cols-2 gap-8 md:gap-12">

@@ -5,8 +5,6 @@ import { ReactTyped } from "react-typed";
 import LandingPageImage from "../../public/farclanding.png";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { useRouter } from "next/navigation";
-import { usePrivy } from "@privy-io/react-auth";
 
 export default function Landing() {
   return (
