@@ -35,7 +35,7 @@ export default function Landing() {
           </div>
           <div className="flex justify-center space-x-4 max-w-screen-sm mx-auto py-4">
             <Link
-              href="/affiliate"
+              href="/affiliate/dashboard"
               className="px-6 py-2 bg-[#8A63D2] text-white  text-xl hover:bg-purple-700 transition duration-300 rounded-lg"
             >
               Become a Far-Reacher

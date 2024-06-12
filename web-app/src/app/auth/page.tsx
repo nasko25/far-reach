@@ -54,7 +54,7 @@ export default function Authentication() {
               {ready && authenticated && user && !!user.farcaster && (
                 <div className="w-3/4 pt-4">
                   <Link
-                    href="/affiliate"
+                    href="/affiliate/dashboard"
                     className="rounded-md text-center focus:outline-none bg-transparent border border-black text-black hover:bg-gray-100 w-full px-6 py-2 text-sm font-medium disabled:bg-black disabled:text-white"
                   >
                     Finalize 🥳

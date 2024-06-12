@@ -19,7 +19,7 @@ const Navbar = () => {
         <p className="flex justify-center items-center font-bold text-black">Far-Reach 💜</p>
         <div className="flex">
           <Link
-            href="/affiliate"
+            href="/affiliate/dashboard"
             className="flex justify-center items-center text-black hover:underline py-2 px-6 rounded-lg"
           >
             For Affiliates
@@ -49,9 +49,9 @@ const Navbar = () => {
             {isOpen && (
               <div className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
                 <div className="py-1">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <Link href="/affiliate/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Profile
-                  </a>
+                  </Link>
                   <Link onClick={logout} href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Sign Out
                   </Link>
