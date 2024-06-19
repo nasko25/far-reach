@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {Test, console} from "forge-std/Test.sol";
-import {Registry} from "../src/Registry.sol";
-import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {IRegistry} from "../src/IRegistry.sol";
+import { Test, console } from "forge-std/Test.sol";
+import { Registry } from "../src/Registry.sol";
+import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import { IRegistry } from "../src/IRegistry.sol";
+
 contract CounterTest is Test {
     Counter public counter;
     address affiliateAddress = vm.addr(0x123);
     address merchant = vm.addr(0x456);
     address buyer = vm.addr(0x789);
-    IERC20Metadata USDC =
-        IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
+    IERC20Metadata USDC = IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
 
     function setUp() public {
         vm.createSelectFork("baseSepolia", 11112043);

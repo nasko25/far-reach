@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {IRegistry} from "./IRegistry.sol";
+import {IRegistry} from "./interfaces/IRegistry.sol";
 
 contract Registry is IRegistry {
     uint256 public number;
