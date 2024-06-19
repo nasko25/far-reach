@@ -16,7 +16,9 @@ const Navbar = () => {
   return (
     <nav className="text-white p-4 rounded-b-lg">
       <div className="flex justify-between">
-        <p className="flex justify-center items-center font-bold text-black">Far-Reach 💜</p>
+        <Link href="/" className="flex justify-center items-center font-bold text-black">
+          Far-Reach 💜
+        </Link>
         <div className="flex">
           <Link
             href="/affiliate/dashboard"
