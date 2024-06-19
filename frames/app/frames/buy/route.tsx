@@ -3,7 +3,9 @@ import { Button } from "frames.js/next";
 import { frames } from "../frames";
 
 const handleRequest = frames(async (ctx) => {
+  // TODO: remove example and use trx ID instead
   if (ctx.message?.transactionId || ctx.url.searchParams.has("example")) {
+    // TODO: check if trx id is valid, and if it is make a request to shopify api to order the product
     return {
       image: (
         <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex text-center">
@@ -34,7 +36,7 @@ const handleRequest = frames(async (ctx) => {
         { ctx.url.searchParams.has("color") && ctx.url.searchParams.get("color") === "black"
           ? <img tw="h-200" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNMjLY3ExAv8O2swxPg7_vgt-s6D8t3chYDg&s"></img>
           : <img tw="h-200" src="https://cdn.iconscout.com/icon/free/png-256/free-t-shirt-2772271-2302029.png"></img> }
-          Size: {ctx.url.searchParams.get("size")}
+          Size: {ctx.url.searchParams.get("size") ?? "M"}
         { ctx.url.searchParams.has("street") && ctx.message?.inputText ? 
               <div tw="justify-between items-center flex flex-col"><p tw="mx-8 text-center">This is the address you have typed: {ctx.url.searchParams.get("street")}; {ctx.message?.inputText}</p>
               <p tw="mx-8 text-center">If it is correct, please proceed to the checkout.</p></div>

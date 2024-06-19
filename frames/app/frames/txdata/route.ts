@@ -5,7 +5,7 @@ import {
     getContract,
     http,
   } from "viem";
-import { optimism } from "viem/chains";
+import { baseSepolia } from "viem/chains";
 import { frames } from "../frames";
 import { storageRegistryABI } from "./contracts/storage-registry";
 import { transaction } from "frames.js/core";
@@ -25,7 +25,7 @@ export const POST = frames(async (ctx) => {
   });
 
   const publicClient = createPublicClient({
-    chain: optimism,
+    chain: baseSepolia,
     transport: http(),
   });
 
