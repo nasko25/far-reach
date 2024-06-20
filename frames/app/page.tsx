@@ -22,7 +22,7 @@ export const NavBar = (props: { stats?: boolean}) => {
   return (
       <nav tw="text-white border-gray-200 dark:bg-gray-900 border-b border-[#e5e7eb] h-40">
         <p tw="p-0 m-4 ml-20 my-auto"> Far Reach </p>
-        <p tw="m-4 mr-20 ml-auto my-auto p-0 max-w-lg"> { props.stats ? "You are not yet a part of far reach. Please apply below." : "Web3 Affiliate Marketing"} </p>
+        <p tw="m-4 mr-20 ml-auto my-auto p-0 max-w-lg"> { props.stats ? "You are not yet a part of far reach. Please apply below." : "Web3 Affiliate Platform"} </p>
       </nav>
     );
 }
