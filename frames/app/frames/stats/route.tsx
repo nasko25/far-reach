@@ -1,14 +1,17 @@
 import { frames } from "../frames";
-import { NavBar, Leaderboard, Stats } from "../../page";
+import { NavBar, Stats } from "../../page";
 import { Button } from "frames.js/core";
 import { getUserDataForFid } from "frames.js";
 
 const handleRequest = frames(async (ctx) => {
+    const userData = await getUserDataForFid({fid: ctx.message?.requesterFid!});
+    console.log(userData?.profileImage);
     return {
       image: (
         <div tw="bg-[#17101f] text-black flex flex-col w-full h-full">
-            <NavBar stats={ true } fid={ ctx.message?.requesterFid ?? ctx.searchParams.fid } username="v"/>
-            <Stats fid = {ctx.message?.requesterFid ?? ctx.searchParams.fid! }/>
+            <NavBar stats={ true } />
+            {/* TODO: image too big; need to resize or alternatively get through airstack */}
+            <Stats fid = {ctx.message?.requesterFid! } profileImage={userData?.profileImage} rank={4} score="2"/>
         </div>
       ),
       imageOptions: {
