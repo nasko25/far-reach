@@ -1,17 +1,16 @@
 import { frames } from "../frames";
-import { NavBar, Stats } from "../../page";
+import { NavBar, Stats } from "../../components";
 import { Button } from "frames.js/core";
 import { getUserDataForFid } from "frames.js";
 
 const handleRequest = frames(async (ctx) => {
     const userData = await getUserDataForFid({fid: ctx.message?.requesterFid!});
-    console.log(userData?.profileImage);
+    console.log("user data from stats: " + JSON.stringify(userData));
     return {
       image: (
         <div tw="bg-[#17101f] text-black flex flex-col w-full h-full">
-            <NavBar stats={ true } />
-            {/* TODO: image too big; need to resize or alternatively get through airstack */}
-            <Stats fid = {ctx.message?.requesterFid! } profileImage={userData?.profileImage} rank={4} score="2"/>
+            <NavBar rank={ 4 } />
+            <Stats profileImage={userData?.profileImage} displayName={userData?.displayName} totalRewards={400} rank="2"/>
         </div>
       ),
       imageOptions: {

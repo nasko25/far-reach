@@ -10,6 +10,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Does not work? */
+.frame-data {
+  margin: 0 !important;
+  margin-left: 20px;
+  color: red; /* for testing only */
+}
+
 @layer components {
   .desc {
     z-index: 10;

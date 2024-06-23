@@ -1,6 +1,7 @@
 import { getUserDataForFid } from "frames.js";
 import { fetchMetadata } from "frames.js/next";
 import { Metadata } from "next";
+import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -15,38 +16,4 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   return <div>Welcome to far reach. Please use this URL in a frame.</div>;
-}
-
-export const NavBar = (props: { stats?: boolean}) => {
-  // assumes parent is display: flex and has 100% width and height
-  return (
-      <nav tw="text-white border-gray-200 dark:bg-gray-900 border-b border-[#e5e7eb] h-40">
-        <p tw="p-0 m-4 ml-20 my-auto"> Far Reach </p>
-        <p tw="m-4 mr-20 ml-auto my-auto p-0 max-w-lg"> { props.stats ? "You are not yet a part of far reach. Please apply below." : "Web3 Affiliate Platform"} </p>
-      </nav>
-    );
-}
-
-export const Leaderboard = (props: {users: {username: string, score: string}[]}) => {
-  const casterName = "7";
-  // TODO: if caster is not top 10, show them below the top 10 with their actual current score
-  // assumes parent is display: flex and has 100% width and height
-  return (
-      <div tw="text-white border-gray-200 dark:bg-gray-900 mb-auto mt-4 flex flex-col">
-        <div tw="flex ml-30"><p tw="ml-10 mr-12"> Rank </p> <p> User </p> <p tw="ml-88"> Money made so far </p></div>
-        <div tw="flex border-b border-gray-700 mx-30 text-gray-400 mb-8"> </div>
-        {props.users.map((user, idx) => <div tw={"flex pl-40" + (casterName == user.username ? " text-purple-600" : "")} key={idx}><p tw="p-0 m-2 w-20"> # { idx + 1 } </p><p tw="p-0 m-2 w-120 text-purple-500"> { user.username } </p> <p tw="p-0 m-2"> ${user.score} {idx < 3 ?  "💸".repeat(3 - idx) : ""} </p></div>)}
-      </div>
-    );
-}
-
-export const Stats = (props: { fid: number, rank: number, score: string, profileImage: string | undefined }) => {
-  // assumes parent is display: flex and has 100% width and height
-  return (
-      <div tw="text-white border-gray-200 dark:bg-gray-900 mb-auto mt-4 flex flex-col">
-        {/* TODO: display pfp, total far reacher posts & impressions, total money made, rank */}
-        {/* if user is not far reacher yet ass a custom message saying no data to show */}
-        <img src={props.profileImage} alt="User Profile image" tw="size-6"/>
-      </div>
-    );
 }
