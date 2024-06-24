@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@airstack/airstack-react": "^0.6.3",
     "@frames.js/render": "^0.2.12",
     "@nivo/bar": "^0.87.0",
     "@nivo/line": "^0.87.0",
