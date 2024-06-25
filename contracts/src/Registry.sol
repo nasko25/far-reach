@@ -5,8 +5,6 @@ import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IER
 import {IRegistry} from "./interfaces/IRegistry.sol";
 
 contract Registry is IRegistry {
-    uint256 public number;
-    string public name;
     uint256 currentProductId = 1;
     uint256 affiliateId = 1;
     uint256 merchantId = 1;
@@ -55,22 +53,6 @@ contract Registry is IRegistry {
         address affiliateAddress
     ) public view returns (bool) {
         return affiliates[affiliateAddress].affiliateAddress != address(0);
-    }
-
-    function setNumber(uint256 newNumber) public {
-        number = newNumber;
-    }
-
-    function setName(string memory newName) public {
-        name = newName;
-    }
-
-    function increment() public {
-        number++;
-    }
-
-    function decrement() public {
-        number--;
     }
 
     function createAffiliate(string memory nickname) public {

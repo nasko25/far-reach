@@ -64,8 +64,4 @@ interface IRegistry {
         uint256 price,
         uint256 comission
     );
-
-    function number() external view returns (uint256);
-    function setNumber(uint256 newNumber) external;
-    function setName(string memory newName) external;
 }
