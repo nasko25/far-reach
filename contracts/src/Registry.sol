@@ -75,22 +75,27 @@ contract Registry is IRegistry {
 
     function createAffiliate(string memory nickname) public {
         affiliates[msg.sender] = Affiliate(
-            affiliateId++,
+            affiliateId,
             msg.sender,
             nickname,
             0,
             0
         );
+
+        emit CreatedAffiliate(affiliateId, msg.sender, nickname, 0, 0);
+        affiliateId++;
     }
 
     function createMerchant(string memory nickname) public {
         merchants[msg.sender] = Merchant(
-            merchantId++,
+            merchantId,
             msg.sender,
             nickname,
             0,
             0
         );
+        emit CreatedMerchant(merchantId, msg.sender, nickname, 0, 0);
+        merchantId++;
     }
 
     function registerProduct(
@@ -109,6 +114,15 @@ contract Registry is IRegistry {
             price,
             comission
         );
+
+        emit RegisteredProduct(
+            currentProductId,
+            msg.sender,
+            productName,
+            price,
+            comission
+        );
+
         currentProductId++;
     }
 
@@ -154,7 +168,7 @@ contract Registry is IRegistry {
 
         ordersForMerchants[merchant.merchantAddress].push(
             Order(
-                orderId++,
+                orderId,
                 msg.sender,
                 affiliateAddress,
                 productId,
@@ -162,5 +176,15 @@ contract Registry is IRegistry {
                 product.comission
             )
         );
+
+        emit CreatedOrder(
+            orderId,
+            msg.sender,
+            affiliateAddress,
+            productId,
+            product.price,
+            product.comission
+        );
+        orderId++;
     }
 }
