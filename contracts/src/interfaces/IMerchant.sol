@@ -36,6 +36,6 @@ interface IMerchant {
         string memory permalink
     ) external returns (address);
     function getNumberOfCampaigns() external view returns (uint256);
-    function getCampaign(uint256 index) external view returns (address);
+    function getCampaign(uint256 index) external view returns (Campaign memory);
     function processOrder(address buyer, uint256 productId) external;
 }
