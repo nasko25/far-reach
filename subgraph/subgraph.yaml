@@ -1,0 +1,35 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Registry
+    network: base-sepolia
+    source:
+      address: "0x36367dB77d38935051110f47e7080f6fE7540A68"
+      abi: Registry
+      startBlock: 11771336
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CreatedAffiliate
+        - CreatedMerchant
+        - CreatedOrder
+        - RegisteredProduct
+      abis:
+        - name: Registry
+          file: ./abis/Registry.json
+      eventHandlers:
+        - event: CreatedAffiliate(uint256,indexed address,string,uint256,uint256)
+          handler: handleCreatedAffiliate
+        - event: CreatedMerchant(uint256,address,string,uint256,uint256)
+          handler: handleCreatedMerchant
+        - event: CreatedOrder(uint256,indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleCreatedOrder
+        - event: RegisteredProduct(uint256,indexed address,string,uint256,uint16)
+          handler: handleRegisteredProduct
+      file: ./src/registry.ts

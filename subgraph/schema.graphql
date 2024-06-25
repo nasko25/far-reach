@@ -1,0 +1,48 @@
+type CreatedAffiliate @entity(immutable: true) {
+  id: Bytes!
+  Registry_id: BigInt! # uint256
+  affiliateAddress: Bytes! # address
+  affiliateName: String! # string
+  numberOfSales: BigInt! # uint256
+  totalEarned: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CreatedMerchant @entity(immutable: true) {
+  id: Bytes!
+  Registry_id: BigInt! # uint256
+  merchantAddress: Bytes! # address
+  merchantName: String! # string
+  numberOfSales: BigInt! # uint256
+  totalEarned: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CreatedOrder @entity(immutable: true) {
+  id: Bytes!
+  Registry_id: BigInt! # uint256
+  buyer: Bytes! # address
+  affiliateAddress: Bytes! # address
+  productId: BigInt! # uint256
+  price: BigInt! # uint256
+  comission: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RegisteredProduct @entity(immutable: true) {
+  id: Bytes!
+  Registry_id: BigInt! # uint256
+  merchantAddress: Bytes! # address
+  productName: String! # string
+  price: BigInt! # uint256
+  commission: Int! # uint16
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

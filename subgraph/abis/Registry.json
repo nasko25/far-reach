@@ -1,0 +1,511 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_transactionToken",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "affiliateName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "numberOfSales",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalEarned",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreatedAffiliate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "merchantName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "numberOfSales",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalEarned",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreatedMerchant",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "productId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "comission",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreatedOrder",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "productName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "commission",
+        "type": "uint16"
+      }
+    ],
+    "name": "RegisteredProduct",
+    "type": "event"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "affiliates",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "affiliateName", "type": "string" },
+      { "internalType": "uint256", "name": "numberOfSales", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalEarned", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "allAffiliates",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "affiliateName", "type": "string" },
+      { "internalType": "uint256", "name": "numberOfSales", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalEarned", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "allMerchants",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "merchantName", "type": "string" },
+      { "internalType": "uint256", "name": "numberOfSales", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalEarned", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "allOrders",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "internalType": "address", "name": "buyer", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "productId", "type": "uint256" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "internalType": "uint256", "name": "comission", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "allProducts",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "productName", "type": "string" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "internalType": "uint16", "name": "comission", "type": "uint16" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "productId", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      }
+    ],
+    "name": "buyProduct",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "nickname", "type": "string" }
+    ],
+    "name": "createAffiliate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "nickname", "type": "string" }
+    ],
+    "name": "createMerchant",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllAffiliates",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          {
+            "internalType": "address",
+            "name": "affiliateAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "affiliateName",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "numberOfSales",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalEarned",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IRegistry.Affiliate[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllMerchants",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          {
+            "internalType": "address",
+            "name": "merchantAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "merchantName",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "numberOfSales",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalEarned",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IRegistry.Merchant[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllOrders",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "buyer", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "affiliateAddress",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "productId", "type": "uint256" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "comission", "type": "uint256" }
+        ],
+        "internalType": "struct IRegistry.Order[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllProducts",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          {
+            "internalType": "address",
+            "name": "merchantAddress",
+            "type": "address"
+          },
+          { "internalType": "string", "name": "productName", "type": "string" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint16", "name": "comission", "type": "uint16" }
+        ],
+        "internalType": "struct IRegistry.Product[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      }
+    ],
+    "name": "isRegisteredAffiliate",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      }
+    ],
+    "name": "isRegisteredMerchant",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "merchants",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "merchantName", "type": "string" },
+      { "internalType": "uint256", "name": "numberOfSales", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalEarned", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "ordersForMerchants",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "internalType": "address", "name": "buyer", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "affiliateAddress",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "productId", "type": "uint256" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "internalType": "uint256", "name": "comission", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "products",
+    "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "merchantAddress",
+        "type": "address"
+      },
+      { "internalType": "string", "name": "productName", "type": "string" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "internalType": "uint16", "name": "comission", "type": "uint16" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "productName", "type": "string" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "internalType": "uint16", "name": "comission", "type": "uint16" }
+    ],
+    "name": "registerProduct",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "transactionToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20Metadata",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
