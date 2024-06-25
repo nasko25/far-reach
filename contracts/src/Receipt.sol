@@ -15,8 +15,7 @@ contract Receipt is ERC721, IERC721Enumerable {
     constructor(
         string memory _productName,
         uint256 _formattedPrice,
-        string memory _merchantName,
-        uint16 _stock
+        string memory _merchantName
     ) ERC721("Receipt", "RCPT") {
         productName = _productName;
         formattedPrice = _formattedPrice;
