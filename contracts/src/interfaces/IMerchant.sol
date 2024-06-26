@@ -22,7 +22,6 @@ interface IMerchant {
         Finished
     }
 
-    function owner() external view returns (address);
     function name() external view returns (string memory);
     function createCampaign(
         string memory name,

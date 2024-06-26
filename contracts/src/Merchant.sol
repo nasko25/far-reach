@@ -6,7 +6,7 @@ import {Receipt} from "./Receipt.sol";
 import {IPool} from "./interfaces/IPool.sol";
 
 contract Merchant is IMerchant {
-    address public owner;
+    address public merchantOwner;
     string public name;
     IPool public seamlessPool;
     address public usdc;
@@ -15,9 +15,8 @@ contract Merchant is IMerchant {
     mapping(uint256 => Campaign) public campaigns;
     uint256 public numberOfCampaigns;
 
-    constructor(string memory _name, address _owner, address _pool) {
+    constructor(string memory _name, address _merchantOwner, address _pool) {
         name = _name;
-        owner = _owner;
         seamlessPool = IPool(_pool);
         usdc = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913;
         latestTokenId = 1;
