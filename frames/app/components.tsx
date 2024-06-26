@@ -34,12 +34,13 @@ export const NavBar = (props: { rank?: number, stats?: boolean}) => {
             <p tw="m-0" className="frame-data"> Published on: 23 June 2024 @ 12:23 </p>
             <div tw="flex flex-row">
                 <div tw="flex flex-col">
-                    <p tw="m-0" style={{"marginLeft": "20px", color: "red"}}> Total likes: {randomBetween(10, 20)} </p>
-                    <p tw="m-0" style={{"marginLeft": "20px"}}> Total recasts: {randomBetween(2, 15)} </p>
-                    <p tw="m-0" style={{"marginLeft": "20px"}}> Total comments: {randomBetween(10, 60)} </p>
+                    <p tw="m-0" style={{"marginLeft": "20px", color: "red"}}> Total products sold: {randomBetween(1, 20)} </p>
+                    <p tw="m-0" style={{"marginLeft": "20px"}}> Total rewards: ${randomBetween(20, 100)} </p>
+                    <p tw="m-0"> Likes/recasts/comments: {randomBetween(10, 20)}/{randomBetween(2, 15)}/{randomBetween(10, 60)} </p>
                 </div>
                 <img tw="m-auto mr-40 h-30" src={Math.random() > 0.5 ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNMjLY3ExAv8O2swxPg7_vgt-s6D8t3chYDg&s" :"https://cdn.iconscout.com/icon/free/png-256/free-t-shirt-2772271-2302029.png" }></img>
             </div>
+            <div tw="flex border-b border-gray-700 mx-30 text-gray-400 m-0 mt-2 mr-40"> </div>
 
         </div>
     );

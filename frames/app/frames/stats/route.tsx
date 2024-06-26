@@ -6,7 +6,7 @@ import { getUserDataForFid } from "frames.js";
 const handleRequest = frames(async (ctx) => {
     const userData = await getUserDataForFid({fid: ctx.message?.requesterFid!});
     console.log("user data from stats: " + JSON.stringify(userData));
-    const rank = 4;
+    const rank = undefined // 4;
     return {
       image: (
         <div tw="bg-[#17101f] text-black flex flex-col w-full h-full">
