@@ -19,16 +19,19 @@ contract Receipt is
     string public productName;
     uint256 public formattedPrice;
     string public merchantName;
+    uint256 public stock;
     mapping(address => string) public dateOfPurchase;
 
     constructor(
         string memory _productName,
         uint256 _formattedPrice,
-        string memory _merchantName
+        string memory _merchantName,
+        uint256 _stock
     ) ERC721Upgradeable() {
         productName = _productName;
         formattedPrice = _formattedPrice;
         merchantName = _merchantName;
+        stock = _stock;
     }
 
     function tokenURI(
