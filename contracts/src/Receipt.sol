@@ -5,8 +5,17 @@ import {ERC721Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC72
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {IERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
-contract Receipt is ERC721U, IERC721Enumerable {
+contract Receipt is
+    ERC721Upgradeable,
+    IERC721Enumerable,
+    OwnableUpgradeable,
+    ReentrancyGuardUpgradeable,
+    UUPSUpgradeable
+{
     string public productName;
     uint256 public formattedPrice;
     string public merchantName;
@@ -16,7 +25,7 @@ contract Receipt is ERC721U, IERC721Enumerable {
         string memory _productName,
         uint256 _formattedPrice,
         string memory _merchantName
-    ) ERC721("Receipt", "RCPT") {
+    ) ERC721Upgradeable() {
         productName = _productName;
         formattedPrice = _formattedPrice;
         merchantName = _merchantName;
@@ -107,4 +116,11 @@ contract Receipt is ERC721U, IERC721Enumerable {
     function tokenByIndex(uint256 index) external view returns (uint256) {
         return 0;
     }
+
+    /**
+     * @notice Internal function to authorize a contract upgrade
+     * @dev The function is a requirement for Openzeppelin's UUPS upgradeable contracts
+     * @dev can only be called by the contract owner
+     */
+    function _authorizeUpgrade(address) internal override onlyOwner {}
 }
