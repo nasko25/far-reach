@@ -35,7 +35,33 @@ interface IRegistry {
         uint256 comission;
     }
 
-    function number() external view returns (uint256);
-    function setNumber(uint256 newNumber) external;
-    function setName(string memory newName) external;
+    event CreatedAffiliate(
+        uint256 id,
+        address indexed affiliateAddress,
+        string affiliateName,
+        uint256 numberOfSales,
+        uint256 totalEarned
+    );
+    event CreatedMerchant(
+        uint256 id,
+        address merchantAddress,
+        string merchantName,
+        uint256 numberOfSales,
+        uint256 totalEarned
+    );
+    event RegisteredProduct(
+        uint256 id,
+        address indexed merchantAddress,
+        string productName,
+        uint256 price,
+        uint16 commission
+    );
+    event CreatedOrder(
+        uint256 id,
+        address indexed buyer,
+        address indexed affiliateAddress,
+        uint256 productId,
+        uint256 price,
+        uint256 comission
+    );
 }

@@ -22,10 +22,10 @@ interface IMerchant {
         Finished
     }
 
-    function owner() external view returns (address);
     function name() external view returns (string memory);
     function createCampaign(
         string memory name,
+        string memory productName,
         uint256 productId,
         uint256 price,
         uint16 comission,
@@ -36,6 +36,10 @@ interface IMerchant {
         string memory permalink
     ) external returns (address);
     function getNumberOfCampaigns() external view returns (uint256);
-    function getCampaign(uint256 index) external view returns (address);
-    function processOrder(address buyer, uint256 productId) external;
+    function getCampaign(uint256 index) external view returns (Campaign memory);
+    function processOrder(
+        address buyer,
+        uint256 productId,
+        uint256 revenue
+    ) external;
 }
