@@ -1,20 +1,35 @@
-export const query = `
-query MyQuery {
+export const query = (username: string): string => `
+query GetFarcasterUserDetails {
   Socials(
-    input: {
-      filter: {
-        dappName: {
-          _eq: farcaster
-        },
-        identity: { _eq: "fc_fid:602" }
-      },
-      blockchain: ethereum
-    }
+    input: {filter: {identity: {_eq: "fc_fname:${username}"}, dappName: {_eq: farcaster}}, blockchain: ethereum, limit: 50}
   ) {
     Social {
+      dappName
+      profileName
       socialCapital {
-        socialCapitalScoreRaw
         socialCapitalScore
+      }
+      isFarcasterPowerUser
+      followerCount
+    }
+  }
+   FarcasterCasts(
+    input: {
+      filter: {
+        castedBy: {_eq: "fc_fname:${username}"},
+      },
+      blockchain: ALL,
+      limit:5,
+    }
+  ) {
+    Cast {
+      castedBy {
+        profileName
+      }
+      url
+      frame {
+        castedAtTimestamp
+        frameUrl
       }
     }
   }
