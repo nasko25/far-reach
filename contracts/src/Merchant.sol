@@ -82,11 +82,25 @@ contract Merchant is IMerchant, Ownable {
         address buyer,
         uint256 productId,
         uint256 revenue,
-        string memory date
+        string memory date,
+        bytes32 buyerHash
     ) external onlyRegistry {
         require(campaigns[productId].stock > 0, "No stock left");
         Campaign storage campaign = campaigns[productId];
         Receipt(campaign.receiptAddress).emitReceipt(buyer, date);
         seamlessPool.supply(usdc, revenue, address(this), 0);
+        ordersStatus[buyerHash] = OrderStatus.Pending;
+    }
+
+    function postProcessOrder(bytes32 buyerHash) external {
+        require(
+            ordersStatus[buyerHash] == OrderStatus.Pending,
+            "Order not found"
+        );
+        ordersStatus[buyerHash] = OrderStatus.Completed;
+    }
+
+    function withdraw(uint256 amount) external onlyOwner {
+        seamlessPool.withdraw(usdc, amount, address(this));
     }
 }
