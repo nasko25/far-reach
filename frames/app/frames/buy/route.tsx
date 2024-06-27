@@ -41,7 +41,7 @@ const handleRequest = frames(async (ctx) => {
               <div tw="justify-between items-center flex flex-col"><p tw="mx-8 text-center">This is the address you have typed: {ctx.url.searchParams.get("street")}; {ctx.message?.inputText}</p>
               <p tw="mx-8 text-center">If it is correct, please proceed to the checkout.</p></div>
         : <div tw="justify-between items-center flex flex-col">
-              <p tw="mx-8 text-center">If you'd like to order this T-Shirt, please input your shipment details below.</p>
+              <p tw="mx-8 text-center">If you'd like to order this T-Shirt, please input your email below. It will be used to verify you have purchased the product, so please input an email only you have access to.</p>
               <p tw="mx-8 text-center">In this screen, please type in {ctx.message?.inputText ? "your city and country names, separated by a comma" : "your street name" }.</p>          
           </div> }
       </div>
