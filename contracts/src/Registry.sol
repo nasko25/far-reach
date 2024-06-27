@@ -12,7 +12,6 @@ contract Registry is
     UUPSUpgradeable,
     ReentrancyGuardUpgradeable
 {
-    uint256 currentProductId = 1;
     uint256 affiliateId = 1;
     uint256 merchantId = 1;
     uint256 orderId = 1;

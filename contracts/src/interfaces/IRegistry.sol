@@ -8,6 +8,9 @@ interface IRegistry {
         string affiliateName;
         uint256 numberOfSales;
         uint256 totalEarned;
+        uint256 postsLastWeek;
+        uint256 followers;
+        uint256 FID;
     }
 
     struct Merchant {
@@ -16,14 +19,6 @@ interface IRegistry {
         string merchantName;
         uint256 numberOfSales;
         uint256 totalEarned;
-    }
-
-    struct Product {
-        uint256 id;
-        address merchantAddress;
-        string productName;
-        uint256 price;
-        uint16 comission;
     }
 
     struct Order {
