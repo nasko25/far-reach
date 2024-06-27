@@ -40,6 +40,7 @@ interface IMerchant {
     function processOrder(
         address buyer,
         uint256 productId,
-        uint256 revenue
+        uint256 revenue,
+        string memory date
     ) external;
 }

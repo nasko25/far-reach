@@ -2,28 +2,36 @@
 pragma solidity ^0.8.13;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import {IERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
-//because we haven't override ERC721Enumerable, I removed it temporarily
-contract Receipt is ERC721 {
+contract Receipt is ERC721, Ownable {
     string public productName;
     uint256 public formattedPrice;
     string public merchantName;
     uint16 public stock;
     mapping(address => string) public dateOfPurchase;
 
+    uint256 private _totalSupply;
+
     constructor(
         string memory _productName,
         uint256 _formattedPrice,
         string memory _merchantName,
         uint16 _stock
-    ) ERC721("Receipt", "RCPT") {
+    ) ERC721("Receipt", "RCPT") Ownable(msg.sender) {
         productName = _productName;
         formattedPrice = _formattedPrice;
         merchantName = _merchantName;
         stock = _stock;
+        _totalSupply = 0;
+    }
+
+    function emitReceipt(address _to, string memory _date) external onlyOwner {
+        _safeMint(_to, _totalSupply);
+        dateOfPurchase[_to] = _date;
+        _totalSupply++;
     }
 
     function tokenURI(
@@ -85,5 +93,9 @@ contract Receipt is ERC721 {
         );
 
         return output;
+    }
+
+    function totalSupply() external view returns (uint256) {
+        return _totalSupply;
     }
 }

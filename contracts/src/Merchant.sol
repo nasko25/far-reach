@@ -1,25 +1,39 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IMerchant} from "./interfaces/IMerchant.sol";
 import {Receipt} from "./Receipt.sol";
 import {IPool} from "./interfaces/IPool.sol";
 
-contract Merchant is IMerchant {
+contract Merchant is IMerchant, Ownable {
+    address public registry;
     address public merchantOwner;
     string public name;
     IPool public seamlessPool;
     address public usdc;
-    uint256 public latestTokenId;
 
     mapping(uint256 => Campaign) public campaigns;
     uint256 public numberOfCampaigns;
 
-    constructor(string memory _name, address _merchantOwner, address _pool) {
+    modifier onlyRegistry() {
+        require(msg.sender == registry, "Only registry can call this function");
+        _;
+    }
+
+    constructor(
+        string memory _name,
+        address _pool,
+        address _registry
+    ) Ownable(msg.sender) {
         name = _name;
         seamlessPool = IPool(_pool);
         usdc = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913;
-        latestTokenId = 1;
+        registry = _registry;
+    }
+
+    function updateRegistry(address _registry) external onlyOwner {
+        registry = _registry;
     }
 
     function createCampaign(
@@ -50,6 +64,8 @@ contract Merchant is IMerchant {
             CampaignStatus.Active,
             address(receipt)
         );
+
+        return address(receipt);
     }
 
     function getNumberOfCampaigns() external view returns (uint256) {
@@ -65,11 +81,12 @@ contract Merchant is IMerchant {
     function processOrder(
         address buyer,
         uint256 productId,
-        uint256 revenue
-    ) external {
+        uint256 revenue,
+        string memory date
+    ) external onlyRegistry {
         require(campaigns[productId].stock > 0, "No stock left");
         Campaign storage campaign = campaigns[productId];
-        Receipt(campaign.receiptAddress)._safeMint(buyer, latestTokenId++);
+        Receipt(campaign.receiptAddress).emitReceipt(buyer, date);
         seamlessPool.supply(usdc, revenue, address(this), 0);
     }
 }
