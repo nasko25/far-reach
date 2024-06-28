@@ -28,6 +28,12 @@ export interface Cast {
   url: string;
   frame: Frame;
   hash: string;
+  channel: Channel;
+}
+
+export interface Channel {
+  name: string;
+  imageUrl: string;
 }
 
 export interface FarcasterCasts {

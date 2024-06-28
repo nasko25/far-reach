@@ -19,12 +19,16 @@ query GetFarcasterUserDetails {
         castedBy: {_eq: "fc_fname:${username}"},
       },
       blockchain: ALL,
-      limit:10,
+      limit:50,
     }
   ) {
     Cast {
       url
       hash
+      channel {
+        name
+        imageUrl
+      }
       frame {
         castedAtTimestamp
         frameUrl
@@ -42,7 +46,7 @@ query GetFarcasterUserDetails {
         hasFrames: {_eq: true},
       },
       blockchain: ALL,
-      limit:6,
+      limit:5,
     }
   ) {
     Cast {
