@@ -3,15 +3,8 @@ pragma solidity ^0.8.13;
 
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {IRegistry} from "./interfaces/IRegistry.sol";
-import {OwnableUpgradeable} from "@openzeppelin-contracts-upgradeable/access/OwnableUpgradeable.sol";
-import {UUPSUpgradeable} from "@openzeppelin-contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import {ReentrancyGuardUpgradeable} from "@openzeppelin-contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
-contract Registry is
-    IRegistry,
-    OwnableUpgradeable,
-    UUPSUpgradeable,
-    ReentrancyGuardUpgradeable
-{
+
+contract Registry is IRegistry {
     uint256 affiliateId = 1;
     uint256 merchantId = 1;
     uint256 orderId = 1;
@@ -19,13 +12,7 @@ contract Registry is
     uint16 farReachComission = 10;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
-    function initialize(address _transactionToken) public initializer {
-        __Ownable_init(msg.sender);
-        __UUPSUpgradeable_init();
+    constructor(address _transactionToken) {
         transactionToken = IERC20Metadata(_transactionToken);
     }
 
@@ -182,11 +169,4 @@ contract Registry is
         );
         orderId++;
     }
-
-    /**
-     * @notice Internal function to authorize a contract upgrade
-     * @dev The function is a requirement for Openzeppelin's UUPS upgradeable contracts
-     * @dev can only be called by the contract owner
-     */
-    function _authorizeUpgrade(address) internal override onlyOwner {}
 }
