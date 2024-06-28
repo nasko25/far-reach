@@ -27,6 +27,7 @@ export interface Cast {
   castedBy: CastedBy;
   url: string;
   frame: Frame;
+  hash: string;
 }
 
 export interface FarcasterCasts {

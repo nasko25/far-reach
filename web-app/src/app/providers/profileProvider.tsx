@@ -2,7 +2,7 @@
 import { usePrivy } from "@privy-io/react-auth";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-type UserProfile = {
+export type UserProfile = {
   address: string;
   identity: string;
   platform: string;
@@ -62,7 +62,7 @@ const UserProfileProvider = ({ children }: UserProfileProviderProps) => {
   return <UserProfileContext.Provider value={{ userProfile, loading, error }}>{children}</UserProfileContext.Provider>;
 };
 
-const useUserProfile = () => {
+const useUserProfile = (): UserProfileContextType => {
   const context = useContext(UserProfileContext);
   if (context === undefined) {
     throw new Error("useUserProfile must be used within a UserProfileProvider");

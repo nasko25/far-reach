@@ -3,7 +3,7 @@ import { EarningsCard } from "@/components/affiliate/EarningsCard";
 import { StatCard } from "@/components/affiliate/StatCard";
 import { Coins, ShoppingBag, User } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
-import { FrameCard } from "@/components/affiliate/FrameCard";
+
 export default function AffiliateDashboard() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
@@ -48,19 +48,6 @@ export default function AffiliateDashboard() {
                 <StatCard name="Sales" value={1234} unit="in revenue" change={4} money={true} Icon={ShoppingBag} />
                 <StatCard name="Commissions" value={632} unit="earned" change={7} money={true} Icon={Coins} />
               </div>
-            </CardContent>
-          </Card>
-        </div>
-        <div>
-          <Card>
-            <CardHeader>
-              <CardDescription>Frames</CardDescription>
-              <CardTitle>Your Far-reaching Frames</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col space-y-8 items-center">
-              <FrameCard />
-              <FrameCard />
-              <FrameCard />
             </CardContent>
           </Card>
         </div>
