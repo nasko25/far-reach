@@ -6,6 +6,8 @@ Simple Frames.js app using Next.js.
 
 ```sh
 npm install
+cp .env.sample .env # And set appropriate variables
+npm run init
 ```
 
 ### Run in Debugger
