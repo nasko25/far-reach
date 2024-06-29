@@ -21,13 +21,43 @@ interface IRegistry {
         uint256 totalEarned;
     }
 
+    enum OrderStatus {
+        Pending,
+        Completed
+    }
+
     struct Order {
         uint256 id;
+        uint256 campaignId;
+        uint256 productId;
         address buyer;
         address affiliateAddress;
+        uint256 price;
+        uint256 affiliateComission;
+        bytes32 buyerHash;
+        OrderStatus status;
+    }
+
+    struct Campaign {
+        uint256 id;
+        address merchantAddress;
+        string name;
+        string productName;
         uint256 productId;
         uint256 price;
-        uint256 comission;
+        uint16 comission;
+        uint16 stock;
+        uint128 minFID;
+        uint128 minFollowers;
+        uint128 minPostsLastWeek;
+        string permalink;
+        address receiptAddress;
+        CampaignStatus status;
+    }
+
+    enum CampaignStatus {
+        Active,
+        Finished
     }
 
     event CreatedAffiliate(
@@ -44,18 +74,19 @@ interface IRegistry {
         uint256 numberOfSales,
         uint256 totalEarned
     );
-    event RegisteredProduct(
+    event CreatedCampaign(
         uint256 id,
         address indexed merchantAddress,
         string productName,
         uint256 price,
-        uint16 commission
+        uint16 commission,
+        uint16 stock
     );
     event CreatedOrder(
         uint256 id,
+        uint256 campaignId,
         address indexed buyer,
         address indexed affiliateAddress,
-        uint256 productId,
         uint256 price,
         uint256 comission
     );

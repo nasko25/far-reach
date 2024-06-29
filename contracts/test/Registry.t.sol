@@ -16,24 +16,30 @@ contract RegistryTest is Test {
 
     function setUp() public {
         vm.createSelectFork("baseSepolia", 11112043);
-        registry = new Registry();
+        registry = new Registry(address(USDC));
         deal(address(USDC), buyer, 100e6);
     }
     function test_createAffiliate() public {
         vm.prank(affiliateAddress);
-        registry.createAffiliate("Affiliate 1");
+        registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
         (
             uint256 id,
             address currentAffiliateAddress,
             string memory name,
             uint256 sales,
-            uint256 earned
+            uint256 earned,
+            uint256 postsLastWeek,
+            uint256 followers,
+            uint256 FID
         ) = registry.affiliates(affiliateAddress);
         assertEq(id, 1);
         assertEq(currentAffiliateAddress, affiliateAddress);
         assertEq(name, "Affiliate 1");
         assertEq(sales, 0);
         assertEq(earned, 0);
+        assertEq(postsLastWeek, 7);
+        assertEq(followers, 5000);
+        assertEq(FID, 1000);
     }
 
     function test_createMerchant() public {
@@ -53,50 +59,94 @@ contract RegistryTest is Test {
         assertEq(earned, 0);
     }
 
-    function test_registerProduct() public {
+    function test_createCampaign() public {
         vm.startPrank(merchant);
         registry.createMerchant("Merchant 1");
-        registry.registerProduct("Product 1", 100e6, 10);
+        registry.createCampaign(
+            "Campaign 1",
+            "Degen T-Shirt",
+            1,
+            100e6,
+            10,
+            50,
+            750,
+            3000,
+            5,
+            "url"
+        );
         vm.stopPrank();
         (
             uint256 id,
             address merchantAddress,
+            ,
             string memory productName,
+            ,
             uint256 price,
-            uint16 comission
-        ) = registry.products(1);
+            uint16 comission,
+            ,
+            ,
+            ,
+            ,
+            ,
+            address receiptAddress,
+
+        ) = registry.campaigns(1);
         assertEq(id, 1);
         assertEq(merchantAddress, merchant);
-        assertEq(productName, "Product 1");
+        assertEq(productName, "Degen T-Shirt");
         assertEq(price, 100e6);
         assertEq(comission, 10);
+        assertNotEq(receiptAddress, address(0));
     }
 
-    function test_buyProduct() public {
+    function test_buyProductFromCampaign() public {
         vm.startPrank(merchant);
         registry.createMerchant("Merchant 1");
-        registry.registerProduct("Product 1", 100e6, 10);
+        uint256 campaignId = registry.createCampaign(
+            "Campaign 1",
+            "Degen T-Shirt",
+            33333,
+            100e6,
+            10,
+            50,
+            750,
+            3000,
+            5,
+            "url"
+        );
         vm.stopPrank();
         vm.prank(affiliateAddress);
-        registry.createAffiliate("Affiliate 1");
+        registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
         vm.startPrank(buyer);
         USDC.approve(address(registry), 100e6);
-        registry.buyProduct(1, affiliateAddress);
+        bytes32 buyerHash = keccak256(abi.encodePacked("buyer@email.com"));
+        string memory dateOfPurchase = "2021-10-10";
+        registry.buyProductFromCampaign(
+            campaignId,
+            affiliateAddress,
+            buyerHash,
+            dateOfPurchase
+        );
         vm.stopPrank();
         (
             uint256 id,
-            address buyerAddress,
-            address currentAffiliateAddress,
+            uint256 orderCampaignId,
             uint256 productId,
+            address buyerAddress,
+            address orderAffiliateAddress,
             uint256 price,
-            uint256 comission
+            uint256 comission,
+            ,
+
         ) = registry.ordersForMerchants(merchant, 0);
         assertEq(id, 1);
         assertEq(buyerAddress, buyer);
-        assertEq(currentAffiliateAddress, affiliateAddress);
-        assertEq(productId, 1);
+        assertEq(orderAffiliateAddress, affiliateAddress);
+        assertEq(orderCampaignId, campaignId);
+        assertEq(productId, 33333);
         assertEq(price, 100e6);
         assertEq(comission, 10);
+        assertEq(buyerHash, buyerHash);
         assertEq(USDC.balanceOf(merchant), 81e6);
         assertEq(USDC.balanceOf(affiliateAddress), 9e6);
         assertEq(USDC.balanceOf(address(registry)), 10e6);
@@ -113,7 +163,7 @@ contract RegistryTest is Test {
 
     function test_isRegisteredAffiliate() public {
         vm.prank(affiliateAddress);
-        registry.createAffiliate("Affiliate 1");
+        registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
         assert(registry.isRegisteredAffiliate(affiliateAddress));
     }
 }
