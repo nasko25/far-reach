@@ -71,7 +71,8 @@ contract RegistryTest is Test {
             750,
             3000,
             5,
-            "url"
+            "url",
+            "imageUrl"
         );
         vm.stopPrank();
         (
@@ -82,6 +83,7 @@ contract RegistryTest is Test {
             ,
             uint256 price,
             uint16 comission,
+            ,
             ,
             ,
             ,
@@ -111,7 +113,8 @@ contract RegistryTest is Test {
             750,
             3000,
             5,
-            "url"
+            "url",
+            "imageUrl"
         );
         vm.stopPrank();
         vm.prank(affiliateAddress);

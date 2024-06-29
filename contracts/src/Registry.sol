@@ -147,7 +147,8 @@ contract Registry is IRegistry {
         uint128 _maxFID,
         uint128 _minFollowers,
         uint128 _minPostsLastWeek,
-        string memory _permalink
+        string memory _permalink,
+        string memory _productImage
     ) external returns (uint256) {
         Merchant memory merchant = merchants[msg.sender];
         require(
@@ -177,6 +178,7 @@ contract Registry is IRegistry {
             _minFollowers,
             _minPostsLastWeek,
             _permalink,
+            _productImage,
             address(receipt),
             CampaignStatus.Active
         );

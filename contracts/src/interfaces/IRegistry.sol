@@ -50,6 +50,7 @@ interface IRegistry {
         uint128 minFollowers;
         uint128 minPostsLastWeek;
         string permalink;
+        string productImage;
         address receiptAddress;
         CampaignStatus status;
     }
