@@ -19,11 +19,12 @@ contract Registry is IRegistry {
     mapping(uint256 => Affiliate) public affiliates;
     mapping(address => Merchant) public merchants;
     mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => Order) public orders;
 
-    Campaign[] public allCampaigns;
-    Order[] public allOrders;
-    Affiliate[] public allAffiliates;
-    Merchant[] public allMerchants;
+    Campaign[] private allCampaigns;
+    Order[] private allOrders;
+    Affiliate[] private allAffiliates;
+    Merchant[] private allMerchants;
 
     mapping(address => Order[]) public ordersForMerchants;
     mapping(address => Campaign[]) public campaignsForMerchants;
@@ -34,19 +35,73 @@ contract Registry is IRegistry {
     mapping(address => uint256) public numberOfOrders;
 
     function getAllOrders() public view returns (Order[] memory) {
-        return allOrders;
+        Order[] memory orderArray = new Order[](allOrders.length);
+        for (uint256 i = 0; i < allOrders.length; i++) {
+            orderArray[i] = allOrders[i];
+        }
+        return orderArray;
     }
 
     function getAllCampaigns() public view returns (Campaign[] memory) {
-        return allCampaigns;
+        Campaign[] memory campaignArray = new Campaign[](allCampaigns.length);
+        for (uint256 i = 0; i < allCampaigns.length; i++) {
+            campaignArray[i] = allCampaigns[i];
+        }
+        return campaignArray;
     }
 
     function getAllAffiliates() public view returns (Affiliate[] memory) {
-        return allAffiliates;
+        Affiliate[] memory affiliateArray = new Affiliate[](
+            allAffiliates.length
+        );
+        for (uint256 i = 0; i < allAffiliates.length; i++) {
+            affiliateArray[i] = allAffiliates[i];
+        }
+        return affiliateArray;
     }
 
     function getAllMerchants() public view returns (Merchant[] memory) {
-        return allMerchants;
+        Merchant[] memory merchantArray = new Merchant[](allMerchants.length);
+        for (uint256 i = 0; i < allMerchants.length; i++) {
+            merchantArray[i] = allMerchants[i];
+        }
+        return merchantArray;
+    }
+
+    function getOrdersForMerchant(
+        address merchantAddress
+    ) public view returns (Order[] memory) {
+        Order[] memory orderArray = new Order[](
+            ordersForMerchants[merchantAddress].length
+        );
+
+        for (
+            uint256 i = 0;
+            i < ordersForMerchants[merchantAddress].length;
+            i++
+        ) {
+            orderArray[i] = ordersForMerchants[merchantAddress][i];
+        }
+
+        return orderArray;
+    }
+
+    function getCampaignsForMerchant(
+        address merchantAddress
+    ) public view returns (Campaign[] memory) {
+        Campaign[] memory campaignArray = new Campaign[](
+            campaignsForMerchants[merchantAddress].length
+        );
+
+        for (
+            uint256 i = 0;
+            i < campaignsForMerchants[merchantAddress].length;
+            i++
+        ) {
+            campaignArray[i] = campaignsForMerchants[merchantAddress][i];
+        }
+
+        return campaignArray;
     }
 
     function isRegisteredMerchant(
@@ -71,7 +126,7 @@ contract Registry is IRegistry {
             affiliates[FID].affiliateAddress == address(0),
             "Affiliate already exists"
         );
-        affiliates[FID] = Affiliate(
+        Affiliate memory affiliate = Affiliate(
             FID,
             msg.sender,
             nickname,
@@ -80,6 +135,8 @@ contract Registry is IRegistry {
             postsLastWeek,
             followers
         );
+        affiliates[FID] = affiliate;
+        allAffiliates.push(affiliate);
 
         emit CreatedAffiliate(FID, msg.sender, nickname, 0, 0);
     }
@@ -134,13 +191,15 @@ contract Registry is IRegistry {
     }
 
     function createMerchant(string memory nickname) public {
-        merchants[msg.sender] = Merchant(
+        Merchant memory merchant = Merchant(
             currentMerchantId,
             msg.sender,
             nickname,
             0,
             0
         );
+        merchants[msg.sender] = merchant;
+        allMerchants.push(merchant);
         emit CreatedMerchant(currentMerchantId, msg.sender, nickname, 0, 0);
         currentMerchantId++;
     }
@@ -173,7 +232,7 @@ contract Registry is IRegistry {
 
         uint256 campaignId = currentCampaignId;
 
-        campaigns[campaignId] = Campaign(
+        Campaign memory campaign = Campaign(
             campaignId,
             msg.sender,
             _name,
@@ -190,6 +249,10 @@ contract Registry is IRegistry {
             address(receipt),
             CampaignStatus.Active
         );
+
+        campaigns[campaignId] = campaign;
+        allCampaigns.push(campaign);
+        campaignsForMerchants[msg.sender].push(campaign);
 
         currentCampaignId++;
 
@@ -294,6 +357,7 @@ contract Registry is IRegistry {
 
         ordersForMerchants[merchant.merchantAddress].push(order);
         allOrders.push(order);
+        orders[currentOrderId] = order;
 
         Receipt(campaign.receiptAddress).emitReceipt(
             msg.sender,
