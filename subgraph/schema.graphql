@@ -32,14 +32,13 @@ type Order @entity {
   commission: BigInt!
   buyerHash: Bytes!
   affiliateCommission: BigInt!
-  price: BigInt!
 }
 
 type Campaign @entity {
   id: ID!
   txHash: Bytes!
   blockTimestamp: BigInt!
-  merchant: Merchant!
+  merchantAddress: Bytes!
   name: String!
   productName: String!
   productId: BigInt!
