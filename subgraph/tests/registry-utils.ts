@@ -1,14 +1,34 @@
 import { newMockEvent } from "matchstick-as"
 import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
 import {
+  CampaignEnded,
   CreatedAffiliate,
+  CreatedCampaign,
   CreatedMerchant,
   CreatedOrder,
-  RegisteredProduct
+  PaymentMade,
+  RegisteredAffiliateInCampaign,
+  TotalEarnedAffiliate,
+  TotalEarnedMerchant
 } from "../generated/Registry/Registry"
 
+export function createCampaignEndedEvent(campaignId: BigInt): CampaignEnded {
+  let campaignEndedEvent = changetype<CampaignEnded>(newMockEvent())
+
+  campaignEndedEvent.parameters = new Array()
+
+  campaignEndedEvent.parameters.push(
+    new ethereum.EventParam(
+      "campaignId",
+      ethereum.Value.fromUnsignedBigInt(campaignId)
+    )
+  )
+
+  return campaignEndedEvent
+}
+
 export function createCreatedAffiliateEvent(
-  id: BigInt,
+  FID: BigInt,
   affiliateAddress: Address,
   affiliateName: string,
   numberOfSales: BigInt,
@@ -19,7 +39,7 @@ export function createCreatedAffiliateEvent(
   createdAffiliateEvent.parameters = new Array()
 
   createdAffiliateEvent.parameters.push(
-    new ethereum.EventParam("id", ethereum.Value.fromUnsignedBigInt(id))
+    new ethereum.EventParam("FID", ethereum.Value.fromUnsignedBigInt(FID))
   )
   createdAffiliateEvent.parameters.push(
     new ethereum.EventParam(
@@ -47,6 +67,52 @@ export function createCreatedAffiliateEvent(
   )
 
   return createdAffiliateEvent
+}
+
+export function createCreatedCampaignEvent(
+  id: BigInt,
+  merchantAddress: Address,
+  productName: string,
+  price: BigInt,
+  commission: i32,
+  stock: i32
+): CreatedCampaign {
+  let createdCampaignEvent = changetype<CreatedCampaign>(newMockEvent())
+
+  createdCampaignEvent.parameters = new Array()
+
+  createdCampaignEvent.parameters.push(
+    new ethereum.EventParam("id", ethereum.Value.fromUnsignedBigInt(id))
+  )
+  createdCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "merchantAddress",
+      ethereum.Value.fromAddress(merchantAddress)
+    )
+  )
+  createdCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "productName",
+      ethereum.Value.fromString(productName)
+    )
+  )
+  createdCampaignEvent.parameters.push(
+    new ethereum.EventParam("price", ethereum.Value.fromUnsignedBigInt(price))
+  )
+  createdCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "commission",
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(commission))
+    )
+  )
+  createdCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "stock",
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(stock))
+    )
+  )
+
+  return createdCampaignEvent
 }
 
 export function createCreatedMerchantEvent(
@@ -93,9 +159,9 @@ export function createCreatedMerchantEvent(
 
 export function createCreatedOrderEvent(
   id: BigInt,
+  campaignId: BigInt,
   buyer: Address,
-  affiliateAddress: Address,
-  productId: BigInt,
+  affiliateFID: BigInt,
   price: BigInt,
   comission: BigInt
 ): CreatedOrder {
@@ -107,18 +173,18 @@ export function createCreatedOrderEvent(
     new ethereum.EventParam("id", ethereum.Value.fromUnsignedBigInt(id))
   )
   createdOrderEvent.parameters.push(
+    new ethereum.EventParam(
+      "campaignId",
+      ethereum.Value.fromUnsignedBigInt(campaignId)
+    )
+  )
+  createdOrderEvent.parameters.push(
     new ethereum.EventParam("buyer", ethereum.Value.fromAddress(buyer))
   )
   createdOrderEvent.parameters.push(
     new ethereum.EventParam(
-      "affiliateAddress",
-      ethereum.Value.fromAddress(affiliateAddress)
-    )
-  )
-  createdOrderEvent.parameters.push(
-    new ethereum.EventParam(
-      "productId",
-      ethereum.Value.fromUnsignedBigInt(productId)
+      "affiliateFID",
+      ethereum.Value.fromUnsignedBigInt(affiliateFID)
     )
   )
   createdOrderEvent.parameters.push(
@@ -134,41 +200,107 @@ export function createCreatedOrderEvent(
   return createdOrderEvent
 }
 
-export function createRegisteredProductEvent(
-  id: BigInt,
-  merchantAddress: Address,
-  productName: string,
-  price: BigInt,
-  commission: i32
-): RegisteredProduct {
-  let registeredProductEvent = changetype<RegisteredProduct>(newMockEvent())
+export function createPaymentMadeEvent(
+  customer: Address,
+  amount: BigInt
+): PaymentMade {
+  let paymentMadeEvent = changetype<PaymentMade>(newMockEvent())
 
-  registeredProductEvent.parameters = new Array()
+  paymentMadeEvent.parameters = new Array()
 
-  registeredProductEvent.parameters.push(
-    new ethereum.EventParam("id", ethereum.Value.fromUnsignedBigInt(id))
+  paymentMadeEvent.parameters.push(
+    new ethereum.EventParam("customer", ethereum.Value.fromAddress(customer))
   )
-  registeredProductEvent.parameters.push(
-    new ethereum.EventParam(
-      "merchantAddress",
-      ethereum.Value.fromAddress(merchantAddress)
-    )
-  )
-  registeredProductEvent.parameters.push(
-    new ethereum.EventParam(
-      "productName",
-      ethereum.Value.fromString(productName)
-    )
-  )
-  registeredProductEvent.parameters.push(
-    new ethereum.EventParam("price", ethereum.Value.fromUnsignedBigInt(price))
-  )
-  registeredProductEvent.parameters.push(
-    new ethereum.EventParam(
-      "commission",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(commission))
-    )
+  paymentMadeEvent.parameters.push(
+    new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount))
   )
 
-  return registeredProductEvent
+  return paymentMadeEvent
+}
+
+export function createRegisteredAffiliateInCampaignEvent(
+  campaignId: BigInt,
+  affiliateFID: Address,
+  maxFID: BigInt,
+  minFollowers: BigInt,
+  minPostsLastWeek: BigInt
+): RegisteredAffiliateInCampaign {
+  let registeredAffiliateInCampaignEvent =
+    changetype<RegisteredAffiliateInCampaign>(newMockEvent())
+
+  registeredAffiliateInCampaignEvent.parameters = new Array()
+
+  registeredAffiliateInCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "campaignId",
+      ethereum.Value.fromUnsignedBigInt(campaignId)
+    )
+  )
+  registeredAffiliateInCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "affiliateFID",
+      ethereum.Value.fromAddress(affiliateFID)
+    )
+  )
+  registeredAffiliateInCampaignEvent.parameters.push(
+    new ethereum.EventParam("maxFID", ethereum.Value.fromUnsignedBigInt(maxFID))
+  )
+  registeredAffiliateInCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "minFollowers",
+      ethereum.Value.fromUnsignedBigInt(minFollowers)
+    )
+  )
+  registeredAffiliateInCampaignEvent.parameters.push(
+    new ethereum.EventParam(
+      "minPostsLastWeek",
+      ethereum.Value.fromUnsignedBigInt(minPostsLastWeek)
+    )
+  )
+
+  return registeredAffiliateInCampaignEvent
+}
+
+export function createTotalEarnedAffiliateEvent(
+  affiliate: Address,
+  totalEarned: BigInt
+): TotalEarnedAffiliate {
+  let totalEarnedAffiliateEvent = changetype<TotalEarnedAffiliate>(
+    newMockEvent()
+  )
+
+  totalEarnedAffiliateEvent.parameters = new Array()
+
+  totalEarnedAffiliateEvent.parameters.push(
+    new ethereum.EventParam("affiliate", ethereum.Value.fromAddress(affiliate))
+  )
+  totalEarnedAffiliateEvent.parameters.push(
+    new ethereum.EventParam(
+      "totalEarned",
+      ethereum.Value.fromUnsignedBigInt(totalEarned)
+    )
+  )
+
+  return totalEarnedAffiliateEvent
+}
+
+export function createTotalEarnedMerchantEvent(
+  merhcant: Address,
+  totalEarned: BigInt
+): TotalEarnedMerchant {
+  let totalEarnedMerchantEvent = changetype<TotalEarnedMerchant>(newMockEvent())
+
+  totalEarnedMerchantEvent.parameters = new Array()
+
+  totalEarnedMerchantEvent.parameters.push(
+    new ethereum.EventParam("merhcant", ethereum.Value.fromAddress(merhcant))
+  )
+  totalEarnedMerchantEvent.parameters.push(
+    new ethereum.EventParam(
+      "totalEarned",
+      ethereum.Value.fromUnsignedBigInt(totalEarned)
+    )
+  )
+
+  return totalEarnedMerchantEvent
 }
