@@ -3,14 +3,13 @@ pragma solidity ^0.8.13;
 
 interface IRegistry {
     struct Affiliate {
-        uint256 id;
+        uint256 FID;
         address affiliateAddress;
         string affiliateName;
         uint256 numberOfSales;
         uint256 totalEarned;
         uint256 postsLastWeek;
         uint256 followers;
-        uint256 FID;
     }
 
     struct Merchant {
@@ -30,8 +29,8 @@ interface IRegistry {
         uint256 id;
         uint256 campaignId;
         uint256 productId;
+        uint256 affiliateFID;
         address buyer;
-        address affiliateAddress;
         uint256 price;
         uint256 affiliateComission;
         bytes32 buyerHash;
@@ -47,7 +46,7 @@ interface IRegistry {
         uint256 price;
         uint16 comission;
         uint16 stock;
-        uint128 minFID;
+        uint128 maxFID;
         uint128 minFollowers;
         uint128 minPostsLastWeek;
         string permalink;
@@ -61,7 +60,7 @@ interface IRegistry {
     }
 
     event CreatedAffiliate(
-        uint256 id,
+        uint256 FID,
         address indexed affiliateAddress,
         string affiliateName,
         uint256 numberOfSales,
@@ -84,9 +83,9 @@ interface IRegistry {
     );
     event CreatedOrder(
         uint256 id,
-        uint256 campaignId,
+        uint256 indexed campaignId,
         address indexed buyer,
-        address indexed affiliateAddress,
+        uint256 indexed affiliateFID,
         uint256 price,
         uint256 comission
     );

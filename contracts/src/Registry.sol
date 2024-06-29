@@ -6,7 +6,6 @@ import {IRegistry} from "./interfaces/IRegistry.sol";
 import {Receipt} from "./Receipt.sol";
 
 contract Registry is IRegistry {
-    uint256 currentAffiliateId = 1;
     uint256 currentMerchantId = 1;
     uint256 currentOrderId = 1;
     uint256 currentCampaignId = 1;
@@ -17,7 +16,7 @@ contract Registry is IRegistry {
         transactionToken = IERC20Metadata(_transactionToken);
     }
 
-    mapping(address => Affiliate) public affiliates;
+    mapping(uint256 => Affiliate) public affiliates;
     mapping(address => Merchant) public merchants;
     mapping(uint256 => Campaign) public campaigns;
 
@@ -28,6 +27,8 @@ contract Registry is IRegistry {
 
     mapping(address => Order[]) public ordersForMerchants;
     mapping(address => Campaign[]) public campaignsForMerchants;
+
+    mapping(uint256 => mapping(uint256 => bool)) public affiliatesInCampaigns;
 
     mapping(address => uint256) public numberOfCampaigns;
     mapping(address => uint256) public numberOfOrders;
@@ -55,9 +56,9 @@ contract Registry is IRegistry {
     }
 
     function isRegisteredAffiliate(
-        address affiliateAddress
+        uint256 affiliateFID
     ) public view returns (bool) {
-        return affiliates[affiliateAddress].affiliateAddress != address(0);
+        return affiliates[affiliateFID].affiliateAddress != address(0);
     }
 
     function createAffiliate(
@@ -66,36 +67,62 @@ contract Registry is IRegistry {
         uint256 followers,
         uint256 FID
     ) external {
-        affiliates[msg.sender] = Affiliate(
-            currentAffiliateId,
+        require(
+            affiliates[FID].affiliateAddress == address(0),
+            "Affiliate already exists"
+        );
+        affiliates[FID] = Affiliate(
+            FID,
             msg.sender,
             nickname,
             0,
             0,
             postsLastWeek,
-            followers,
-            FID
+            followers
         );
 
-        emit CreatedAffiliate(currentAffiliateId, msg.sender, nickname, 0, 0);
-        currentAffiliateId++;
+        emit CreatedAffiliate(FID, msg.sender, nickname, 0, 0);
     }
 
     function syncAffiliate(
-        address affiliateAddress,
         uint256 postsLastWeek,
         uint256 followers,
         uint256 FID
     ) external {
-        Affiliate memory affiliate = affiliates[affiliateAddress];
+        Affiliate memory affiliate = affiliates[FID];
         require(
             affiliate.affiliateAddress != address(0),
             "Affiliate not found"
         );
         affiliate.postsLastWeek = postsLastWeek;
         affiliate.followers = followers;
-        affiliate.FID = FID;
-        affiliates[affiliateAddress] = affiliate;
+        affiliates[FID] = affiliate;
+    }
+
+    function registerAffiliateInCampaign(
+        uint256 campaignId,
+        uint256 FID
+    ) external {
+        require(
+            campaignId <= currentCampaignId || campaignId == 0,
+            "Campaign not found"
+        );
+        Affiliate memory affiliate = affiliates[FID];
+        require(
+            affiliate.affiliateAddress != address(0),
+            "Affiliate not found"
+        );
+
+        Campaign memory campaign = campaigns[campaignId];
+
+        require(
+            campaign.maxFID <= affiliate.FID &&
+                campaign.minFollowers <= affiliate.followers &&
+                campaign.minPostsLastWeek <= affiliate.postsLastWeek,
+            "Affiliate does not meet requirements"
+        );
+
+        affiliatesInCampaigns[campaignId][affiliate.FID] = true;
     }
 
     function createMerchant(string memory nickname) public {
@@ -117,7 +144,7 @@ contract Registry is IRegistry {
         uint256 _price,
         uint16 _comission,
         uint16 _stock,
-        uint128 _minFID,
+        uint128 _maxFID,
         uint128 _minFollowers,
         uint128 _minPostsLastWeek,
         string memory _permalink
@@ -146,7 +173,7 @@ contract Registry is IRegistry {
             _price,
             _comission,
             _stock,
-            _minFID,
+            _maxFID,
             _minFollowers,
             _minPostsLastWeek,
             _permalink,
@@ -169,7 +196,7 @@ contract Registry is IRegistry {
 
     function buyProductFromCampaign(
         uint256 campaignId,
-        address affiliateAddress,
+        uint256 FID,
         bytes32 buyerHash,
         string memory dateOfPurchase
     ) external {
@@ -181,11 +208,15 @@ contract Registry is IRegistry {
         require(campaign.stock > 0, "No stock left");
 
         Merchant memory merchant = merchants[campaign.merchantAddress];
-        Affiliate memory affiliate = affiliates[affiliateAddress];
+        Affiliate memory affiliate = affiliates[FID];
 
         require(
             affiliate.affiliateAddress != address(0),
             "Affiliate not found"
+        );
+        require(
+            affiliatesInCampaigns[campaignId][affiliate.FID],
+            "Affiliate not registered in campaign"
         );
 
         require(
@@ -220,8 +251,8 @@ contract Registry is IRegistry {
             currentOrderId,
             campaignId,
             campaign.productId,
+            affiliate.FID,
             msg.sender,
-            affiliateAddress,
             campaign.price,
             campaign.comission,
             buyerHash,
@@ -240,7 +271,7 @@ contract Registry is IRegistry {
             currentOrderId,
             campaignId,
             msg.sender,
-            affiliateAddress,
+            affiliate.FID,
             campaign.price,
             campaign.comission
         );

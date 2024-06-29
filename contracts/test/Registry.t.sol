@@ -9,6 +9,7 @@ import {IRegistry} from "../src/interfaces/IRegistry.sol";
 contract RegistryTest is Test {
     Registry public registry;
     address affiliateAddress = vm.addr(0x123);
+    uint256 affiliateFID = 1000;
     address merchant = vm.addr(0x456);
     address buyer = vm.addr(0x789);
     IERC20Metadata USDC =
@@ -23,16 +24,14 @@ contract RegistryTest is Test {
         vm.prank(affiliateAddress);
         registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
         (
-            uint256 id,
+            uint256 FID,
             address currentAffiliateAddress,
             string memory name,
             uint256 sales,
             uint256 earned,
             uint256 postsLastWeek,
-            uint256 followers,
-            uint256 FID
-        ) = registry.affiliates(affiliateAddress);
-        assertEq(id, 1);
+            uint256 followers
+        ) = registry.affiliates(affiliateFID);
         assertEq(currentAffiliateAddress, affiliateAddress);
         assertEq(name, "Affiliate 1");
         assertEq(sales, 0);
@@ -123,7 +122,7 @@ contract RegistryTest is Test {
         string memory dateOfPurchase = "2021-10-10";
         registry.buyProductFromCampaign(
             campaignId,
-            affiliateAddress,
+            affiliateFID,
             buyerHash,
             dateOfPurchase
         );
@@ -132,8 +131,8 @@ contract RegistryTest is Test {
             uint256 id,
             uint256 orderCampaignId,
             uint256 productId,
+            uint256 orderAffiliateFID,
             address buyerAddress,
-            address orderAffiliateAddress,
             uint256 price,
             uint256 comission,
             ,
@@ -141,7 +140,7 @@ contract RegistryTest is Test {
         ) = registry.ordersForMerchants(merchant, 0);
         assertEq(id, 1);
         assertEq(buyerAddress, buyer);
-        assertEq(orderAffiliateAddress, affiliateAddress);
+        assertEq(orderAffiliateFID, affiliateFID);
         assertEq(orderCampaignId, campaignId);
         assertEq(productId, 33333);
         assertEq(price, 100e6);
@@ -163,7 +162,7 @@ contract RegistryTest is Test {
 
     function test_isRegisteredAffiliate() public {
         vm.prank(affiliateAddress);
-        registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
-        assert(registry.isRegisteredAffiliate(affiliateAddress));
+        registry.createAffiliate("Affiliate 1", 7, 5000, affiliateFID);
+        assert(registry.isRegisteredAffiliate(affiliateFID));
     }
 }
