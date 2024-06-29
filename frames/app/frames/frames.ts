@@ -9,7 +9,7 @@ const analytics: types.FramesMiddleware<any, {}> = async (ctx: any, next) => {
     const fid = ctx.message?.requesterFid;
     console.log(JSON.stringify(ctx, null, 2));
     // <sigh> https://stackoverflow.com/a/77093839
-    sql.query(
+    await sql.query(
       `INSERT INTO FRAME_INTERACTIONS (customer_fid, interaction, campaign_id, far_reacher_fid)
        SELECT customer_fid, interaction, campaign_id, far_reacher_fid FROM json_populate_recordset(NULL::FRAME_INTERACTIONS, $1)`,
       [

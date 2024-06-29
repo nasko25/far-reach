@@ -6,7 +6,7 @@ import { sql } from "@vercel/postgres";
 const handleRequest = frames(async (ctx) => {
   // TODO: remove example and use trx ID instead
   if (ctx.message?.transactionId || ctx.url.searchParams.has("example")) {
-    sql.query(
+    await sql.query(
       `INSERT INTO TRANSACTION_EVENT (customer_fid, customer_addresses_json, campaign_id, far_reacher_fid)
        SELECT customer_fid, customer_addresses_json, campaign_id, far_reacher_fid FROM json_populate_recordset(NULL::TRANSACTION_EVENT, $1)`,
       [
