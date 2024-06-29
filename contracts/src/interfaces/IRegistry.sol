@@ -94,7 +94,7 @@ interface IRegistry {
     event RegisteredAffiliateInCampaign(
         uint256 indexed campaignId,
         address indexed affiliateFID,
-        uint128 indexed maxFID,
+        uint128 maxFID,
         uint128 minFollowers,
         uint128 minPostsLastWeek
     );
@@ -103,7 +103,15 @@ interface IRegistry {
 
     event PaymentMade(address indexed customer, uint256 amount);
 
-    event TotalEarnedMerchant(address indexed merhcant, uint256 totalEarned);
+    event TotalEarnedMerchant(
+        address indexed merhcant,
+        uint256 indexed totalEarned,
+        uint256 indexed numberOfSales
+    );
 
-    event TotalEarnedAffiliate(address indexed affiliate, uint256 totalEarned);
+    event TotalEarnedAffiliate(
+        address indexed affiliate,
+        uint256 indexed totalEarned,
+        uint256 indexed numberOfSales
+    );
 }

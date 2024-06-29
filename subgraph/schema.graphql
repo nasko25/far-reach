@@ -1,96 +1,64 @@
-type CampaignEnded @entity(immutable: true) {
-  id: Bytes!
-  campaignId: BigInt! # uint256
-  blockNumber: BigInt!
+type Affiliate @entity {
+  id: ID!
+  txHash: Bytes!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  address: Bytes!
+  fid: BigInt!
+  name: String!
+  numberOfSales: BigInt!
+  totalEarned: BigInt!
+  postsLastWeek: BigInt!
+  followers: BigInt!
 }
 
-type CreatedAffiliate @entity(immutable: true) {
-  id: Bytes!
-  FID: BigInt! # uint256
-  affiliateAddress: Bytes! # address
-  affiliateName: String! # string
-  numberOfSales: BigInt! # uint256
-  totalEarned: BigInt! # uint256
-  blockNumber: BigInt!
+type Merchant @entity {
+  id: ID!
+  txHash: Bytes!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  address: Bytes!
+  name: String!
+  numberOfSales: BigInt!
+  totalEarned: BigInt!
 }
 
-type CreatedCampaign @entity(immutable: true) {
-  id: Bytes!
-  Registry_id: BigInt! # uint256
-  merchantAddress: Bytes! # address
-  productName: String! # string
-  price: BigInt! # uint256
-  commission: Int! # uint16
-  stock: Int! # uint16
-  blockNumber: BigInt!
+type Order @entity {
+  id: ID!
+  txHash: Bytes!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  campaign: Campaign!
+  buyer: Bytes!
+  affiliate: Affiliate!
+  price: BigInt!
+  commission: BigInt!
+  buyerHash: Bytes!
+  affiliateCommission: BigInt!
+  price: BigInt!
 }
 
-type CreatedMerchant @entity(immutable: true) {
-  id: Bytes!
-  Registry_id: BigInt! # uint256
-  merchantAddress: Bytes! # address
-  merchantName: String! # string
-  numberOfSales: BigInt! # uint256
-  totalEarned: BigInt! # uint256
-  blockNumber: BigInt!
+type Campaign @entity {
+  id: ID!
+  txHash: Bytes!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  merchant: Merchant!
+  name: String!
+  productName: String!
+  productId: BigInt!
+  price: BigInt!
+  commission: Int!
+  stock: Int!
+  maxFID: BigInt!
+  minFollowers: BigInt!
+  minPostsLastWeek: BigInt!
+  permalink: String!
+  productImage: String!
+  receiptAddress: Bytes!
+  orders: [Order!]!
 }
 
-type CreatedOrder @entity(immutable: true) {
-  id: Bytes!
-  Registry_id: BigInt! # uint256
-  campaignId: BigInt! # uint256
-  buyer: Bytes! # address
-  affiliateFID: BigInt! # uint256
-  price: BigInt! # uint256
-  comission: BigInt! # uint256
-  blockNumber: BigInt!
+type Payment @entity {
+  id: ID!
+  txHash: Bytes!
   blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type PaymentMade @entity(immutable: true) {
-  id: Bytes!
-  customer: Bytes! # address
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type RegisteredAffiliateInCampaign @entity(immutable: true) {
-  id: Bytes!
-  campaignId: BigInt! # uint256
-  affiliateFID: Bytes! # address
-  maxFID: BigInt! # uint128
-  minFollowers: BigInt! # uint128
-  minPostsLastWeek: BigInt! # uint128
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type TotalEarnedAffiliate @entity(immutable: true) {
-  id: Bytes!
-  affiliate: Bytes! # address
-  totalEarned: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type TotalEarnedMerchant @entity(immutable: true) {
-  id: Bytes!
-  merhcant: Bytes! # address
-  totalEarned: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  customer: Bytes!
+  amount: BigInt!
 }

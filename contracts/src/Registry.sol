@@ -271,11 +271,13 @@ contract Registry is IRegistry {
         merchant.totalEarned += amountForMerchant;
         emit TotalEarnedMerchant(
             merchant.merchantAddress,
-            merchant.totalEarned
+            merchant.totalEarned,
+            merchant.numberOfSales
         );
         emit TotalEarnedAffiliate(
             affiliate.affiliateAddress,
-            affiliate.totalEarned
+            affiliate.totalEarned,
+            affiliate.numberOfSales
         );
 
         Order memory order = Order(
