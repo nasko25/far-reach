@@ -123,6 +123,14 @@ contract Registry is IRegistry {
         );
 
         affiliatesInCampaigns[campaignId][affiliate.FID] = true;
+
+        emit RegisteredAffiliateInCampaign(
+            campaignId,
+            affiliate.affiliateAddress,
+            campaign.maxFID,
+            campaign.minFollowers,
+            campaign.minPostsLastWeek
+        );
     }
 
     function createMerchant(string memory nickname) public {
@@ -185,6 +193,15 @@ contract Registry is IRegistry {
 
         currentCampaignId++;
 
+        emit CreatedCampaign(
+            campaignId,
+            msg.sender,
+            _productName,
+            _price,
+            _comission,
+            _stock
+        );
+
         return campaignId;
     }
 
@@ -194,6 +211,8 @@ contract Registry is IRegistry {
             "Merchant not authorized"
         );
         campaigns[campaignId].status = CampaignStatus.Finished;
+
+        emit CampaignEnded(campaignId);
     }
 
     function buyProductFromCampaign(
@@ -232,6 +251,8 @@ contract Registry is IRegistry {
             campaign.price
         );
 
+        emit PaymentMade(msg.sender, campaign.price);
+
         uint256 amountAfterComission = (campaign.price *
             (100 - farReachComission)) / 100;
         uint256 amountForAffiliate = (amountAfterComission *
@@ -248,6 +269,14 @@ contract Registry is IRegistry {
         affiliate.totalEarned += amountForAffiliate;
         merchant.numberOfSales++;
         merchant.totalEarned += amountForMerchant;
+        emit TotalEarnedMerchant(
+            merchant.merchantAddress,
+            merchant.totalEarned
+        );
+        emit TotalEarnedAffiliate(
+            affiliate.affiliateAddress,
+            affiliate.totalEarned
+        );
 
         Order memory order = Order(
             currentOrderId,

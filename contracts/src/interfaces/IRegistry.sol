@@ -90,4 +90,20 @@ interface IRegistry {
         uint256 price,
         uint256 comission
     );
+
+    event RegisteredAffiliateInCampaign(
+        uint256 indexed campaignId,
+        address indexed affiliateFID,
+        uint128 indexed maxFID,
+        uint128 minFollowers,
+        uint128 minPostsLastWeek
+    );
+
+    event CampaignEnded(uint256 indexed campaignId);
+
+    event PaymentMade(address indexed customer, uint256 amount);
+
+    event TotalEarnedMerchant(address indexed merhcant, uint256 totalEarned);
+
+    event TotalEarnedAffiliate(address indexed affiliate, uint256 totalEarned);
 }
