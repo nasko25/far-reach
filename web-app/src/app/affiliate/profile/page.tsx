@@ -6,6 +6,7 @@ import { ProfileStats } from "@/components/affiliate/ProfileStats";
 import { ProfileCasts } from "@/components/affiliate/ProfileCasts";
 import "react-farcaster-embed/dist/styles.css";
 
+// TODO: allow them to unlink wallet
 export default function AffiliateProfile() {
   const { userProfile: profile } = useUserProfile();
 

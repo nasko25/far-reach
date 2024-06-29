@@ -1,4 +1,5 @@
 import { OfferCard } from "@/components/affiliate/OfferCard";
+
 export default function AffiliateOffers() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
@@ -12,6 +13,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -20,6 +22,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -28,6 +31,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -36,6 +40,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -44,6 +49,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -52,6 +58,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -60,6 +67,7 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
           <OfferCard
             name="Apple iPhone 13"
@@ -68,9 +76,11 @@ export default function AffiliateOffers() {
             deadline="30th October"
             image="https://images.fixje.nl/wp-content/uploads/2022/09/Refurbished-iPhone-13-zwart-1.png"
             description="The iPhone 13 is the latest and greatest from Apple. It features a new A15 Bionic chip, improved cameras, and a new Super Retina XDR display."
+            promoteUrl="https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://farcaster.xyz&embeds[]=https://github.com/farcasterxyz/protocol"
           />
         </div>
       </div>
+
     </main>
   );
 }

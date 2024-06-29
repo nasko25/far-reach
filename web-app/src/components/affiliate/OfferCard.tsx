@@ -1,4 +1,11 @@
+"use client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
+import toast, {Toaster} from "react-hot-toast";
+
+const notify = (promoteUrl: string) => {
+  toast("Affiliate link frame copied to clipboard.");
+  window.open(promoteUrl, "_blank")
+}
 
 export function OfferCard({
   from,
@@ -7,6 +14,7 @@ export function OfferCard({
   image,
   commission,
   description,
+  promoteUrl
 }: {
   from: string;
   deadline: string;
@@ -14,6 +22,7 @@ export function OfferCard({
   image: string;
   commission: string;
   description: string;
+  promoteUrl: string
 }) {
   return (
     <Card>
@@ -35,7 +44,9 @@ export function OfferCard({
               <p>{deadline}</p>
             </div>
           </div>
+          <button onClick={() => notify(promoteUrl)}>Promote</button>
         </div>
+        <Toaster/>
       </CardContent>
     </Card>
   );
