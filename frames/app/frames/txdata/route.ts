@@ -1,53 +1,77 @@
-import {
-    Abi,
-    createPublicClient,
-    encodeFunctionData,
-    getContract,
-    http,
-  } from "viem";
+import { Abi, encodeFunctionData } from "viem";
 import { baseSepolia } from "viem/chains";
 import { frames } from "../frames";
-import { storageRegistryABI } from "./contracts/storage-registry";
+import {
+  FAR_REACH_REGISTRY_ADDRESS,
+  storageRegistryABI,
+} from "./contracts_abi/registry";
 import { transaction } from "frames.js/core";
+import { JsonObject } from "frames.js/types";
+import { USDC_CONTRACT_ADDRESS, usdcABI } from "./contracts_abi/usdc";
+import { createHash } from "crypto";
+import { userCanBuy } from "./userCanBuy";
 
+const baseId = `eip155:${baseSepolia.id.toString()}`;
 export const POST = frames(async (ctx) => {
-  if (!ctx?.message) {
+  console.log(ctx.searchParams);
+  if (
+    !ctx?.message ||
+    !ctx.message.connectedAddress ||
+    !ctx.message.castId ||
+    typeof ctx.searchParams.campaignId !== "string"
+  ) {
     throw new Error("Invalid frame message");
   }
 
-  // Get current storage price
-  const units = BigInt(1);
+  // TODO: better to check for product's price instead
+  if (ctx.searchParams.toApprove == "true") {
+    const calldata = encodeFunctionData({
+      abi: usdcABI,
+      functionName: "approve",
+      args: [
+        FAR_REACH_REGISTRY_ADDRESS,
+        BigInt(
+          ctx.searchParams.price ??
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        ),
+      ] as const,
+    });
+
+    // TODO: verify that on warpcast this allows using the coinbase smart wallet
+    return transaction({
+      chainId: baseId,
+      method: "eth_sendTransaction",
+      params: {
+        abi: usdcABI as Abi,
+        to: USDC_CONTRACT_ADDRESS,
+        data: calldata,
+      },
+    });
+  }
+
+  if (typeof ctx.message.inputText !== "string") {
+    throw new Error("Invalid frame message");
+  }
 
   const calldata = encodeFunctionData({
     abi: storageRegistryABI,
-    functionName: "rent",
-    args: [BigInt(ctx.message.requesterFid), units] as const,
+    functionName: "buyProductFromCampaign",
+    args: [
+      BigInt(ctx.searchParams.campaignId),
+      BigInt(ctx.message.castId.fid),
+      `0x${createHash("sha256").update(ctx.message.inputText).digest("hex")}`,
+      new Date().toISOString(),
+    ] as const,
   });
-
-  const publicClient = createPublicClient({
-    chain: baseSepolia,
-    transport: http(),
-  });
-
-  const STORAGE_REGISTRY_ADDRESS = "0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D";
-
-  const storageRegistry = getContract({
-    address: STORAGE_REGISTRY_ADDRESS,
-    abi: storageRegistryABI,
-    client: publicClient,
-  });
-
-  const unitPrice = await storageRegistry.read.price([units]);
 
   // TODO: verify that on warpcast this allows using the coinbase smart wallet
   return transaction({
-    chainId: "eip155:10", // OP Mainnet 10
+    chainId: baseId,
     method: "eth_sendTransaction",
     params: {
       abi: storageRegistryABI as Abi,
-      to: STORAGE_REGISTRY_ADDRESS,
+      to: FAR_REACH_REGISTRY_ADDRESS,
       data: calldata,
-      value: unitPrice.toString(),
     },
   });
 });

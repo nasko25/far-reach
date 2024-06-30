@@ -14,9 +14,7 @@ export const NavBar = (props: { rank?: number; stats?: boolean }) => {
   );
 };
 
-export const Leaderboard = (props: {
-  users: { username: string; score: string }[];
-}) => {
+export const Leaderboard = (props: { leaderboard: Leaderboard }) => {
   const casterName = "7";
   // TODO: if caster is not top 10, show them below the top 10 with their actual current score
   // assumes parent is display: flex and has 100% width and height
@@ -27,18 +25,17 @@ export const Leaderboard = (props: {
         <p tw="ml-88"> Money made so far </p>
       </div>
       <div tw="flex border-b border-gray-700 mx-30 text-gray-400 mb-8"> </div>
-      {props.users.map((user, idx) => (
+      {props.leaderboard.map((user, idx) => (
         <div
           tw={
-            "flex pl-40" +
-            (casterName == user.username ? " text-purple-600" : "")
+            "flex pl-40" + (casterName == user.name ? " text-purple-600" : "")
           }
           key={idx}
         >
           <p tw="p-0 m-2 w-20"> # {idx + 1} </p>
-          <p tw="p-0 m-2 w-120 text-purple-500"> {user.username} </p>
+          <p tw="p-0 m-2 w-120 text-purple-500"> {user.name} </p>
           <p tw="p-0 m-2">
-            ${user.score} {idx < 3 ? "💸".repeat(3 - idx) : ""}
+            ${user.totalEarned} {idx < 3 ? "💸".repeat(3 - idx) : ""}
           </p>
         </div>
       ))}
@@ -50,7 +47,14 @@ const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-const FrameData = () => {
+const FrameData = (props: {
+  productImage: string;
+  productsSold: number;
+  reward: number;
+  likes: number;
+  recasts: number;
+  comments: number;
+}) => {
   return (
     <div tw="flex flex-col m-0 mt-5">
       {
@@ -62,31 +66,32 @@ const FrameData = () => {
       <div tw="flex flex-row">
         <div tw="flex flex-col">
           <p tw="m-0" style={{ marginLeft: "20px", color: "red" }}>
-            Total products sold: {randomBetween(1, 20)}
+            Total products sold: {props.productsSold}
           </p>
           <p tw="m-0" style={{ marginLeft: "20px" }}>
-            Total rewards: ${randomBetween(20, 100)}
+            Total reward: ${props.reward}
           </p>
           <p tw="m-0">
-            Likes/recasts/comments: {randomBetween(10, 20)}/
-            {randomBetween(2, 15)}/{randomBetween(10, 60)}
+            Likes/recasts/comments: {props.likes}/{props.recasts}/
+            {props.comments}
           </p>
         </div>
-        <img
-          tw="m-auto mr-40 h-30"
-          src={
-            Math.random() > 0.5
-              ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNMjLY3ExAv8O2swxPg7_vgt-s6D8t3chYDg&s"
-              : "https://cdn.iconscout.com/icon/free/png-256/free-t-shirt-2772271-2302029.png"
-          }
-        ></img>
+        <img tw="m-auto mr-40 h-30" src={props.productImage}></img>
       </div>
       <div tw="flex border-b border-gray-700 mx-30 text-gray-400 m-0 mt-2 mr-40"></div>
     </div>
   );
 };
 
-type FrameData = { likes: number; casts: number; replies: number };
+export type FrameData = {
+  castedAtTimestamp: string;
+  numberOfRecasts: number;
+  numberOfLikes: number;
+  numberOfReplies: number;
+  productImage: string;
+  productsSold: number;
+  reward: number;
+};
 
 export const Stats = (props: {
   displayName: string | undefined;
@@ -94,6 +99,22 @@ export const Stats = (props: {
   profileImage: string | undefined;
   frameData: FrameData[];
 }) => {
+  let frames: any[] = [];
+
+  if (props.totalRewards) {
+    for (let frame of props.frameData) {
+      frames.push(
+        <FrameData
+          productImage={frame.productImage}
+          productsSold={frame.productsSold}
+          reward={frame.reward}
+          likes={frame.numberOfLikes}
+          recasts={frame.numberOfRecasts}
+          comments={frame.numberOfReplies}
+        />
+      );
+    }
+  }
   // assumes parent is display: flex and has 100% width and height
   return (
     <div tw="text-white border-gray-200 dark:bg-gray-900 mb-auto mt-5 ml-40 flex flex-col">
@@ -111,9 +132,7 @@ export const Stats = (props: {
       </div>
       <div tw="flex border-b border-gray-700 mr-40 text-gray-400 mb-4 mt-0"></div>
       <p tw="mt-0 mr-40 justify-center"> Your Top 3 frames </p>
-      {props.totalRewards ? <FrameData /> : undefined}
-      {props.totalRewards ? <FrameData /> : undefined}
-      {props.totalRewards ? <FrameData /> : undefined}
+      <tbody>{frames}</tbody>
       {props.totalRewards ? undefined : (
         <p tw="mr-40 justify-center">You don't have any frames yet</p>
       )}

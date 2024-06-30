@@ -1,32 +1,57 @@
 /* eslint-disable react/jsx-key */
 import { Button } from "frames.js/next";
 import { frames } from "./frames";
+import { getProductInformation } from "../subgraph/queries";
+import { NavBar } from "../components";
 
 // TODO: fetch from shopify
 const handleRequest = frames(async (ctx) => {
   // NOTE: keep in mind that one object is the "default" one (when no parameters are selected)
+  const product = await getProductInformation(ctx.searchParams.campaignId);
   return {
     image: (
-      <div tw="text-black w-full h-full justify-center items-center flex relative">
-        <div tw="text-black w-140 h-140 justify-center items-center flex relative">
-          { ctx.url.searchParams.has("color") && ctx.url.searchParams.get("color") === "black"
-          ? <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNMjLY3ExAv8O2swxPg7_vgt-s6D8t3chYDg&s"></img>
-          : <img src="https://cdn.iconscout.com/icon/free/png-256/free-t-shirt-2772271-2302029.png"></img> }
+      <div tw="bg-[#17101f] text-white w-full h-full justify-center items-center flex relative flex-col">
+        <NavBar />
+        <div tw="text-black w-140 h-140 justify-center items-center flex relative mt-20">
+          <img src={product.productImage}></img>
         </div>
-        <p tw="w-50 absolute right-0 top-0">Only 5 left in stock!</p>
+        <p tw="m-0 mt-10">{product.name}</p>
+        <p tw="m-0">
+          Price: ${parseFloat(product.price) / parseFloat("1000000")}
+        </p>
+        <p tw="m-5">
+          {product.stock == "0"
+            ? "Product sold out!"
+            : "Only ${product.stock} left in stock!"}
+        </p>
       </div>
     ),
-    // imageOptions: {
-    //   aspectRatio: "1:1"
-    // },
-    buttons: [
-      <Button action="post" target={{ pathname: "/customize", query: Object.fromEntries(ctx.url.searchParams) }}>
-        Customize 
-      </Button>,
-      <Button action="post" target={{ pathname: "/buy", query: Object.fromEntries(ctx.url.searchParams) }}>
-        Buy 
-      </Button>,
-    ]
+    imageOptions: {
+      aspectRatio: "1:1",
+    },
+    buttons:
+      product.stock == "0"
+        ? [
+            // <Button
+            //   action="post"
+            //   target={{
+            //     pathname: "/customize",
+            //     query: Object.fromEntries(ctx.url.searchParams),
+            //   }}
+            // >
+            //   Customize
+            // </Button>,
+            <Button
+              action="post"
+              target={{
+                pathname: "/buy",
+                query: Object.fromEntries(ctx.url.searchParams),
+              }}
+            >
+              Buy
+            </Button>,
+          ]
+        : [],
   };
 });
 

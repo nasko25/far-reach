@@ -1,4 +1,5 @@
 import { fetchQuery, init } from "@airstack/node";
+import { FrameData } from "../components";
 
 init(process.env.AIRSTACK_API_KEY!);
 
@@ -69,14 +70,7 @@ export const getUserData = async (
 
 export const getTop3Frames = async (
   fid: number | undefined
-): Promise<
-  {
-    castedAtTimestamp: string;
-    numberOfRecasts: number;
-    numberOfLikes: number;
-    numberOfReplies: number;
-  }[]
-> => {
+): Promise<FrameData[]> => {
   if (!fid) return [];
   const { data, error }: QueryResponse = await fetchQuery(
     queryFarReachActivity(

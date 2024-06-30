@@ -7,7 +7,6 @@ const analytics: types.FramesMiddleware<any, {}> = async (ctx: any, next) => {
   if (typeof button === "number") {
     const interaction = `button pressed: ${button} to arrive @ ${ctx.url}`;
     const fid = ctx.message?.requesterFid;
-    console.log(JSON.stringify(ctx, null, 2));
     // <sigh> https://stackoverflow.com/a/77093839
     await sql.query(
       `INSERT INTO FRAME_INTERACTIONS (customer_fid, interaction, campaign_id, far_reacher_fid)

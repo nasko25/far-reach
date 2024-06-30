@@ -52,18 +52,18 @@ export async function GET(
     );
 
     const networthAcc = [0];
-    // for (var address of uniqueAddresses) {
-    //   if (address)
-    //     networthAcc.push(
-    //       await Moralis.EvmApi.wallets
-    //         .getWalletNetWorth({
-    //           excludeSpam: true,
-    //           excludeUnverifiedContracts: true,
-    //           address,
-    //         })
-    //         .then((result) => parseInt(result.raw.total_networth_usd))
-    //     );
-    // }
+    for (var address of uniqueAddresses) {
+      if (address)
+        networthAcc.push(
+          await Moralis.EvmApi.wallets
+            .getWalletNetWorth({
+              excludeSpam: true,
+              excludeUnverifiedContracts: true,
+              address,
+            })
+            .then((result) => parseInt(result.raw.total_networth_usd))
+        );
+    }
     networths.push(
       networthAcc.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
@@ -73,7 +73,7 @@ export async function GET(
   }
 
   return Response.json({
-    page: params.campaign_id,
+    campaign_id: params.campaign_id,
     networths,
     customerFidsBelow10000: customerFids.filter((fid) => fid <= 10000).length,
     customersAlsoBought: Array.from(customersAlsoBought),
