@@ -9,6 +9,12 @@ const handleRequest = frames(async (ctx) => {
   return {
     image: (
       <div tw="bg-[#17101f] text-black flex flex-col w-full h-full">
+        {/* Absolutely terrible way of handling that, TODO: fix at some point */}
+        <img
+          tw="absolute text-white top-5 left-130"
+          src="https://i.ibb.co/tXSF6t5/image.png"
+          width={120}
+        ></img>
         <NavBar />
         <Leaderboard leaderboard={leaderboard} />
       </div>

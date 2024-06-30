@@ -34,6 +34,12 @@ const handleRequest = frames(async (ctx) => {
     return {
       image: (
         <div tw="bg-[#17101f] text-white w-full h-full justify-center items-center flex text-center">
+          {/* Absolutely terrible way of handling that, TODO: fix at some point */}
+          <img
+            tw="absolute text-white top-5"
+            src="https://i.ibb.co/tXSF6t5/image.png"
+            width={120}
+          ></img>
           Congratulations! Your purchase was successful. You can expect shipment
           in around 4-5 days.
         </div>
@@ -57,6 +63,12 @@ const handleRequest = frames(async (ctx) => {
     return {
       image: (
         <div tw="bg-[#17101f] text-white w-full h-full justify-center items-center flex text-center">
+          {/* Absolutely terrible way of handling that, TODO: fix at some point */}
+          <img
+            tw="absolute text-white top-5"
+            src="https://i.ibb.co/tXSF6t5/image.png"
+            width={120}
+          ></img>
           You can now proceed with buying the product. Please input your email
           below. It will be used to verify you have purchased the product, so
           please input an email only you have access to.
@@ -87,6 +99,12 @@ const handleRequest = frames(async (ctx) => {
   return {
     image: (
       <div tw="bg-[#17101f] text-white w-full h-full justify-center items-center flex relative flex-col">
+        {/* Absolutely terrible way of handling that, TODO: fix at some point */}
+        <img
+          tw="absolute text-white top-5"
+          src="https://i.ibb.co/tXSF6t5/image.png"
+          width={120}
+        ></img>
         <NavBar />
         <div tw="text-black w-140 h-140 justify-center items-center flex relative mt-20">
           <img src={product.productImage}></img>
