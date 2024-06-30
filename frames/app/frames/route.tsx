@@ -19,7 +19,7 @@ const handleRequest = frames(async (ctx) => {
         ></img>
         <NavBar />
         <div tw="text-black w-140 h-140 justify-center items-center flex relative mt-20">
-          <img src={product.productImage}></img>
+          <img src={product.productImage} width={400}></img>
         </div>
         <p tw="m-0 mt-10">{product.name}</p>
         <p tw="m-0">
