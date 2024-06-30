@@ -8,7 +8,7 @@ import {Registry} from "../src/Registry.sol";
 contract Populate is Script {
     IERC20Metadata USDC =
         IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
-    Registry registry = Registry(0x4522eF756166AB628228b865bf469b9abd395E15);
+    Registry registry = Registry(0xE627Ef48352DD3d121ABB1AF9a38da5032F98dE6);
     uint256 FID = 10;
     function setUp() public {}
 
