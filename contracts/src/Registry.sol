@@ -204,6 +204,7 @@ contract Registry is IRegistry, Ownable {
             msg.sender,
             nickname,
             0,
+            0,
             0
         );
         merchants[msg.sender] = merchant;
@@ -348,6 +349,7 @@ contract Registry is IRegistry, Ownable {
         affiliate.totalEarned += amountForAffiliate;
         merchant.numberOfSales++;
         merchant.totalEarned += amountForMerchant;
+        merchant.totalPaidToAffiliates += amountForAffiliate;
 
         merchants[campaign.merchantAddress] = merchant;
         affiliates[FID] = affiliate;
@@ -398,6 +400,12 @@ contract Registry is IRegistry, Ownable {
             order.status
         );
         currentOrderId++;
+        campaign.stock--;
+        if (campaign.stock == 0) {
+            campaign.status = CampaignStatus.Finished;
+            emit CampaignEnded(campaignId);
+        }
+        campaigns[campaignId] = campaign;
     }
 
     function withdrawRevenue() external onlyOwner {

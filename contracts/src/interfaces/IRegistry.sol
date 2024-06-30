@@ -18,6 +18,7 @@ interface IRegistry {
         string merchantName;
         uint256 numberOfSales;
         uint256 totalEarned;
+        uint256 totalPaidToAffiliates;
     }
 
     enum OrderStatus {

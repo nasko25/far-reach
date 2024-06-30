@@ -49,13 +49,15 @@ contract RegistryTest is Test {
             address currentMerchantAddress,
             string memory name,
             uint256 sales,
-            uint256 earned
+            uint256 earned,
+            uint256 paidToAffiliates
         ) = registry.merchants(merchant);
         assertEq(id, 1);
         assertEq(currentMerchantAddress, merchant);
         assertEq(name, "Merchant 1");
         assertEq(sales, 0);
         assertEq(earned, 0);
+        assertEq(paidToAffiliates, 0);
     }
 
     function test_createCampaign() public {
@@ -150,13 +152,25 @@ contract RegistryTest is Test {
         assertEq(price, 100e6);
         assertEq(comission, 10);
         assertEq(buyerHash, buyerHash);
-        (, , , uint256 sales, uint256 revenue) = registry.merchants(merchant);
+        (
+            ,
+            ,
+            ,
+            uint256 sales,
+            uint256 revenue,
+            uint256 paidToAffiliates
+        ) = registry.merchants(merchant);
         assertEq(sales, 1);
         assertEq(revenue, 81e6);
+        assertEq(paidToAffiliates, 9e6);
         assertEq(USDC.balanceOf(merchant), 81e6);
         assertEq(USDC.balanceOf(affiliateAddress), 9e6);
         assertEq(USDC.balanceOf(address(registry)), 10e6);
         assertEq(USDC.balanceOf(buyer), 0);
+        (, , , , , , , uint256 stock, , , , , , , ) = registry.campaigns(
+            campaignId
+        );
+        assertEq(stock, 49);
     }
 
     function test_isRegisteredMerchant() public {

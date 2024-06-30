@@ -8,25 +8,25 @@ import {Registry} from "../src/Registry.sol";
 contract Populate is Script {
     IERC20Metadata USDC =
         IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
-    Registry registry = Registry(0x71358C0E5caa12F23F62640ecA68361143e610DB);
+    Registry registry = Registry(0x5E848fff72A92D5837DdA15B9d3384448C742b7E);
     uint256 FID = 1;
     function setUp() public {}
 
     function run() public {
         vm.createSelectFork("baseSepolia");
         vm.startBroadcast();
-        registry.createAffiliate("Ducke Affiliate", 7, 5000, FID);
-        registry.createMerchant("Ducke Merchant");
+        // registry.createAffiliate("Ducke Affiliate", 7, 5000, FID);
+        // registry.createMerchant("Ducke Merchant");
         uint256 campaignId = registry.createCampaign(
-            "Campaign 1",
-            "Hydrogen Ski",
+            "Easy Campaign",
+            "Efe's Hair",
             1,
-            1e6,
+            1e5,
             10,
             5,
-            750,
-            1000,
-            2,
+            75000000,
+            0,
+            0,
             "https://testing-web3.myshopify.com/cart/45112423579875:1",
             "https://cdn.shopify.com/s/files/1/0692/1637/0915/files/Main_0a40b01b-5021-48c1-80d1-aa8ab4876d3d.jpg?v=1717873109"
         );
