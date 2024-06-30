@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@airstack/airstack-react": "^0.6.3",
+    "@apollo/client": "^3.10.8",
     "@frames.js/render": "^0.2.12",
     "@nivo/bar": "^0.87.0",
     "@nivo/line": "^0.87.0",

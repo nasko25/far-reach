@@ -5,6 +5,7 @@ import { usePrivy } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AirstackProvider } from "@airstack/airstack-react";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 export default function Affiliate({
   children,

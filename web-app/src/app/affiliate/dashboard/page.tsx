@@ -1,10 +1,50 @@
+"use client";
 import { Card, CardHeader, CardDescription, CardTitle, CardContent } from "@/components/Card";
 import { EarningsCard } from "@/components/affiliate/EarningsCard";
 import { StatCard } from "@/components/affiliate/StatCard";
 import { Coins, ShoppingBag, User } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { useEffect, useState } from "react";
 
 export default function AffiliateDashboard() {
+  const [leaderboard, setLeaderboard] = useState([]);
+  useEffect(() => {
+    const farReachClient = new ApolloClient({
+      uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+      cache: new InMemoryCache(),
+    });
+    farReachClient
+      .query({
+        query: gql`
+          query {
+            affiliates(first: 5, orderBy: totalEarned, orderDirection: desc) {
+              address
+              totalEarned
+              numberOfSales
+              name
+              fid
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        console.log(result);
+        setLeaderboard(
+          result.data.affiliates.map((affiliate: any) => {
+            return {
+              name: affiliate.name,
+              totalEarned: affiliate.totalEarned,
+              numberOfSales: affiliate.numberOfSales,
+            };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log("Error fetching data: ", err);
+      });
+  }, []);
+  console.log(leaderboard);
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
       <h1 className="font-bold text-2xl">Dashboard</h1>
