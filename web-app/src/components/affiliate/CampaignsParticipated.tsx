@@ -34,6 +34,7 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
                 productImage
                 productName
                 status
+                permalink
                 stock
               }
       }
@@ -55,6 +56,7 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
     return (
       <div className="grid md:grid-cols-3 gap-4">
         {campaignsParticipated.map((campaign: any) => {
+          console.log("Promoteusrl", campaign.id, campaign.permalink);
           return (
             <OfferCard
               campaignId={campaign.id}

@@ -24,6 +24,7 @@ export function OfferCard({
   campaignId: string;
   affiliateFID: string;
 }) {
+  console.log("PROMOTURL", promoteUrl);
   return (
     <Card>
       <CardHeader>

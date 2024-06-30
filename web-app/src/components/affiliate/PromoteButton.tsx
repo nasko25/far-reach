@@ -48,26 +48,23 @@ export function PromoteButton({
           args: [1, affilaiteFID],
         })) as any[];
         console.log(exists);
-        if (exists) {
-          notify(promoteUrl);
-          return;
+        if (!exists) {
+          const data = encodeFunctionData({
+            args: [1, affilaiteFID],
+            abi: registry,
+            functionName: "registerAffiliateInCampaign",
+          });
+          const transactionRequest = {
+            from: wallet.address,
+            to: contractAddress,
+            data: data,
+          };
+          const transactionHash = await provider.request({
+            method: "eth_sendTransaction",
+            params: [transactionRequest],
+          });
+          console.log(transactionHash);
         }
-
-        const data = encodeFunctionData({
-          args: [1, affilaiteFID],
-          abi: registry,
-          functionName: "registerAffiliateInCampaign",
-        });
-        const transactionRequest = {
-          from: wallet.address,
-          to: contractAddress,
-          data: data,
-        };
-        const transactionHash = await provider.request({
-          method: "eth_sendTransaction",
-          params: [transactionRequest],
-        });
-        console.log(transactionHash);
         notify(promoteUrl);
       }}
     >
