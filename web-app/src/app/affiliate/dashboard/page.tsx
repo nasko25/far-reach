@@ -7,12 +7,12 @@ import { ProfileCasts } from "@/components/affiliate/ProfileCasts";
 import { Card, CardHeader, CardDescription, CardTitle, CardContent } from "@/components/Card";
 import { EarningsCard } from "@/components/affiliate/EarningsCard";
 import { StatCard } from "@/components/affiliate/StatCard";
-import { Coins, ShoppingBag, User } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import "react-farcaster-embed/dist/styles.css";
 import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { CampaignsParticipated } from "@/components/affiliate/CampaignsParticipated";
+import { PerformanceMetrics } from "@/components/affiliate/PerformanceMetrics";
 
 // TODO: allow them to unlink wallet
 export default function AffiliateProfile() {
@@ -95,7 +95,7 @@ export default function AffiliateProfile() {
               <CardTitle>Top 5</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4">
+              <div className="grid grid-rows-2 gap-4">
                 {leaderboard.length > 0 &&
                   leaderboard
                     .slice(0, 4)
@@ -129,14 +129,8 @@ export default function AffiliateProfile() {
             <CardHeader>
               <CardDescription>Analytics</CardDescription>
               <CardTitle>Performance</CardTitle>
+              {profile ? <PerformanceMetrics profile={profile} /> : <div>Loading...</div>}
             </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <StatCard name="User Interactions" value={3456} unit="clicks" change={12} Icon={User} />
-                <StatCard name="Sales" value={1234} unit="in revenue" change={4} money={true} Icon={ShoppingBag} />
-                <StatCard name="Commissions" value={632} unit="earned" change={7} money={true} Icon={Coins} />
-              </div>
-            </CardContent>
           </Card>
         </div>
         <div className="mt-5 md:mt-5">

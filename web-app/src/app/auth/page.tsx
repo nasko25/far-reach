@@ -107,12 +107,7 @@ export default function Authentication() {
                         return;
                       }
                       const data = encodeFunctionData({
-                        args: [
-                          user.farcaster?.displayName,
-                          randomNumber(0, 20),
-                          randomNumber(0, 2000),
-                          user.farcaster?.fid,
-                        ],
+                        args: [user.farcaster?.displayName, 1000, 1000, user.farcaster?.fid],
                         abi: registry,
                         functionName: "createAffiliate",
                       });

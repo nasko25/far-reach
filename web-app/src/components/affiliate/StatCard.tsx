@@ -12,7 +12,7 @@ export function StatCard({
   money?: boolean;
   value: number;
   unit?: string;
-  change: number;
+  change?: number;
   Icon?: LucideIcon;
   className?: string;
 }) {
@@ -27,7 +27,7 @@ export function StatCard({
         <div className="font-semibold">{name}</div>
         <div className="text-sm text-gray-400">{`${money ? "$" : ""}${value} ${unit ? unit : ""}`} </div>
       </div>
-      <div className="font-semibold">{change}%</div>
+      {change && <div className="font-semibold">{change}%</div>}
     </div>
   );
 }

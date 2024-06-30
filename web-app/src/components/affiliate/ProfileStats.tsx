@@ -84,7 +84,7 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
             ))}
           </div>
         </div>
-        <div>
+        {/* <div>
           <h3 className="text-xl md:text-2xl font-bold mb-4">Performance Metrics</h3>
           {performanceMetrics ? (
             <div className="grid md:grid-cols-3 gap-4">
@@ -93,8 +93,8 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
             </div>
           ) : (
             <div>Loading...</div>
-          )}
-        </div>
+          )} 
+        </div> */}
       </div>
     );
   }

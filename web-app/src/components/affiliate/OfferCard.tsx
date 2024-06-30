@@ -30,10 +30,11 @@ export function OfferCard({
 }) {
   const [totalSales, setTotalSales] = useState<BigInt>(BigInt(0));
   const [totalEarned, setTotalEarned] = useState<BigInt>(BigInt(0));
+  const [conversionRate, setConversionRate] = useState<number>(0);
   useEffect(() => {
-    // fetch(`https://far-reach.vercel.app/api/analytics/2234`)
-    //   .then((res) => res.json())
-    //   .then((data) => setStats(data));
+    fetch(`https://far-reach.vercel.app/api/analytics/2234`)
+      .then((res) => res.json())
+      .then((data) => setConversionRate(data.userConversion));
 
     const publicClient = createPublicClient({
       chain: baseSepolia,
@@ -75,6 +76,10 @@ export function OfferCard({
             <div>
               <h3 className="text-lg font-semibold">Commission</h3>
               <p>{Number(commission)}%</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">Campaign Conversion Rate</h3>
+              <p>{conversionRate * 100}%</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold">Status</h3>
