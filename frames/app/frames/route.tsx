@@ -22,7 +22,7 @@ const handleRequest = frames(async (ctx) => {
         <p tw="m-5">
           {product.stock == "0"
             ? "Product sold out!"
-            : "Only ${product.stock} left in stock!"}
+            : `Only ${product.stock} left in stock!`}
         </p>
       </div>
     ),
@@ -30,7 +30,7 @@ const handleRequest = frames(async (ctx) => {
       aspectRatio: "1:1",
     },
     buttons:
-      product.stock == "0"
+      product.stock != "0"
         ? [
             // <Button
             //   action="post"

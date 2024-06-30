@@ -3,13 +3,13 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 const SUBGRAPH_URL =
   "https://api.studio.thegraph.com/query/55913/far-reach/version/latest";
 
-const ethereumApolloClient = new ApolloClient({
+const apolloClient = new ApolloClient({
   uri: SUBGRAPH_URL,
   cache: new InMemoryCache(),
 });
 
 export const getLeaderboard = async (): Promise<Leaderboard> => {
-  const result = await ethereumApolloClient.query({
+  const result = await apolloClient.query({
     query: gql`
       query {
         affiliates(first: 10, orderBy: totalEarned, orderDirection: desc) {
@@ -30,7 +30,7 @@ export const getLeaderboard = async (): Promise<Leaderboard> => {
 export const getProductInformation = async (
   campaignId: string
 ): Promise<Product> => {
-  const result = await ethereumApolloClient.query({
+  const result = await apolloClient.query({
     query: gql`
       query {
         campaign(id: "${campaignId}") {
@@ -58,4 +58,22 @@ export const getProductInformation = async (
 
   console.log(result.data.campaign);
   return result.data?.campaign ?? [];
+};
+
+export const getAffiliateTotalRewards = async (
+  fid: number
+): Promise<{ totalEarned: string; numberOfSales: string } | undefined> => {
+  const result = await apolloClient.query({
+    query: gql`
+          query {
+            affiliates(where: {fid: ${fid}}) {
+              totalEarned
+              numberOfSales
+            }
+          }
+        `,
+  });
+
+  console.log(result.data?.affiliates[0]);
+  return result.data?.affiliates?.at(0);
 };

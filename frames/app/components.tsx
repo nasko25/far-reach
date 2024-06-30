@@ -43,14 +43,11 @@ export const Leaderboard = (props: { leaderboard: Leaderboard }) => {
   );
 };
 
-const randomBetween = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
 const FrameData = (props: {
-  productImage: string;
-  productsSold: number;
-  reward: number;
+  timestamp: string;
+  productImage?: string;
+  productsSold?: number;
+  reward?: number;
   likes: number;
   recasts: number;
   comments: number;
@@ -61,7 +58,7 @@ const FrameData = (props: {
         // I could not get the globals.css file to work...
       }
       <p tw="m-0" className="frame-data">
-        Published on: 23 June 2024 @ 12:23
+        Published on: {props.timestamp}
       </p>
       <div tw="flex flex-row">
         <div tw="flex flex-col">
@@ -88,15 +85,16 @@ export type FrameData = {
   numberOfRecasts: number;
   numberOfLikes: number;
   numberOfReplies: number;
-  productImage: string;
-  productsSold: number;
-  reward: number;
+  productImage?: string;
+  productsSold?: number;
+  reward?: number;
 };
 
 export const Stats = (props: {
   displayName: string | undefined;
-  totalRewards: number | undefined;
+  totalRewards: string | undefined;
   profileImage: string | undefined;
+  itemsSold: string;
   frameData: FrameData[];
 }) => {
   let frames: any[] = [];
@@ -105,6 +103,7 @@ export const Stats = (props: {
     for (let frame of props.frameData) {
       frames.push(
         <FrameData
+          timestamp={frame.castedAtTimestamp}
           productImage={frame.productImage}
           productsSold={frame.productsSold}
           reward={frame.reward}
@@ -127,7 +126,8 @@ export const Stats = (props: {
         </div>
         <p tw="ml-20 max-w-60"> {props.displayName} </p>
         <p tw="m-0 ml-auto mr-40 w-70 text-center h-40">
-          Total rewards so far: ${props.totalRewards ?? 0}
+          Total rewards so far: ${props.totalRewards ?? 0} for
+          {props.itemsSold} items sold
         </p>
       </div>
       <div tw="flex border-b border-gray-700 mr-40 text-gray-400 mb-4 mt-0"></div>
