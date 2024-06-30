@@ -5,34 +5,47 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "vite:build": "NODE_ENV=production vite build"
+    "vite:build": "NODE_ENV=production vite build",
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy"
   },
   "dependencies": {
+    "@coinbase/onchainkit": "^0.19.4",
+    "@coinbase/wallet-sdk": "^4.0.3",
     "@gadget-client/far-reacher": "link:.gadget/client",
     "@gadgetinc/react": "^0.15.10",
     "@gadgetinc/react-shopify-app-bridge": "^0.15.2",
     "@shopify/app-bridge-react": "4.0.0",
     "@shopify/polaris": "^12.0.0",
     "@shopify/polaris-icons": "^8.1.0",
+    "@tanstack/react-query": "^5.40.1",
     "gadget-server": "link:.gadget/server",
+    "permissionless": "^0.1.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "6.15.0",
     "shopify-api-node": "^3.12.6",
-    "@coinbase/wallet-sdk": "^4.0.3",
-    "@coinbase/onchainkit": "^0.19.4",
-    "@tanstack/react-query": "^5.40.1",
-    "permissionless": "^0.1.30",
-    "wagmi": "^2.9.10",
-    "viem": "2.x"
+    "viem": "2.x",
+    "wagmi": "^2.9.10"
   },
   "devDependencies": {
-    "@types/node": "^20.8.4",
+    "@shopify/cli": "^3.63.0",
+    "@shopify/stylelint-polaris": "^12.0.0",
+    "@types/node": "^20.14.8",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "3.2.0",
     "typescript": "^5.4.5",
-    "vite": "^4.4.9",
-    "@shopify/stylelint-polaris": "^12.0.0"
-  }
+    "vite": "^4.4.9"
+  },
+  "workspaces": [
+    "extensions/*"
+  ],
+  "trustedDependencies": [
+    "@shopify/plugin-cloudflare"
+  ]
 }

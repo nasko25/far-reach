@@ -1,6 +1,7 @@
 import React from "react";
 import { Page, Text } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
+import OnchainPayouts from "../components/OnchainPayouts";
 
 export default function () {
     const navigate = useNavigate();
@@ -13,9 +14,7 @@ export default function () {
                 onAction: () => navigate("/"),
             }}
         >
-            <Text variant="bodyMd" as="p">
-                Coming soon.
-            </Text>
+            <OnchainPayouts />
         </Page>
     );
 }

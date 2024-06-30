@@ -18,9 +18,7 @@ import {
 } from "react-router-dom";
 import { api } from "../api";
 import Index from "../routes/index";
-import Dashboard from "../routes/dashboard";
 import FarReachers from "../routes/far-reachers";
-import Loyalty from "../routes/loyalty";
 import Customers from "../routes/customers";
 import OnChainPayouts from "../routes/on-chain-payouts";
 import Campaign from "../routes/campaign";
@@ -45,11 +43,9 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route index element={<Index />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/campaigns" element={<Campaign />} />
         <Route path="/far-reachers" element={<FarReachers />} />
         <Route path="/customers" element={<Customers />} />
-        <Route path="/loyalty" element={<Loyalty />} />
         <Route path="/payouts" element={<OnChainPayouts />} />
         <Route path="*" element={<Error404 />} />
       </Route>
@@ -101,12 +97,10 @@ function EmbeddedApp() {
     <>
       <Outlet />
       <NavMenu>
-        <Link to="/" rel="home">Shop Information</Link>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/">Home</Link>
         <Link to="/campaigns">Campaigns</Link>
         <Link to="/far-reachers">Far Reachers</Link>
         <Link to="/customers">Customers</Link>
-        <Link to="/loyalty">Loyalty</Link>
         <Link to="/payouts">On-chain Payouts</Link>
       </NavMenu>
     </>

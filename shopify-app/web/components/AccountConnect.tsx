@@ -10,8 +10,9 @@ import { CoinbaseWalletLogo } from './CoinbaseWalletLogo';
 import { contractAbi } from '../abi';
 import { zeroAddress } from 'viem';
 import { useCapabilities, useWriteContracts } from 'wagmi/experimental';
-
-const counterAddress = '0x9F6EdfCEed8F168D90b3DEed6270291a4c4c2b2f';
+import { contractAddress } from '../config';
+import { useFindFirst } from '@gadgetinc/react';
+import { api } from '../api';
 
 export function AccountConnect() {
   const { address, isConnected, chainId } = useAccount();
@@ -19,6 +20,8 @@ export function AccountConnect() {
   const { disconnect } = useDisconnect();
 
   const { writeContracts } = useWriteContracts();
+
+  const [{ data }] = useFindFirst(api.shopifyShop);
 
   const { data: availableCapabilities } = useCapabilities({
     account: address,
@@ -38,8 +41,6 @@ export function AccountConnect() {
     }
   }, [availableCapabilities]);
 
-  console.log('capabilities', capabilities);
-
   const createWallet = useCallback(() => {
     const coinbaseWalletConnector = connectors.find(
       (connector) => connector.id === 'coinbaseWalletSDK'
@@ -53,10 +54,10 @@ export function AccountConnect() {
     writeContracts({
       contracts: [
         {
-          address: counterAddress,
+          address: contractAddress,
           abi: contractAbi,
           functionName: "createMerchant",
-          args: ['Merchant'],
+          args: [data?.name],
         },
       ],
       capabilities,
@@ -66,11 +67,9 @@ export function AccountConnect() {
 
   const {
     data: isRegistered,
-    isError,
-    isLoading
   } = useReadContract({
     abi: contractAbi,
-    address: counterAddress,
+    address: contractAddress,
     functionName: 'isRegisteredMerchant',
     args: [address ?? zeroAddress],
   })
@@ -87,6 +86,7 @@ export function AccountConnect() {
               !isRegistered ? (
                 <Button
                   onClick={handleRegister}
+                  disabled={!data?.name}
                   accessibilityLabel='Register as a merchant'
                   icon={EnterIcon}
                 >
@@ -112,23 +112,21 @@ export function AccountConnect() {
             )
           }
         </InlineGrid>
-        <Text as="p" variant="bodyMd">
-          {
-            isConnected && isRegistered ? shortenEthereumAddress(address) : (
-              <List type='number'>
-                <List.Item>
-                  Connect or Create your wallet.
-                </List.Item>
-                <List.Item>
-                  Register as a merchant on FarReach.
-                </List.Item>
-                <List.Item >
-                  This will allow you to register products and sell them on the platform.
-                </List.Item>
-              </List>
-            )
-          }
-        </Text>
+        {
+          isConnected && isRegistered ? shortenEthereumAddress(address) : (
+            <List type='number'>
+              <List.Item>
+                Connect or Create your wallet.
+              </List.Item>
+              <List.Item>
+                Register as a merchant on FarReach.
+              </List.Item>
+              <List.Item >
+                This will allow you to register products and sell them on the platform.
+              </List.Item>
+            </List>
+          )
+        }
       </BlockStack>
     </Card>
   );

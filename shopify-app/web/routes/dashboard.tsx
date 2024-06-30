@@ -13,9 +13,7 @@ export default function () {
                 onAction: () => navigate("/"),
             }}
         >
-            <Text variant="bodyMd" as="p">
-                Coming soon.
-            </Text>
+            Coming soon....
         </Page>
     );
 }

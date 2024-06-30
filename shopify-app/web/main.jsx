@@ -8,7 +8,6 @@ import { WagmiProvider, createConfig, http } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
 import { coinbaseWallet } from 'wagmi/connectors';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { OnchainKitProvider } from '@coinbase/onchainkit';
 const root = document.getElementById("root");
 if (!root) throw new Error("#root element not found for booting react app");
 
@@ -23,7 +22,7 @@ const wagmiConfig = createConfig({
   ],
   ssr: true,
   transports: {
-    [baseSepolia.id]: http(),
+    [baseSepolia.id]: http('https://api.developer.coinbase.com/rpc/v1/base-sepolia/CfwmCRWRT9tWRWXhUvXoDVaqUUUaqaSj'),
   },
 });
 
@@ -34,9 +33,7 @@ ReactDOM.createRoot(root).render(
     <AppProvider i18n={enTranslations}>
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
-          <OnchainKitProvider chain={baseSepolia}>
-            <App />
-          </OnchainKitProvider>
+          <App />
         </QueryClientProvider>
       </WagmiProvider>
     </AppProvider>
