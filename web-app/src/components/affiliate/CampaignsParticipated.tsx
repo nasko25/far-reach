@@ -1,6 +1,5 @@
 "use client";
 import { UserProfile } from "@/app/providers/profileProvider";
-import { ProfileStatCard } from "./ProfileStatCard";
 import { useQuery } from "@airstack/airstack-react";
 import { profileQuery } from "@/app/queries/farcasterUser";
 import { Channel } from "@/app/affiliate/interfaces";
@@ -25,7 +24,7 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
       affiliate(id: "${profileData.Socials.Social[0].userId}") {
         numberOfSales
         totalEarned
-        campaigns(first: 10) {
+        campaigns(first: 10, where: {status: 0}) {
                 id
                 name
                 commission

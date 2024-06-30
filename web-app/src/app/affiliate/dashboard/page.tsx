@@ -58,7 +58,7 @@ export default function AffiliateProfile() {
       .query({
         query: gql`
           query {
-            campaigns(first: 3) {
+            campaigns(first: 3, where: { status: 0 }) {
               id
               name
               merchantAddress

@@ -1,7 +1,11 @@
 "use client";
-import { purple } from "@/constants";
+import { contractAddress, purple } from "@/constants";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
 import { PromoteButton } from "./PromoteButton";
+import { useEffect, useState } from "react";
+import { createPublicClient, http } from "viem";
+import { baseSepolia } from "viem/chains";
+import { registry } from "../../../abis/Registry";
 
 export function OfferCard({
   from,
@@ -24,7 +28,36 @@ export function OfferCard({
   campaignId: string;
   affiliateFID: string;
 }) {
-  console.log("PROMOTURL", promoteUrl);
+  const [totalSales, setTotalSales] = useState<BigInt>(BigInt(0));
+  const [totalEarned, setTotalEarned] = useState<BigInt>(BigInt(0));
+  useEffect(() => {
+    // fetch(`https://far-reach.vercel.app/api/analytics/2234`)
+    //   .then((res) => res.json())
+    //   .then((data) => setStats(data));
+
+    const publicClient = createPublicClient({
+      chain: baseSepolia,
+      transport: http(),
+    });
+    publicClient
+      .readContract({
+        address: contractAddress,
+        abi: registry,
+        functionName: "affiliatesInCampaignsTotalSales",
+        args: [campaignId, affiliateFID],
+      })
+      .then((res) => setTotalSales(res as BigInt));
+
+    publicClient
+      .readContract({
+        address: contractAddress,
+        abi: registry,
+        functionName: "affiliatesInCampaignsTotalEarned",
+        args: [campaignId, affiliateFID],
+      })
+      .then((res) => setTotalEarned(res as BigInt));
+  }, []);
+
   return (
     <Card>
       <CardHeader>
@@ -46,6 +79,14 @@ export function OfferCard({
             <div>
               <h3 className="text-lg font-semibold">Status</h3>
               <p>{status === "0" ? "Active" : "Ended"}</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">You Sold</h3>
+              <p>{totalSales.toString()} units</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">You Earned</h3>
+              <p>${totalEarned.toString()}</p>
             </div>
           </div>
           <PromoteButton

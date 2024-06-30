@@ -1,2 +1,2 @@
 export const purple = "#8A63D2";
-export const contractAddress = "0x1B41dD91Dd0D2c9FD8Fdf52d2B6aD78F421Ed5cD";
+export const contractAddress = "0x7134B9506d81c3C986DF3F4AAFF9b0D6B9f76aaD";

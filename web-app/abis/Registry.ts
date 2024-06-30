@@ -4,11 +4,7 @@ export const registry = [
     stateMutability: "nonpayable",
     type: "constructor",
   },
-  {
-    inputs: [{ internalType: "address", name: "owner", type: "address" }],
-    name: "OwnableInvalidOwner",
-    type: "error",
-  },
+  { inputs: [{ internalType: "address", name: "owner", type: "address" }], name: "OwnableInvalidOwner", type: "error" },
   {
     inputs: [{ internalType: "address", name: "account", type: "address" }],
     name: "OwnableUnauthorizedAccount",
@@ -111,26 +107,6 @@ export const registry = [
     type: "event",
   },
   {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: "address", name: "affiliate", type: "address" },
-      { indexed: true, internalType: "uint256", name: "totalEarned", type: "uint256" },
-      { indexed: true, internalType: "uint256", name: "numberOfSales", type: "uint256" },
-    ],
-    name: "TotalEarnedAffiliate",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: "address", name: "merhcant", type: "address" },
-      { indexed: true, internalType: "uint256", name: "totalEarned", type: "uint256" },
-      { indexed: true, internalType: "uint256", name: "numberOfSales", type: "uint256" },
-    ],
-    name: "TotalEarnedMerchant",
-    type: "event",
-  },
-  {
     inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     name: "affiliates",
     outputs: [
@@ -152,6 +128,26 @@ export const registry = [
     ],
     name: "affiliatesInCampaigns",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "affiliatesInCampaignsTotalEarned",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "affiliatesInCampaignsTotalSales",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -324,6 +320,7 @@ export const registry = [
           { internalType: "string", name: "merchantName", type: "string" },
           { internalType: "uint256", name: "numberOfSales", type: "uint256" },
           { internalType: "uint256", name: "totalEarned", type: "uint256" },
+          { internalType: "uint256", name: "totalPaidToAffiliates", type: "uint256" },
         ],
         internalType: "struct IRegistry.Merchant[]",
         name: "",
@@ -444,21 +441,8 @@ export const registry = [
       { internalType: "string", name: "merchantName", type: "string" },
       { internalType: "uint256", name: "numberOfSales", type: "uint256" },
       { internalType: "uint256", name: "totalEarned", type: "uint256" },
+      { internalType: "uint256", name: "totalPaidToAffiliates", type: "uint256" },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "numberOfCampaigns",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "numberOfOrders",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
