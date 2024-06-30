@@ -13,7 +13,7 @@ export function ProfileCasts({ profile }: { profile: any }) {
     console.log(profileData, "PROFILEDATA");
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {profileData.FarcasterCasts.Cast.map((cast: any, index: number) => (
+        {profileData.FarcasterCasts.Cast.slice(0, 9).map((cast: any, index: number) => (
           <FarcasterEmbedWrapper
             key={index}
             hash={cast.hash}

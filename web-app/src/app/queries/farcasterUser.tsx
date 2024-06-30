@@ -6,6 +6,9 @@ query GetFarcasterUserDetails {
     Social {
       dappName
       profileName
+      id
+      identity
+      userId
       socialCapital {
         socialCapitalScore
       }

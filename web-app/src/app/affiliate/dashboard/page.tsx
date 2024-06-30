@@ -1,19 +1,28 @@
 "use client";
+
+import { useUserProfile } from "../../providers/profileProvider";
+import { ProfileDetails } from "@/components/affiliate/ProfileDetails";
+import { ProfileStats } from "@/components/affiliate/ProfileStats";
+import { ProfileCasts } from "@/components/affiliate/ProfileCasts";
 import { Card, CardHeader, CardDescription, CardTitle, CardContent } from "@/components/Card";
 import { EarningsCard } from "@/components/affiliate/EarningsCard";
 import { StatCard } from "@/components/affiliate/StatCard";
 import { Coins, ShoppingBag, User } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import "react-farcaster-embed/dist/styles.css";
 import { useEffect, useState } from "react";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
-export default function AffiliateDashboard() {
+// TODO: allow them to unlink wallet
+export default function AffiliateProfile() {
+  const { userProfile: profile } = useUserProfile();
   const [leaderboard, setLeaderboard] = useState([]);
+  const [performance, setPerformance] = useState([]);
+  const farReachClient = new ApolloClient({
+    uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+    cache: new InMemoryCache(),
+  });
   useEffect(() => {
-    const farReachClient = new ApolloClient({
-      uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
-      cache: new InMemoryCache(),
-    });
     farReachClient
       .query({
         query: gql`
@@ -44,10 +53,16 @@ export default function AffiliateDashboard() {
         console.log("Error fetching data: ", err);
       });
   }, []);
-  console.log(leaderboard);
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-      <h1 className="font-bold text-2xl">Dashboard</h1>
+      <h1 className="font-bold text-2xl">Profile</h1>
+      <div className="w-full max-w-5xl mx-auto px-4 md:px-6 py-6">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+          <ProfileDetails profile={profile} />
+          {profile != null ? <ProfileStats profile={profile} /> : <div>Loading...</div>}
+        </div>
+      </div>
       <div className="grid gap-6">
         <div className="grid md:grid-cols-3 gap-6">
           <Card>
@@ -57,10 +72,12 @@ export default function AffiliateDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                <EarningsCard name="nxs" earnings={4567} />
-                <EarningsCard name="gaonuk" earnings={3456} />
-                <EarningsCard name="gkas23.eth" earnings={2345} />
-                <EarningsCard name="builderszn.eth" earnings={1234} />
+                {leaderboard.length > 0 &&
+                  leaderboard
+                    .slice(0, 4)
+                    .map((affiliate: any, index: number) => (
+                      <EarningsCard name={affiliate.name} earnings={affiliate.totalEarned} />
+                    ))}
               </div>
             </CardContent>
           </Card>
@@ -90,6 +107,12 @@ export default function AffiliateDashboard() {
               </div>
             </CardContent>
           </Card>
+        </div>
+        <div className="mt-12 md:mt-20">
+          <div className="flex flex-col">
+            <h3 className="text-xl md:text-2xl font-bold pb-4">{`Recent Casts from ${profile?.displayName}`}</h3>
+            {profile != null ? <ProfileCasts profile={profile} /> : <div>Loading...</div>}
+          </div>
         </div>
       </div>
     </main>

@@ -1,15 +1,24 @@
+"use client";
 import { UserProfile } from "@/app/providers/profileProvider";
 import { ProfileStatCard } from "./ProfileStatCard";
 import { useQuery } from "@airstack/airstack-react";
 import { profileQuery } from "@/app/queries/farcasterUser";
 import { Channel } from "@/app/affiliate/interfaces";
 import Image from "next/image";
+import { useState } from "react";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 export function ProfileStats({ profile }: { profile: UserProfile }) {
   const { data: profileData, loading, error } = useQuery(profileQuery(profile.links.farcaster.handle), { cache: true });
+  const [performanceMetrics, setPerformanceMetrics] = useState<any>(null);
+  const farReachClient = new ApolloClient({
+    uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+    cache: new InMemoryCache(),
+  });
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (profileData) {
+    console.log("PROFILE DATA", profileData);
     const channelsRaw = profileData.FarcasterCasts.Cast.map((cast: any) => cast.channel);
     const channels = channelsRaw.filter((channel: Channel | null) => channel != null);
     const frequency = channels.reduce((acc: any, channel: Channel) => {
@@ -25,6 +34,25 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
         imageUrl: channels.find((channel: Channel) => channel.name === key).imageUrl,
       }));
 
+    farReachClient
+      .query({
+        query: gql`
+    query {
+      affiliate(id: "${profileData.Socials.Social[0].userId}") {
+        numberOfSales
+        totalEarned
+      }
+  }
+            `,
+      })
+      .then((result) => {
+        console.log(result);
+        setPerformanceMetrics(result.data.affiliate);
+      })
+      .catch((err) => {
+        console.log("Error fetching data: ", err);
+      });
+    console.log("performancemetrics", performanceMetrics);
     return (
       <div className="space-y-8">
         <div>
