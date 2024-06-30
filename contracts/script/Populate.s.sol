@@ -8,15 +8,15 @@ import {Registry} from "../src/Registry.sol";
 contract Populate is Script {
     IERC20Metadata USDC =
         IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
-    Registry registry = Registry(0x5E848fff72A92D5837DdA15B9d3384448C742b7E);
+    Registry registry = Registry(0x1B41dD91Dd0D2c9FD8Fdf52d2B6aD78F421Ed5cD);
     uint256 FID = 1;
     function setUp() public {}
 
     function run() public {
         vm.createSelectFork("baseSepolia");
         vm.startBroadcast();
-        // registry.createAffiliate("Ducke Affiliate", 7, 5000, FID);
-        // registry.createMerchant("Ducke Merchant");
+        registry.createAffiliate("Ducke Affiliate", 7, 5000, FID);
+        registry.createMerchant("Ducke Merchant");
         uint256 campaignId = registry.createCampaign(
             "Easy Campaign",
             "Efe's Hair",
