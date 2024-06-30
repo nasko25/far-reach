@@ -113,16 +113,4 @@ interface IRegistry {
     event CampaignEnded(uint256 indexed campaignId);
 
     event PaymentMade(address indexed customer, uint256 amount);
-
-    event TotalEarnedMerchant(
-        address indexed merhcant,
-        uint256 indexed totalEarned,
-        uint256 indexed numberOfSales
-    );
-
-    event TotalEarnedAffiliate(
-        address indexed affiliate,
-        uint256 indexed totalEarned,
-        uint256 indexed numberOfSales
-    );
 }

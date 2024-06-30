@@ -8,7 +8,7 @@ import {Registry} from "../src/Registry.sol";
 contract BuyProduct is Script {
     IERC20Metadata USDC =
         IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
-    Registry registry = Registry(0x1B41dD91Dd0D2c9FD8Fdf52d2B6aD78F421Ed5cD);
+    Registry registry = Registry(0x7134B9506d81c3C986DF3F4AAFF9b0D6B9f76aaD);
     uint256 campaignId = 1;
     uint256 affiliateFID = 1;
 

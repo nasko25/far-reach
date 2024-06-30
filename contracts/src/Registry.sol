@@ -39,9 +39,6 @@ contract Registry is IRegistry, Ownable {
     mapping(address => mapping(uint256 => uint256))
         public merchantPayoutForAffiliate;
 
-    mapping(address => uint256) public numberOfCampaigns;
-    mapping(address => uint256) public numberOfOrders;
-
     function getAllOrders() public view returns (Order[] memory) {
         Order[] memory orderArray = new Order[](allOrders.length);
         for (uint256 i = 0; i < allOrders.length; i++) {
@@ -367,16 +364,6 @@ contract Registry is IRegistry, Ownable {
         affiliatesInCampaignsTotalEarned[campaignId][
             affiliate.FID
         ] += amountForAffiliate;
-        emit TotalEarnedMerchant(
-            merchant.merchantAddress,
-            merchant.totalEarned,
-            merchant.numberOfSales
-        );
-        emit TotalEarnedAffiliate(
-            affiliate.affiliateAddress,
-            affiliate.totalEarned,
-            affiliate.numberOfSales
-        );
 
         Order memory order = Order(
             currentOrderId,
@@ -420,7 +407,6 @@ contract Registry is IRegistry, Ownable {
 
     function withdrawRevenue() external onlyOwner {
         uint256 amount = transactionToken.balanceOf(address(this));
-        require(amount > 0, "No revenue available");
         transactionToken.transfer(msg.sender, amount);
     }
 }
