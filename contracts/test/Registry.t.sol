@@ -150,6 +150,9 @@ contract RegistryTest is Test {
         assertEq(price, 100e6);
         assertEq(comission, 10);
         assertEq(buyerHash, buyerHash);
+        (, , , uint256 sales, uint256 revenue) = registry.merchants(merchant);
+        assertEq(sales, 1);
+        assertEq(revenue, 81e6);
         assertEq(USDC.balanceOf(merchant), 81e6);
         assertEq(USDC.balanceOf(affiliateAddress), 9e6);
         assertEq(USDC.balanceOf(address(registry)), 10e6);

@@ -347,6 +347,10 @@ contract Registry is IRegistry, Ownable {
         affiliate.totalEarned += amountForAffiliate;
         merchant.numberOfSales++;
         merchant.totalEarned += amountForMerchant;
+
+        merchants[campaign.merchantAddress] = merchant;
+        affiliates[FID] = affiliate;
+
         merchantPayoutForAffiliate[merchant.merchantAddress][
             FID
         ] += amountForAffiliate;
