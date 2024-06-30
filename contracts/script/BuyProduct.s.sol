@@ -8,9 +8,9 @@ import {Registry} from "../src/Registry.sol";
 contract BuyProduct is Script {
     IERC20Metadata USDC =
         IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
-    Registry registry = Registry(0x71358C0E5caa12F23F62640ecA68361143e610DB);
+    Registry registry = Registry(0xcbF8c318eD2A7E84752040a0F4cd362B81858582);
     uint256 campaignId = 1;
-    uint256 affiliateFID = 1;
+    uint256 affiliateFID = 420;
 
     function setUp() public {}
 
@@ -18,7 +18,7 @@ contract BuyProduct is Script {
         vm.createSelectFork("baseSepolia");
         vm.startBroadcast();
         USDC.approve(address(registry), 10e6);
-        bytes32 buyerHash = keccak256(abi.encodePacked("rgaonago@gmail.com"));
+        bytes32 buyerHash = keccak256(abi.encodePacked("rgaonao@gmail.com"));
         string memory dateOfPurchase = "Saturday 29th June 2024";
         registry.buyProductFromCampaign(
             campaignId,

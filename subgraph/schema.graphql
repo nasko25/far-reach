@@ -1,5 +1,5 @@
 type Affiliate @entity {
-  id: String!
+  id: ID!
   txHash: Bytes!
   blockTimestamp: BigInt!
   address: Bytes!
@@ -36,7 +36,7 @@ type Order @entity {
 }
 
 type Campaign @entity {
-  id: String!
+  id: ID!
   txHash: Bytes!
   blockTimestamp: BigInt!
   merchantAddress: Bytes!

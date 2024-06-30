@@ -99,7 +99,9 @@ export function handleCreatedOrder(event: CreatedOrderEvent): void {
   merchant.save();
   affiliate.save();
 
-  campaign.orders.push(order.id);
+  const orders = campaign.orders;
+  orders.push(order.id);
+  campaign.orders = orders;
   campaign.save();
 
   order.save();
@@ -109,9 +111,15 @@ export function handleRegisteredAffiliateInCampaign(event: RegisteredAffiliateIn
   const campaign: Campaign = getCampaign(event.params.campaignId.toString());
   const affiliate: Affiliate = getAffiliate(event.params.affiliateFID.toString());
 
-  campaign.participants.push(affiliate.id);
-  affiliate.campaigns.push(campaign.id);
+  const participants = campaign.participants;
+  participants.push(affiliate.fid.toString());
+  campaign.participants = participants;
 
   campaign.save();
+
+  const campaigns = affiliate.campaigns;
+  campaigns.push(campaign.id);
+  affiliate.campaigns = campaigns;
+
   affiliate.save();
 }

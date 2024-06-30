@@ -95,7 +95,7 @@ interface IRegistry {
         uint256 indexed campaignId,
         address indexed buyer,
         bytes32 buyerHash,
-        uint256 indexed affiliateFID,
+        uint256 affiliateFID,
         uint256 price,
         uint256 comission,
         OrderStatus status
@@ -103,7 +103,7 @@ interface IRegistry {
 
     event RegisteredAffiliateInCampaign(
         uint256 indexed campaignId,
-        address indexed affiliateFID,
+        uint256 affiliateFID,
         uint128 maxFID,
         uint128 minFollowers,
         uint128 minPostsLastWeek
