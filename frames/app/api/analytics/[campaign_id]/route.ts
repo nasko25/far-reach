@@ -1,10 +1,18 @@
+import {
+  USDC_CONTRACT_ADDRESS,
+  usdcABI,
+} from "@/app/frames/txdata/contracts_abi/usdc";
 import { QueryResultRow, sql } from "@vercel/postgres";
 import Moralis from "moralis";
+
+import { http, createPublicClient } from "viem";
+import { baseSepolia } from "viem/chains";
 
 Moralis.start({
   apiKey: process.env.MORALIS_API_KEY,
 }).catch(console.error);
 
+// user conversion per affiliate
 export async function GET(
   request: Request,
   { params }: { params: { campaign_id: string } }
@@ -50,33 +58,50 @@ export async function GET(
     const uniqueAddresses = Array.from(
       new Set(JSON.parse(row.customer_addresses_json) as string[])
     );
+    const publicClient = createPublicClient({
+      chain: baseSepolia,
+      transport: http(),
+    });
 
-    const networthAcc = [0];
+    const zero = BigInt(0).valueOf();
+    const networthAcc = [zero];
     for (var address of uniqueAddresses) {
-      if (address)
+      if (address) {
+        const data = await publicClient.readContract({
+          address: USDC_CONTRACT_ADDRESS,
+          abi: usdcABI,
+          functionName: "balanceOf",
+          args: [address as `0x${string}`],
+        });
         networthAcc.push(
-          await Moralis.EvmApi.wallets
-            .getWalletNetWorth({
-              excludeSpam: true,
-              excludeUnverifiedContracts: true,
-              address,
-            })
-            .then((result) => parseInt(result.raw.total_networth_usd))
+          // await Moralis.EvmApi.wallets
+          //   .getWalletNetWorth({
+          //     excludeSpam: true,
+          //     excludeUnverifiedContracts: true,
+          //     address,
+          //   })
+          //   .then((result) => parseInt(result.raw.total_networth_usd))
+          (data / BigInt(1000000)).valueOf()
         );
+      }
     }
+
     networths.push(
       networthAcc.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
-        0
+        zero
       )
     );
   }
 
-  return Response.json({
-    campaign_id: params.campaign_id,
-    networths,
-    customerFidsBelow10000: customerFids.filter((fid) => fid <= 10000).length,
-    customersAlsoBought: Array.from(customersAlsoBought),
-    userConversion,
-  });
+  return Response.json(
+    {
+      campaign_id: params.campaign_id,
+      networths: networths.map((n) => n.toString()),
+      customerFidsBelow10000: customerFids.filter((fid) => fid <= 10000).length,
+      customersAlsoBought: Array.from(customersAlsoBought),
+      userConversion,
+    },
+    { headers: { "Access-Control-Allow-Origin": "*" } }
+  );
 }
