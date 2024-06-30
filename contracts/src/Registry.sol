@@ -191,7 +191,7 @@ contract Registry is IRegistry, Ownable {
 
         emit RegisteredAffiliateInCampaign(
             campaignId,
-            affiliate.affiliateAddress,
+            affiliate.FID,
             campaign.maxFID,
             campaign.minFollowers,
             campaign.minPostsLastWeek
