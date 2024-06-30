@@ -8,7 +8,7 @@ dataSources:
     name: Registry
     network: base-sepolia
     source:
-      address: "0xcbF8c318eD2A7E84752040a0F4cd362B81858582"
+      address: "0x5E848fff72A92D5837DdA15B9d3384448C742b7E"
       abi: Registry
       startBlock: 11998490
     mapping:
@@ -31,8 +31,8 @@ dataSources:
           handler: handleCreatedCampaign
         - event: CreatedMerchant(uint256,address,string,uint256,uint256)
           handler: handleCreatedMerchant
-        - event: CreatedOrder(uint256,indexed uint256,indexed address,bytes32,indexed uint256,uint256,uint256,uint8)
+        - event: CreatedOrder(uint256,indexed uint256,indexed address,bytes32,uint256,uint256,uint256,uint8)
           handler: handleCreatedOrder
-        - event: RegisteredAffiliateInCampaign(indexed uint256,indexed address,uint128,uint128,uint128)
+        - event: RegisteredAffiliateInCampaign(indexed uint256,uint256,uint128,uint128,uint128)
           handler: handleRegisteredAffiliateInCampaign
       file: ./src/mappings/registry.ts

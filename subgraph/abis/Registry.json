@@ -72,7 +72,7 @@
       { "indexed": true, "internalType": "uint256", "name": "campaignId", "type": "uint256" },
       { "indexed": true, "internalType": "address", "name": "buyer", "type": "address" },
       { "indexed": false, "internalType": "bytes32", "name": "buyerHash", "type": "bytes32" },
-      { "indexed": true, "internalType": "uint256", "name": "affiliateFID", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "affiliateFID", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "price", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "comission", "type": "uint256" },
       { "indexed": false, "internalType": "enum IRegistry.OrderStatus", "name": "status", "type": "uint8" }
@@ -102,7 +102,7 @@
     "anonymous": false,
     "inputs": [
       { "indexed": true, "internalType": "uint256", "name": "campaignId", "type": "uint256" },
-      { "indexed": true, "internalType": "address", "name": "affiliateFID", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "affiliateFID", "type": "uint256" },
       { "indexed": false, "internalType": "uint128", "name": "maxFID", "type": "uint128" },
       { "indexed": false, "internalType": "uint128", "name": "minFollowers", "type": "uint128" },
       { "indexed": false, "internalType": "uint128", "name": "minPostsLastWeek", "type": "uint128" }
