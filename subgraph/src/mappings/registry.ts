@@ -72,7 +72,7 @@ export function handleCreatedMerchant(event: CreatedMerchantEvent): void {
 }
 
 export function handleCreatedOrder(event: CreatedOrderEvent): void {
-  buildOrder(
+  const order: Order = buildOrder(
     event.params.id,
     event.transaction.hash,
     event.block.timestamp,
@@ -81,7 +81,7 @@ export function handleCreatedOrder(event: CreatedOrderEvent): void {
     event.params.affiliateFID.toString(),
     event.params.price,
     event.params.comission
-  ).save();
+  );
 
   const campaign: Campaign = getCampaign(event.params.campaignId.toString());
   const merchant: Merchant = getMerchant(campaign.merchantAddress);
@@ -95,6 +95,11 @@ export function handleCreatedOrder(event: CreatedOrderEvent): void {
 
   merchant.save();
   affiliate.save();
+
+  campaign.orders.push(order.id);
+  campaign.save();
+
+  order.save();
 }
 
 export function handleRegisteredAffiliateInCampaign(event: RegisteredAffiliateInCampaignEvent): void {

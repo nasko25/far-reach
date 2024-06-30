@@ -24,7 +24,7 @@ export function buildAffiliate(
   affiliate.totalEarned = totalEarned;
   affiliate.postsLastWeek = postsLastWeek;
   affiliate.followers = followers;
-
+  affiliate.campaigns = [];
   return affiliate as Affiliate;
 }
 
@@ -42,6 +42,7 @@ export function getAffiliate(id: string): Affiliate {
     affiliate.totalEarned = BIG_INT_ZERO;
     affiliate.postsLastWeek = BIG_INT_ZERO;
     affiliate.followers = BIG_INT_ZERO;
+    affiliate.campaigns = [];
   }
 
   return affiliate as Affiliate;

@@ -37,6 +37,7 @@ export function buildCampaign(
   campaign.productImage = productImage;
   campaign.receiptAddress = receiptAddress;
   campaign.participants = [];
+  campaign.orders = [];
   return campaign as Campaign;
 }
 
@@ -60,6 +61,8 @@ export function getCampaign(id: string): Campaign {
     campaign.permalink = "";
     campaign.productImage = "";
     campaign.receiptAddress = BYTES_EMPTY;
+    campaign.participants = [];
+    campaign.orders = [];
   }
 
   return campaign as Campaign;
