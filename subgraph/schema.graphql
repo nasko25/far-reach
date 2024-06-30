@@ -28,6 +28,7 @@ type Order @entity {
   blockTimestamp: BigInt!
   campaign: Campaign!
   buyer: Bytes!
+  buyerHash: Bytes!
   affiliate: Affiliate!
   price: BigInt!
   commission: BigInt!

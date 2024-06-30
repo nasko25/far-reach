@@ -277,7 +277,8 @@ contract Registry is IRegistry, Ownable {
             _minPostsLastWeek,
             _permalink,
             _productImage,
-            address(receipt)
+            address(receipt),
+            campaign.status
         );
 
         return campaignId;
@@ -390,9 +391,11 @@ contract Registry is IRegistry, Ownable {
             currentOrderId,
             campaignId,
             msg.sender,
+            buyerHash,
             affiliate.FID,
             campaign.price,
-            campaign.comission
+            campaign.comission,
+            order.status
         );
         currentOrderId++;
     }

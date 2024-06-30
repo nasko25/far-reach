@@ -8,6 +8,7 @@ export function buildOrder(
   blockTimestamp: BigInt,
   campaign: string,
   buyer: Bytes,
+  buyerHash: Bytes,
   affiliate: string,
   price: BigInt,
   commission: BigInt
@@ -19,6 +20,7 @@ export function buildOrder(
   order.buyer = buyer;
   order.affiliate = affiliate;
   order.price = price;
+  order.buyerHash = buyerHash;
   order.commission = commission;
 
   return order as Order;
@@ -34,6 +36,7 @@ export function getOrder(id: string): Order {
     order.blockTimestamp = BIG_INT_ZERO;
     order.campaign = "";
     order.buyer = BYTES_EMPTY;
+    order.buyerHash = BYTES_EMPTY;
     order.affiliate = "";
     order.price = BIG_INT_ZERO;
     order.commission = BIG_INT_ZERO;

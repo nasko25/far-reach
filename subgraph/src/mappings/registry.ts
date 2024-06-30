@@ -78,6 +78,7 @@ export function handleCreatedOrder(event: CreatedOrderEvent): void {
     event.block.timestamp,
     event.params.campaignId.toString(),
     event.params.buyer,
+    event.params.buyerHash,
     event.params.affiliateFID.toString(),
     event.params.price,
     event.params.comission

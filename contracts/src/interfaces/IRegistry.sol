@@ -87,15 +87,18 @@ interface IRegistry {
         uint128 minPostsLastWeek,
         string permalink,
         string productImage,
-        address receiptAddress
+        address receiptAddress,
+        CampaignStatus status
     );
     event CreatedOrder(
         uint256 id,
         uint256 indexed campaignId,
         address indexed buyer,
+        bytes32 buyerHash,
         uint256 indexed affiliateFID,
         uint256 price,
-        uint256 comission
+        uint256 comission,
+        OrderStatus status
     );
 
     event RegisteredAffiliateInCampaign(
