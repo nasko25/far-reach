@@ -8,9 +8,9 @@ import {Registry} from "../src/Registry.sol";
 contract BuyProduct is Script {
     IERC20Metadata USDC =
         IERC20Metadata(0x036CbD53842c5426634e7929541eC2318f3dCF7e);
-    Registry registry = Registry(0x5F9487E70894799A00A899B8F7d9148E01ADDf57);
-    uint256 campaignId = 5;
-    uint256 affiliateFID = 10;
+    Registry registry = Registry(0x71358C0E5caa12F23F62640ecA68361143e610DB);
+    uint256 campaignId = 1;
+    uint256 affiliateFID = 1;
 
     function setUp() public {}
 
