@@ -1,12 +1,7 @@
 "use client";
 import { purple } from "@/constants";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
-import toast, { Toaster } from "react-hot-toast";
-
-const notify = (promoteUrl: string) => {
-  toast("Affiliate link frame copied to clipboard.");
-  window.open(promoteUrl, "_blank");
-};
+import { PromoteButton } from "./PromoteButton";
 
 export function OfferCard({
   from,
@@ -28,7 +23,7 @@ export function OfferCard({
   return (
     <Card>
       <CardHeader>
-        <CardDescription>Offer from {from}</CardDescription>
+        <CardDescription>Offer from {`${from.substring(0, 6)}...${from.substring(from.length - 4)}`}</CardDescription>
         <CardTitle>{name}</CardTitle>
       </CardHeader>
       <CardContent>
@@ -37,22 +32,19 @@ export function OfferCard({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h3 className="text-lg font-semibold">Price</h3>
-              <p>{price}</p>
+              <p>${Number(price) / 100000}</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold">Commission</h3>
-              <p>{commission}</p>
+              <p>{Number(commission)}%</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold">Status</h3>
-              <p>{status}</p>
+              <p>{status === "0" ? "Active" : "Ended"}</p>
             </div>
           </div>
-          <button className={`bg-[${purple}] rounded-lg text-white`} onClick={() => notify(promoteUrl)}>
-            Promote 💜
-          </button>
+          <PromoteButton promoteUrl={promoteUrl} className={`bg-[${purple}] rounded-lg text-white`} />
         </div>
-        <Toaster />
       </CardContent>
     </Card>
   );

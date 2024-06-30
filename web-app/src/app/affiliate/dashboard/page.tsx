@@ -64,6 +64,7 @@ export default function AffiliateProfile() {
               merchantAddress
               productImage
               commission
+              permalink
             }
           }
         `,
@@ -117,6 +118,7 @@ export default function AffiliateProfile() {
                       image={campaign.productImage}
                       name={campaign.name}
                       commission={Number(campaign.commission) / 100}
+                      productUrl={campaign.permalink}
                     />
                   ))}
                 </div>

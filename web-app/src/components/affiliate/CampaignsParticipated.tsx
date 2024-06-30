@@ -27,6 +27,8 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
         totalEarned
         campaigns(first: 10) {
                 name
+                commission
+                merchantAddress
                 price
                 productImage
                 productName

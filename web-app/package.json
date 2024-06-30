@@ -22,7 +22,8 @@
     "react-dom": "^18",
     "react-farcaster-embed": "^1.6.1",
     "react-hot-toast": "^2.4.1",
-    "react-typed": "^2.0.12"
+    "react-typed": "^2.0.12",
+    "viem": "^2.16.5"
   },
   "devDependencies": {
     "@types/node": "^20",
