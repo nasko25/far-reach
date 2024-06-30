@@ -20,6 +20,7 @@ contract Registry is IRegistry, Ownable {
     mapping(uint256 => Affiliate) public affiliates;
     mapping(address => Merchant) public merchants;
     mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => Order) public orders;
 
     Campaign[] private allCampaigns;
     Order[] private allOrders;
@@ -30,8 +31,16 @@ contract Registry is IRegistry, Ownable {
     mapping(address => Campaign[]) public campaignsForMerchants;
 
     mapping(uint256 => mapping(uint256 => bool)) public affiliatesInCampaigns;
+    mapping(uint256 => mapping(uint256 => uint256))
+        public affiliatesInCampaignsTotalSales;
+    mapping(uint256 => mapping(uint256 => uint256))
+        public affiliatesInCampaignsTotalEarned;
+
     mapping(address => mapping(uint256 => uint256))
         public merchantPayoutForAffiliate;
+
+    mapping(address => uint256) public numberOfCampaigns;
+    mapping(address => uint256) public numberOfOrders;
 
     function getAllOrders() public view returns (Order[] memory) {
         Order[] memory orderArray = new Order[](allOrders.length);
@@ -353,6 +362,11 @@ contract Registry is IRegistry, Ownable {
         merchantPayoutForAffiliate[merchant.merchantAddress][
             FID
         ] += amountForAffiliate;
+
+        affiliatesInCampaignsTotalSales[campaignId][affiliate.FID]++;
+        affiliatesInCampaignsTotalEarned[campaignId][
+            affiliate.FID
+        ] += amountForAffiliate;
         emit TotalEarnedMerchant(
             merchant.merchantAddress,
             merchant.totalEarned,
@@ -378,6 +392,7 @@ contract Registry is IRegistry, Ownable {
 
         ordersForMerchants[merchant.merchantAddress].push(order);
         allOrders.push(order);
+        orders[currentOrderId] = order;
 
         Receipt(campaign.receiptAddress).emitReceipt(
             msg.sender,
