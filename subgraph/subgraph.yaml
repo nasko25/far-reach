@@ -8,7 +8,7 @@ dataSources:
     name: Registry
     network: base-sepolia
     source:
-      address: "0x5F9487E70894799A00A899B8F7d9148E01ADDf57"
+      address: "0x71358C0E5caa12F23F62640ecA68361143e610DB"
       abi: Registry
       startBlock: 11964166
     mapping:
