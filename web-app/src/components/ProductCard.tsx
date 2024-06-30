@@ -1,10 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "./Button";
 import toast from "react-hot-toast";
-const notify = (promoteUrl: string) => {
-  toast("Affiliate link frame copied to clipboard.");
-  window.open(promoteUrl, "_blank");
-};
+import { notify } from "./affiliate/PromoteButton";
+
 export function ProductCard({
   image,
   name,

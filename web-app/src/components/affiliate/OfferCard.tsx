@@ -11,6 +11,8 @@ export function OfferCard({
   commission,
   promoteUrl,
   status,
+  campaignId,
+  affiliateFID,
 }: {
   from: string;
   price: string;
@@ -19,6 +21,8 @@ export function OfferCard({
   commission: string;
   promoteUrl: string;
   status: string;
+  campaignId: string;
+  affiliateFID: string;
 }) {
   return (
     <Card>
@@ -43,7 +47,12 @@ export function OfferCard({
               <p>{status === "0" ? "Active" : "Ended"}</p>
             </div>
           </div>
-          <PromoteButton promoteUrl={promoteUrl} className={`bg-[${purple}] rounded-lg text-white`} />
+          <PromoteButton
+            promoteUrl={promoteUrl}
+            className={`bg-[${purple}] rounded-lg text-white`}
+            campaignId={campaignId}
+            affilaiteFID={affiliateFID}
+          />
         </div>
       </CardContent>
     </Card>

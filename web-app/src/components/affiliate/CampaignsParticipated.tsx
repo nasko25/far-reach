@@ -26,6 +26,7 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
         numberOfSales
         totalEarned
         campaigns(first: 10) {
+                id
                 name
                 commission
                 merchantAddress
@@ -56,6 +57,7 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
         {campaignsParticipated.map((campaign: any) => {
           return (
             <OfferCard
+              campaignId={campaign.id}
               from={campaign.merchantAddress}
               price={campaign.price}
               name={campaign.name}
@@ -63,6 +65,7 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
               commission={campaign.commission}
               status={campaign.status.toString()}
               promoteUrl={campaign.permalink}
+              affiliateFID={profileData.Socials.Social[0].userId}
             />
           );
         })}
