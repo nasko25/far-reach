@@ -9,7 +9,7 @@ import {IRegistry} from "../src/interfaces/IRegistry.sol";
 contract RegistryTest is Test {
     Registry public registry;
     address affiliateAddress = vm.addr(0x123);
-    uint256 affiliateFID = 1000;
+    uint256 affiliateFID = 10;
     address merchant = vm.addr(0x456);
     address buyer = vm.addr(0x789);
     IERC20Metadata USDC =
@@ -22,7 +22,7 @@ contract RegistryTest is Test {
     }
     function test_createAffiliate() public {
         vm.prank(affiliateAddress);
-        registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
+        registry.createAffiliate("Affiliate 1", 7, 5000, affiliateFID);
         (
             uint256 FID,
             address currentAffiliateAddress,
@@ -38,7 +38,7 @@ contract RegistryTest is Test {
         assertEq(earned, 0);
         assertEq(postsLastWeek, 7);
         assertEq(followers, 5000);
-        assertEq(FID, 1000);
+        assertEq(FID, 10);
     }
 
     function test_createMerchant() public {
@@ -118,7 +118,8 @@ contract RegistryTest is Test {
         );
         vm.stopPrank();
         vm.prank(affiliateAddress);
-        registry.createAffiliate("Affiliate 1", 7, 5000, 1000);
+        registry.createAffiliate("Affiliate 1", 7, 5000, affiliateFID);
+        registry.registerAffiliateInCampaign(campaignId, affiliateFID);
         vm.startPrank(buyer);
         USDC.approve(address(registry), 100e6);
         bytes32 buyerHash = keccak256(abi.encodePacked("buyer@email.com"));
@@ -167,5 +168,32 @@ contract RegistryTest is Test {
         vm.prank(affiliateAddress);
         registry.createAffiliate("Affiliate 1", 7, 5000, affiliateFID);
         assert(registry.isRegisteredAffiliate(affiliateFID));
+    }
+
+    function test_registerAffiliateInCampaign() public {
+        vm.startPrank(merchant);
+        registry.createMerchant("Merchant 1");
+        uint256 campaignId = registry.createCampaign(
+            "Campaign 1",
+            "Degen T-Shirt",
+            33333,
+            100e6,
+            10,
+            50,
+            750,
+            3000,
+            5,
+            "url",
+            "imageUrl"
+        );
+        vm.stopPrank();
+        vm.prank(affiliateAddress);
+        registry.createAffiliate("Affiliate 1", 7, 5000, affiliateFID);
+        registry.registerAffiliateInCampaign(campaignId, affiliateFID);
+        bool isAffiliateRegistered = registry.affiliatesInCampaigns(
+            campaignId,
+            affiliateFID
+        );
+        assertTrue(isAffiliateRegistered);
     }
 }

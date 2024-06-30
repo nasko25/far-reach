@@ -173,7 +173,7 @@ contract Registry is IRegistry {
         Campaign memory campaign = campaigns[campaignId];
 
         require(
-            campaign.maxFID <= affiliate.FID &&
+            affiliate.FID <= campaign.maxFID &&
                 campaign.minFollowers <= affiliate.followers &&
                 campaign.minPostsLastWeek <= affiliate.postsLastWeek,
             "Affiliate does not meet requirements"
