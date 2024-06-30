@@ -3,7 +3,7 @@ import { BIG_INT_ZERO, BYTES_EMPTY } from "../lib/constants";
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 
 export function buildPayment(
-  id: BigInt,
+  id: string,
   txHash: Bytes,
   blockTimestamp: BigInt,
   customer: Bytes,

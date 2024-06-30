@@ -76,11 +76,18 @@ interface IRegistry {
     );
     event CreatedCampaign(
         uint256 id,
-        address indexed merchantAddress,
+        address merchantAddress,
         string productName,
+        uint256 productId,
         uint256 price,
-        uint16 commission,
-        uint16 stock
+        uint16 comission,
+        uint16 stock,
+        uint128 maxFID,
+        uint128 minFollowers,
+        uint128 minPostsLastWeek,
+        string permalink,
+        string productImage,
+        address receiptAddress
     );
     event CreatedOrder(
         uint256 id,

@@ -1,5 +1,5 @@
 type Affiliate @entity {
-  id: ID!
+  id: String!
   txHash: Bytes!
   blockTimestamp: BigInt!
   address: Bytes!
@@ -9,6 +9,7 @@ type Affiliate @entity {
   totalEarned: BigInt!
   postsLastWeek: BigInt!
   followers: BigInt!
+  campaigns: [Campaign!]!
 }
 
 type Merchant @entity {
@@ -30,12 +31,10 @@ type Order @entity {
   affiliate: Affiliate!
   price: BigInt!
   commission: BigInt!
-  buyerHash: Bytes!
-  affiliateCommission: BigInt!
 }
 
 type Campaign @entity {
-  id: ID!
+  id: String!
   txHash: Bytes!
   blockTimestamp: BigInt!
   merchantAddress: Bytes!
@@ -52,6 +51,7 @@ type Campaign @entity {
   productImage: String!
   receiptAddress: Bytes!
   orders: [Order!]!
+  participants: [Affiliate!]!
 }
 
 type Payment @entity {

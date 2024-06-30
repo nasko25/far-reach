@@ -3,7 +3,7 @@ import { BIG_INT_ZERO, BYTES_EMPTY } from "../lib/constants";
 import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 
 export function buildMerchant(
-  id: BigInt,
+  id: Bytes,
   txHash: Bytes,
   blockTimestamp: BigInt,
   address: Bytes,
@@ -11,7 +11,7 @@ export function buildMerchant(
   numberOfSales: BigInt,
   totalEarned: BigInt
 ): Merchant {
-  let merchant = new Merchant(id.toString());
+  let merchant = new Merchant(id.toHexString());
   merchant.txHash = txHash;
   merchant.blockTimestamp = blockTimestamp;
   merchant.address = address;
@@ -22,11 +22,11 @@ export function buildMerchant(
   return merchant as Merchant;
 }
 
-export function getMerchant(id: string): Merchant {
-  let merchant = Merchant.load(id);
+export function getMerchant(id: Bytes): Merchant {
+  let merchant = Merchant.load(id.toHexString());
 
   if (merchant == null) {
-    merchant = new Merchant(id);
+    merchant = new Merchant(id.toHexString());
     merchant.txHash = BYTES_EMPTY;
     merchant.blockTimestamp = BIG_INT_ZERO;
     merchant.address = BYTES_EMPTY;

@@ -16,35 +16,23 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - CampaignEnded
-        - CreatedAffiliate
-        - CreatedCampaign
-        - CreatedMerchant
-        - CreatedOrder
-        - PaymentMade
-        - RegisteredAffiliateInCampaign
-        - TotalEarnedAffiliate
-        - TotalEarnedMerchant
+        - Campaign
+        - Merchant
+        - Order
+        - Affiliate
+        - Payment
       abis:
         - name: Registry
           file: ./abis/Registry.json
       eventHandlers:
-        - event: CampaignEnded(indexed uint256)
-          handler: handleCampaignEnded
         - event: CreatedAffiliate(uint256,indexed address,string,uint256,uint256)
           handler: handleCreatedAffiliate
-        - event: CreatedCampaign(uint256,indexed address,string,uint256,uint16,uint16)
+        - event: CreatedCampaign(uint256,indexed address,string,uint256,uint256,uint16,uint16,uint128,uint128,uint128,string,string,address)
           handler: handleCreatedCampaign
         - event: CreatedMerchant(uint256,address,string,uint256,uint256)
           handler: handleCreatedMerchant
         - event: CreatedOrder(uint256,indexed uint256,indexed address,indexed uint256,uint256,uint256)
           handler: handleCreatedOrder
-        - event: PaymentMade(indexed address,uint256)
-          handler: handlePaymentMade
         - event: RegisteredAffiliateInCampaign(indexed uint256,indexed address,indexed uint128,uint128,uint128)
           handler: handleRegisteredAffiliateInCampaign
-        - event: TotalEarnedAffiliate(indexed address,uint256)
-          handler: handleTotalEarnedAffiliate
-        - event: TotalEarnedMerchant(indexed address,uint256)
-          handler: handleTotalEarnedMerchant
-      file: ./src/registry.ts
+      file: ./src/mappings/registry.ts

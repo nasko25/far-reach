@@ -84,13 +84,19 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "productId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "price",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint16",
-        "name": "commission",
+        "name": "comission",
         "type": "uint16"
       },
       {
@@ -98,6 +104,43 @@
         "internalType": "uint16",
         "name": "stock",
         "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "maxFID",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "minFollowers",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "minPostsLastWeek",
+        "type": "uint128"
+      },
+
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "permalink",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "productImage",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "receiptAddress",
+        "type": "address"
       }
     ],
     "name": "CreatedCampaign",
@@ -535,18 +578,14 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "string", "name": "nickname", "type": "string" }
-    ],
+    "inputs": [{ "internalType": "string", "name": "nickname", "type": "string" }],
     "name": "createMerchant",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "campaignId", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "campaignId", "type": "uint256" }],
     "name": "endCampaign",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -725,9 +764,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "affiliateFID", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "affiliateFID", "type": "uint256" }],
     "name": "isRegisteredAffiliate",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",

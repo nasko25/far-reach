@@ -260,9 +260,16 @@ contract Registry is IRegistry {
             campaignId,
             msg.sender,
             _productName,
+            _productId,
             _price,
             _comission,
-            _stock
+            _stock,
+            _maxFID,
+            _minFollowers,
+            _minPostsLastWeek,
+            _permalink,
+            _productImage,
+            address(receipt)
         );
 
         return campaignId;

@@ -6,24 +6,20 @@ export function buildOrder(
   id: BigInt,
   txHash: Bytes,
   blockTimestamp: BigInt,
-  campaignId: BigInt,
+  campaign: string,
   buyer: Bytes,
-  affiliateId: BigInt,
+  affiliate: string,
   price: BigInt,
-  commission: BigInt,
-  buyerHash: Bytes,
-  affiliateCommission: BigInt
+  commission: BigInt
 ): Order {
   let order = new Order(id.toString());
   order.txHash = txHash;
   order.blockTimestamp = blockTimestamp;
-  order.campaign = campaignId.toString();
+  order.campaign = campaign;
   order.buyer = buyer;
-  order.affiliate = affiliateId.toString();
+  order.affiliate = affiliate;
   order.price = price;
   order.commission = commission;
-  order.buyerHash = buyerHash;
-  order.affiliateCommission = affiliateCommission;
 
   return order as Order;
 }
@@ -36,13 +32,11 @@ export function getOrder(id: string): Order {
 
     order.txHash = BYTES_EMPTY;
     order.blockTimestamp = BIG_INT_ZERO;
-    order.campaign = BIG_INT_NEG_ONE.toString();
+    order.campaign = "";
     order.buyer = BYTES_EMPTY;
-    order.affiliate = BIG_INT_NEG_ONE.toString();
+    order.affiliate = "";
     order.price = BIG_INT_ZERO;
     order.commission = BIG_INT_ZERO;
-    order.buyerHash = BYTES_EMPTY;
-    order.affiliateCommission = BIG_INT_ZERO;
   }
 
   return order as Order;

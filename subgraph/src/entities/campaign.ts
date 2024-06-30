@@ -1,9 +1,9 @@
 import { Campaign } from "../../generated/schema";
 import { BIG_INT_ZERO, BYTES_EMPTY } from "../lib/constants";
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes, Int8 } from "@graphprotocol/graph-ts";
 
 export function buildCampaign(
-  id: BigInt,
+  id: string,
   txHash: Bytes,
   blockTimestamp: BigInt,
   merchantAddress: Bytes,
@@ -11,8 +11,8 @@ export function buildCampaign(
   productName: string,
   productId: BigInt,
   price: BigInt,
-  commission: number,
-  stock: number,
+  commission: Int8,
+  stock: Int8,
   maxFID: BigInt,
   minFollowers: BigInt,
   minPostsLastWeek: BigInt,
@@ -28,14 +28,15 @@ export function buildCampaign(
   campaign.productName = productName;
   campaign.productId = productId;
   campaign.price = price;
-  campaign.commission = commission;
-  campaign.stock = stock;
+  campaign.commission = commission as i32;
+  campaign.stock = stock as i32;
   campaign.maxFID = maxFID;
   campaign.minFollowers = minFollowers;
   campaign.minPostsLastWeek = minPostsLastWeek;
   campaign.permalink = permalink;
   campaign.productImage = productImage;
   campaign.receiptAddress = receiptAddress;
+  campaign.participants = [];
   return campaign as Campaign;
 }
 
