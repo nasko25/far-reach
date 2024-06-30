@@ -76,7 +76,7 @@ interface IRegistry {
     );
     event CreatedCampaign(
         uint256 id,
-        address merchantAddress,
+        address indexed merchantAddress,
         string productName,
         uint256 productId,
         uint256 price,
