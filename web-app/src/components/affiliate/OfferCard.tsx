@@ -10,20 +10,20 @@ const notify = (promoteUrl: string) => {
 
 export function OfferCard({
   from,
-  deadline,
+  price,
   name,
   image,
   commission,
-  description,
   promoteUrl,
+  status,
 }: {
   from: string;
-  deadline: string;
+  price: string;
   name: string;
   image: string;
   commission: string;
-  description: string;
   promoteUrl: string;
+  status: string;
 }) {
   return (
     <Card>
@@ -33,20 +33,19 @@ export function OfferCard({
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <CardDescription>{description}</CardDescription>
           <img src={image} alt={name} className="w-full h-48 object-cover rounded-lg" />
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h3 className="text-lg font-semibold">Price</h3>
-              <p>$1300</p>
+              <p>{price}</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold">Commission</h3>
               <p>{commission}</p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold">Deadline</h3>
-              <p>{deadline}</p>
+              <h3 className="text-lg font-semibold">Status</h3>
+              <p>{status}</p>
             </div>
           </div>
           <button className={`bg-[${purple}] rounded-lg text-white`} onClick={() => notify(promoteUrl)}>

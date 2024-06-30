@@ -12,12 +12,12 @@ import { ProductCard } from "@/components/ProductCard";
 import "react-farcaster-embed/dist/styles.css";
 import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { CampaignsParticipated } from "@/components/affiliate/CampaignsParticipated";
 
 // TODO: allow them to unlink wallet
 export default function AffiliateProfile() {
   const { userProfile: profile } = useUserProfile();
   const [leaderboard, setLeaderboard] = useState([]);
-  const [performance, setPerformance] = useState([]);
   const farReachClient = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
     cache: new InMemoryCache(),
@@ -107,6 +107,12 @@ export default function AffiliateProfile() {
               </div>
             </CardContent>
           </Card>
+        </div>
+        <div className="mt-5 md:mt-5">
+          <div className="flex flex-col">
+            <h3 className="text-xl md:text-2xl font-bold pb-4">{`The Campaigns You Participate In:`}</h3>
+            {profile ? <CampaignsParticipated profile={profile} /> : <div>Loading...</div>}
+          </div>
         </div>
         <div className="mt-12 md:mt-20">
           <div className="flex flex-col">

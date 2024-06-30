@@ -5,7 +5,7 @@ import { useQuery } from "@airstack/airstack-react";
 import { profileQuery } from "@/app/queries/farcasterUser";
 import { Channel } from "@/app/affiliate/interfaces";
 import Image from "next/image";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 export function ProfileStats({ profile }: { profile: UserProfile }) {
@@ -15,10 +15,31 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
     uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
     cache: new InMemoryCache(),
   });
+  useEffect(() => {
+    if (profileData)
+      farReachClient
+        .query({
+          query: gql`
+    query {
+      affiliate(id: "${profileData.Socials.Social[0].userId}") {
+        numberOfSales
+        totalEarned
+      }
+  }
+            `,
+        })
+        .then((result) => {
+          console.log("RESULT:", result);
+          setPerformanceMetrics(result.data.affiliate);
+        })
+        .catch((err) => {
+          console.log("Error fetching data: ", err);
+        });
+  }, [profileData]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (profileData) {
-    console.log("PROFILE DATA", profileData);
     const channelsRaw = profileData.FarcasterCasts.Cast.map((cast: any) => cast.channel);
     const channels = channelsRaw.filter((channel: Channel | null) => channel != null);
     const frequency = channels.reduce((acc: any, channel: Channel) => {
@@ -34,24 +55,6 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
         imageUrl: channels.find((channel: Channel) => channel.name === key).imageUrl,
       }));
 
-    farReachClient
-      .query({
-        query: gql`
-    query {
-      affiliate(id: "${profileData.Socials.Social[0].userId}") {
-        numberOfSales
-        totalEarned
-      }
-  }
-            `,
-      })
-      .then((result) => {
-        console.log(result);
-        setPerformanceMetrics(result.data.affiliate);
-      })
-      .catch((err) => {
-        console.log("Error fetching data: ", err);
-      });
     console.log("performancemetrics", performanceMetrics);
     return (
       <div className="space-y-8">
@@ -83,13 +86,14 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
         </div>
         <div>
           <h3 className="text-xl md:text-2xl font-bold mb-4">Performance Metrics</h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <ProfileStatCard name="Total Earned" value={"$10,250"} />
-            <ProfileStatCard name="Commission Earned" value={"$1,250"} />
-            <ProfileStatCard name="Conversion Rate" value={"4.7%"} />
-            <ProfileStatCard name="Average Order Value" value={"$120"} />
-            <ProfileStatCard name="Total Referrals" value={"574"} />
-          </div>
+          {performanceMetrics ? (
+            <div className="grid md:grid-cols-3 gap-4">
+              <ProfileStatCard name="Total Earned" value={`${performanceMetrics.totalEarned}`} />
+              <ProfileStatCard name="Total Number of Sales" value={`${performanceMetrics.numberOfSales}`} />
+            </div>
+          ) : (
+            <div>Loading...</div>
+          )}
         </div>
       </div>
     );
