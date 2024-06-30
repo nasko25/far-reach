@@ -87,7 +87,6 @@ export const getTop3Frames = async (
       JSON.stringify(
         campaignIds.map(
           (campaignId) =>
-            // TODO: get all campaign IDs from subgraph
             "https://far-reach.vercel.app/frames?campaignId=" + campaignId
         )
       )
