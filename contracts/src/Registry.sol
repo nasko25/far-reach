@@ -179,6 +179,11 @@ contract Registry is IRegistry {
             "Affiliate does not meet requirements"
         );
 
+        require(
+            !affiliatesInCampaigns[campaignId][affiliate.FID],
+            "Affiliate already registered in campaign"
+        );
+
         affiliatesInCampaigns[campaignId][affiliate.FID] = true;
 
         emit RegisteredAffiliateInCampaign(
