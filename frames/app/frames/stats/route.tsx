@@ -2,12 +2,15 @@ import { frames } from "../frames";
 import { NavBar, Stats } from "../../components";
 import { Button } from "frames.js/core";
 import { getUserDataForFid } from "frames.js";
+import { getTop3Frames } from "@/app/airstack/airstack";
 
 const handleRequest = frames(async (ctx) => {
   const userData = await getUserDataForFid({ fid: ctx.message?.requesterFid! });
   console.log("user data from stats: " + JSON.stringify(userData));
   const rank = 4;
   console.log("ctx: " + JSON.stringify(ctx, null, 2));
+  const fid = ctx.message?.requesterFid;
+  if (fid) getTop3Frames(fid);
   return {
     image: (
       <div tw="bg-[#17101f] text-black flex flex-col w-full h-full">
