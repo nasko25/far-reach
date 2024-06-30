@@ -18,9 +18,9 @@ import { buildOrder } from "../entities/order";
 import { buildPayment } from "../entities/payment";
 
 export function handleCampaignEnded(event: CampaignEndedEvent): void {
-  let entity = getCampaign(event.transaction.hash.toHexString());
-
-  entity.save();
+  let campaign = getCampaign(event.transaction.hash.toHexString());
+  campaign.status = 1;
+  campaign.save();
 }
 
 export function handleCreatedAffiliate(event: CreatedAffiliateEvent): void {
@@ -55,7 +55,8 @@ export function handleCreatedCampaign(event: CreatedCampaignEvent): void {
     event.params.minPostsLastWeek,
     event.params.permalink,
     event.params.productImage,
-    event.params.receiptAddress
+    event.params.receiptAddress,
+    event.params.status
   ).save();
 }
 
@@ -81,7 +82,8 @@ export function handleCreatedOrder(event: CreatedOrderEvent): void {
     event.params.buyerHash,
     event.params.affiliateFID.toString(),
     event.params.price,
-    event.params.comission
+    event.params.comission,
+    event.params.status
   );
 
   const campaign: Campaign = getCampaign(event.params.campaignId.toString());

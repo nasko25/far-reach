@@ -1,6 +1,6 @@
 import { Order } from "../../generated/schema";
 import { BIG_INT_NEG_ONE, BIG_INT_ZERO, BYTES_EMPTY } from "../lib/constants";
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes, Int8 } from "@graphprotocol/graph-ts";
 
 export function buildOrder(
   id: BigInt,
@@ -11,7 +11,8 @@ export function buildOrder(
   buyerHash: Bytes,
   affiliate: string,
   price: BigInt,
-  commission: BigInt
+  commission: BigInt,
+  status: Int8
 ): Order {
   let order = new Order(id.toString());
   order.txHash = txHash;
@@ -22,6 +23,7 @@ export function buildOrder(
   order.price = price;
   order.buyerHash = buyerHash;
   order.commission = commission;
+  order.status = status as i32;
 
   return order as Order;
 }
@@ -40,6 +42,7 @@ export function getOrder(id: string): Order {
     order.affiliate = "";
     order.price = BIG_INT_ZERO;
     order.commission = BIG_INT_ZERO;
+    order.status = 0 as i32;
   }
 
   return order as Order;

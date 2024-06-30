@@ -32,6 +32,7 @@ type Order @entity {
   affiliate: Affiliate!
   price: BigInt!
   commission: BigInt!
+  status: Int!
 }
 
 type Campaign @entity {
@@ -53,6 +54,7 @@ type Campaign @entity {
   receiptAddress: Bytes!
   orders: [Order!]!
   participants: [Affiliate!]!
+  status: Int!
 }
 
 type Payment @entity {

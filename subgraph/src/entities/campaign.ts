@@ -18,7 +18,8 @@ export function buildCampaign(
   minPostsLastWeek: BigInt,
   permalink: string,
   productImage: string,
-  receiptAddress: Bytes
+  receiptAddress: Bytes,
+  status: Int8
 ): Campaign {
   let campaign = new Campaign(id.toString());
   campaign.txHash = txHash;
@@ -38,6 +39,7 @@ export function buildCampaign(
   campaign.receiptAddress = receiptAddress;
   campaign.participants = [];
   campaign.orders = [];
+  campaign.status = status as i32;
   return campaign as Campaign;
 }
 
@@ -63,6 +65,7 @@ export function getCampaign(id: string): Campaign {
     campaign.receiptAddress = BYTES_EMPTY;
     campaign.participants = [];
     campaign.orders = [];
+    campaign.status = 0 as i32;
   }
 
   return campaign as Campaign;

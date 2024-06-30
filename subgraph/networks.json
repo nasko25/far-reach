@@ -1,7 +1,7 @@
 {
   "base-sepolia": {
     "Registry": {
-      "address": "0x71358C0E5caa12F23F62640ecA68361143e610DB",
+      "address": "0xcbF8c318eD2A7E84752040a0F4cd362B81858582",
       "startBlock": 11964166
     }
   }
