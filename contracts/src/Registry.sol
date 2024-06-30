@@ -2,17 +2,18 @@
 pragma solidity ^0.8.13;
 
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IRegistry} from "./interfaces/IRegistry.sol";
 import {Receipt} from "./Receipt.sol";
 
-contract Registry is IRegistry {
+contract Registry is IRegistry, Ownable {
     uint256 currentMerchantId = 1;
     uint256 currentOrderId = 1;
     uint256 currentCampaignId = 1;
     IERC20Metadata public transactionToken;
     uint16 farReachComission = 10;
 
-    constructor(address _transactionToken) {
+    constructor(address _transactionToken) Ownable(msg.sender) {
         transactionToken = IERC20Metadata(_transactionToken);
     }
 
@@ -30,6 +31,8 @@ contract Registry is IRegistry {
     mapping(address => Campaign[]) public campaignsForMerchants;
 
     mapping(uint256 => mapping(uint256 => bool)) public affiliatesInCampaigns;
+    mapping(address => mapping(uint256 => uint256))
+        public merchantPayoutForAffiliate;
 
     mapping(address => uint256) public numberOfCampaigns;
     mapping(address => uint256) public numberOfOrders;
@@ -344,6 +347,9 @@ contract Registry is IRegistry {
         affiliate.totalEarned += amountForAffiliate;
         merchant.numberOfSales++;
         merchant.totalEarned += amountForMerchant;
+        merchantPayoutForAffiliate[merchant.merchantAddress][
+            FID
+        ] += amountForAffiliate;
         emit TotalEarnedMerchant(
             merchant.merchantAddress,
             merchant.totalEarned,
@@ -385,5 +391,11 @@ contract Registry is IRegistry {
             campaign.comission
         );
         currentOrderId++;
+    }
+
+    function withdrawRevenue() external onlyOwner {
+        uint256 amount = transactionToken.balanceOf(address(this));
+        require(amount > 0, "No revenue available");
+        transactionToken.transfer(msg.sender, amount);
     }
 }
