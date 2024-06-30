@@ -111,26 +111,6 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "address", "name": "affiliate", "type": "address" },
-      { "indexed": true, "internalType": "uint256", "name": "totalEarned", "type": "uint256" },
-      { "indexed": true, "internalType": "uint256", "name": "numberOfSales", "type": "uint256" }
-    ],
-    "name": "TotalEarnedAffiliate",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "address", "name": "merhcant", "type": "address" },
-      { "indexed": true, "internalType": "uint256", "name": "totalEarned", "type": "uint256" },
-      { "indexed": true, "internalType": "uint256", "name": "numberOfSales", "type": "uint256" }
-    ],
-    "name": "TotalEarnedMerchant",
-    "type": "event"
-  },
-  {
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "affiliates",
     "outputs": [
@@ -152,6 +132,26 @@
     ],
     "name": "affiliatesInCampaigns",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "affiliatesInCampaignsTotalEarned",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "affiliatesInCampaignsTotalSales",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -323,7 +323,8 @@
           { "internalType": "address", "name": "merchantAddress", "type": "address" },
           { "internalType": "string", "name": "merchantName", "type": "string" },
           { "internalType": "uint256", "name": "numberOfSales", "type": "uint256" },
-          { "internalType": "uint256", "name": "totalEarned", "type": "uint256" }
+          { "internalType": "uint256", "name": "totalEarned", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalPaidToAffiliates", "type": "uint256" }
         ],
         "internalType": "struct IRegistry.Merchant[]",
         "name": "",
@@ -443,22 +444,9 @@
       { "internalType": "address", "name": "merchantAddress", "type": "address" },
       { "internalType": "string", "name": "merchantName", "type": "string" },
       { "internalType": "uint256", "name": "numberOfSales", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalEarned", "type": "uint256" }
+      { "internalType": "uint256", "name": "totalEarned", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalPaidToAffiliates", "type": "uint256" }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "numberOfCampaigns",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "numberOfOrders",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },

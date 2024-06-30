@@ -7,15 +7,12 @@ import {
   CreatedOrder as CreatedOrderEvent,
   PaymentMade as PaymentMadeEvent,
   RegisteredAffiliateInCampaign as RegisteredAffiliateInCampaignEvent,
-  TotalEarnedAffiliate as TotalEarnedAffiliateEvent,
-  TotalEarnedMerchant as TotalEarnedMerchantEvent,
 } from "../../generated/Registry/Registry";
 import { Campaign, Affiliate, Order, Merchant, Payment } from "../../generated/schema";
 import { buildCampaign, getCampaign } from "../entities/campaign";
 import { buildAffiliate, getAffiliate } from "../entities/affiliate";
 import { buildMerchant, getMerchant } from "../entities/merchant";
 import { buildOrder } from "../entities/order";
-import { buildPayment } from "../entities/payment";
 
 export function handleCampaignEnded(event: CampaignEndedEvent): void {
   let campaign = getCampaign(event.transaction.hash.toHexString());
@@ -102,6 +99,8 @@ export function handleCreatedOrder(event: CreatedOrderEvent): void {
   const orders = campaign.orders;
   orders.push(order.id);
   campaign.orders = orders;
+
+  campaign.stock = campaign.stock - 1;
   campaign.save();
 
   order.save();
