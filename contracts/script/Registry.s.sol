@@ -15,7 +15,6 @@ contract RegistryDeployer is Script {
         vm.createSelectFork("baseSepolia");
         vm.startBroadcast();
         Registry registry = new Registry(address(USDC));
-        registry.createAffiliate("0xDegenAffiliate", 5, 10, 20);
         vm.stopBroadcast();
     }
 }
