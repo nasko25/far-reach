@@ -18,6 +18,7 @@ import { CampaignsParticipated } from "@/components/affiliate/CampaignsParticipa
 export default function AffiliateProfile() {
   const { userProfile: profile } = useUserProfile();
   const [leaderboard, setLeaderboard] = useState([]);
+  const [recentCampaigns, setRecentCampaigns] = useState([]); // [Campaign
   const farReachClient = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
     cache: new InMemoryCache(),
@@ -48,6 +49,28 @@ export default function AffiliateProfile() {
             };
           })
         );
+      })
+      .catch((err) => {
+        console.log("Error fetching data: ", err);
+      });
+
+    farReachClient
+      .query({
+        query: gql`
+          query {
+            campaigns(first: 3) {
+              id
+              name
+              merchantAddress
+              productImage
+              commission
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        console.log(result);
+        setRecentCampaigns(result.data.campaigns);
       })
       .catch((err) => {
         console.log("Error fetching data: ", err);
@@ -86,13 +109,19 @@ export default function AffiliateProfile() {
               <CardDescription>New Merchant Offers</CardDescription>
               <CardTitle>3 new offers</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <ProductCard image="/placeholder.svg" name="Apple IPhone 13" commission={0.18} />
-                <ProductCard image="/placeholder.svg" name="Lacoste Shirt" commission={125} />
-                <ProductCard image="/placeholder.svg" name="Shopify Subscription" commission={0.01} />
-              </div>
-            </CardContent>
+            {recentCampaigns.length > 0 && (
+              <CardContent>
+                <div className="grid gap-4">
+                  {recentCampaigns.map((campaign: any) => (
+                    <ProductCard
+                      image={campaign.productImage}
+                      name={campaign.name}
+                      commission={Number(campaign.commission) / 100}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            )}
           </Card>
           <Card>
             <CardHeader>
@@ -110,7 +139,7 @@ export default function AffiliateProfile() {
         </div>
         <div className="mt-5 md:mt-5">
           <div className="flex flex-col">
-            <h3 className="text-xl md:text-2xl font-bold pb-4">{`The Campaigns You Participate In:`}</h3>
+            <h3 className="text-xl md:text-2xl font-bold pb-4">{`Your Campaigns`}</h3>
             {profile ? <CampaignsParticipated profile={profile} /> : <div>Loading...</div>}
           </div>
         </div>

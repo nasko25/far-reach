@@ -88,8 +88,8 @@ export function ProfileStats({ profile }: { profile: UserProfile }) {
           <h3 className="text-xl md:text-2xl font-bold mb-4">Performance Metrics</h3>
           {performanceMetrics ? (
             <div className="grid md:grid-cols-3 gap-4">
-              <ProfileStatCard name="Total Earned" value={`${performanceMetrics.totalEarned}`} />
-              <ProfileStatCard name="Total Number of Sales" value={`${performanceMetrics.numberOfSales}`} />
+              <ProfileStatCard name="Total Earned" value={`$${performanceMetrics.totalEarned}`} />
+              <ProfileStatCard name="Total Number of Sales" value={`${performanceMetrics.numberOfSales} units`} />
             </div>
           ) : (
             <div>Loading...</div>
