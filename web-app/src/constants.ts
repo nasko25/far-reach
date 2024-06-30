@@ -1,1 +1,1 @@
-const purple = "#8A63D2";
+export const purple = "#8A63D2";
