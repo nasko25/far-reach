@@ -54,6 +54,7 @@ export const getProductInformation = async (
         }
       }
     `,
+    fetchPolicy: "network-only",
   });
 
   console.log(result.data.campaign);
