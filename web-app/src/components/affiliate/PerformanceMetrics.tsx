@@ -42,7 +42,12 @@ export function PerformanceMetrics({ profile }: { profile: UserProfile }) {
       <CardContent>
         {performanceMetrics ? (
           <div className="grid gap-4">
-            <StatCard name="Total Earned" value={performanceMetrics.totalEarned} money={true} Icon={Coins} />
+            <StatCard
+              name="Total Earned"
+              value={Number(performanceMetrics.totalEarned) / 100}
+              money={true}
+              Icon={Coins}
+            />
             <StatCard
               name="Total Number of Sales"
               value={performanceMetrics.numberOfSales}

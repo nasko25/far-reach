@@ -47,10 +47,11 @@ export default function AffiliateOffers() {
       <h1 className="font-bold text-2xl">Offers</h1>
       <div className="grid gap-6">
         <div className="grid md:grid-cols-3 gap-6">
-          {recentCampaigns.map((campaign: any) => {
+          {recentCampaigns.map((campaign: any, index: number) => {
             if (user && user.farcaster && user.farcaster.fid)
               return (
                 <OfferCard
+                  key={index}
                   from={campaign.merchantAddress}
                   price={campaign.price}
                   name={campaign.name}

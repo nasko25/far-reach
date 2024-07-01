@@ -57,10 +57,11 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
         <h3 className="text-xl md:text-2xl font-bold pb-4">{`Your Campaigns`}</h3>
 
         <div className="grid md:grid-cols-3 gap-4">
-          {campaignsParticipated.map((campaign: any) => {
+          {campaignsParticipated.map((campaign: any, index: number) => {
             console.log("Promoteusrl", campaign.id, campaign.permalink);
             return (
               <OfferCard
+                key={index}
                 campaignId={campaign.id}
                 from={campaign.merchantAddress}
                 price={campaign.price}

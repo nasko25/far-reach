@@ -28,11 +28,12 @@ export function OfferCard({
   campaignId: string;
   affiliateFID: string;
 }) {
+  console.log(price, "PRICE");
   const [totalSales, setTotalSales] = useState<BigInt>(BigInt(0));
-  const [totalEarned, setTotalEarned] = useState<BigInt>(BigInt(0));
+  const [totalEarned, setTotalEarned] = useState<number>(0);
   const [conversionRate, setConversionRate] = useState<number>(0);
   useEffect(() => {
-    fetch(`https://far-reach.vercel.app/api/analytics/2234`)
+    fetch(`https://far-reach.vercel.app/api/analytics/10`)
       .then((res) => res.json())
       .then((data) => setConversionRate(data.userConversion));
 
@@ -56,7 +57,7 @@ export function OfferCard({
         functionName: "affiliatesInCampaignsTotalEarned",
         args: [campaignId, affiliateFID],
       })
-      .then((res) => setTotalEarned(res as BigInt));
+      .then((res) => setTotalEarned((Number(res) / 0.9) * 0.1));
   }, []);
 
   return (
@@ -91,7 +92,7 @@ export function OfferCard({
             </div>
             <div>
               <h3 className="text-lg font-semibold">You Earned</h3>
-              <p>${totalEarned.toString()}</p>
+              <p>${(Number(totalEarned) / 10000).toString()}</p>
             </div>
           </div>
           <PromoteButton

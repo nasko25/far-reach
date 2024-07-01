@@ -28,7 +28,7 @@ export default function AffiliateProfile() {
       .query({
         query: gql`
           query {
-            affiliates(first: 5, orderBy: totalEarned, orderDirection: desc) {
+            affiliates(first: 6, orderBy: totalEarned, orderDirection: desc) {
               address
               totalEarned
               numberOfSales
@@ -98,9 +98,10 @@ export default function AffiliateProfile() {
               <div className="grid grid-rows-2 gap-4">
                 {leaderboard.length > 0 &&
                   leaderboard
+                    .filter((affiliate: any) => affiliate.name !== "builderszn.eth")
                     .slice(0, 4)
                     .map((affiliate: any, index: number) => (
-                      <EarningsCard name={affiliate.name} earnings={affiliate.totalEarned} />
+                      <EarningsCard key={index} name={affiliate.name} earnings={affiliate.totalEarned} />
                     ))}
               </div>
             </CardContent>
@@ -113,12 +114,13 @@ export default function AffiliateProfile() {
             {recentCampaigns.length > 0 && (
               <CardContent>
                 <div className="grid gap-4">
-                  {recentCampaigns.map((campaign: any) => (
+                  {recentCampaigns.map((campaign: any, index: number) => (
                     <ProductCard
+                      key={index}
                       image={campaign.productImage}
                       name={campaign.name}
                       commission={Number(campaign.commission) / 100}
-                      promoteUrl={campaign.permalink}
+                      campaignId={campaign.id}
                     />
                   ))}
                 </div>

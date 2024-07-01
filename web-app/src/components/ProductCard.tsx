@@ -7,12 +7,12 @@ export function ProductCard({
   image,
   name,
   commission,
-  promoteUrl,
+  campaignId,
 }: {
   image: string;
   name: string;
   commission: number;
-  promoteUrl: string;
+  campaignId: string;
 }) {
   return (
     <div className="flex items-center gap-4">
@@ -21,7 +21,7 @@ export function ProductCard({
         <div className="font-semibold">{name}</div>
         <div className="text-sm text-gray-500 dark:text-gray-400">{`${Math.floor(commission * 100)}% commission`}</div>
       </div>
-      <Button variant="ghost" onClick={() => notify(promoteUrl)}>
+      <Button variant="ghost" onClick={() => notify(campaignId)}>
         <ArrowUpRight size={24} />
       </Button>
     </div>

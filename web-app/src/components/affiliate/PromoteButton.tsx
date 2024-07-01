@@ -7,10 +7,12 @@ import { createWalletClient, custom } from "viem";
 import { baseSepolia } from "viem/chains";
 import { from } from "@apollo/client";
 
-export const notify = (promoteUrl: string) => {
+export const notify = (campaignId: string) => {
   toast("Affiliate link frame copied to clipboard.");
-  console.log(promoteUrl, "PROMOTE_URL");
-  window.open(`https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=${promoteUrl}`, "_blank");
+  window.open(
+    `https://warpcast.com/~/compose?text=Hello%20@farcaster!&embeds[]=https://far-reach.vercel.app/frames?campaignId=${campaignId}`,
+    "_blank"
+  );
 };
 
 export function PromoteButton({
@@ -45,12 +47,12 @@ export function PromoteButton({
           address: contractAddress,
           abi: registry,
           functionName: "affiliatesInCampaigns",
-          args: [1, affilaiteFID],
+          args: [campaignId, affilaiteFID],
         })) as any[];
         console.log(exists);
         if (!exists) {
           const data = encodeFunctionData({
-            args: [1, affilaiteFID],
+            args: [campaignId, affilaiteFID],
             abi: registry,
             functionName: "registerAffiliateInCampaign",
           });
@@ -65,7 +67,7 @@ export function PromoteButton({
           });
           console.log(transactionHash);
         }
-        notify(promoteUrl);
+        notify(campaignId);
       }}
     >
       Promote 💜
