@@ -1,0 +1,19 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+auto_detect_solc = true
+via_ir = true
+
+[fmt]
+line_length = 100
+tab_width = 4
+bracket_spacing = true
+
+[rpc_endpoints]
+ethereum = "${ETHEREUM_RPC_URL}"
+polygon = "${POLYGON_RPC_URL}"
+baseSepolia = "${BASE_SEPOLIA_RPC_URL}"
+anvil = "http://localhost:8545"
+
+# See more config options https://github.com/foundry-rs/foundry/tree/master/config

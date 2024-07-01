@@ -1,0 +1,66 @@
+type Affiliate @entity {
+  id: ID!
+  txHash: Bytes!
+  blockTimestamp: BigInt!
+  address: Bytes!
+  fid: BigInt!
+  name: String!
+  numberOfSales: BigInt!
+  totalEarned: BigInt!
+  postsLastWeek: BigInt!
+  followers: BigInt!
+  campaigns: [Campaign!]!
+}
+
+type Merchant @entity {
+  id: ID!
+  txHash: Bytes!
+  blockTimestamp: BigInt!
+  address: Bytes!
+  name: String!
+  numberOfSales: BigInt!
+  totalEarned: BigInt!
+}
+
+type Order @entity {
+  id: ID!
+  txHash: Bytes!
+  blockTimestamp: BigInt!
+  campaign: Campaign!
+  buyer: Bytes!
+  buyerHash: Bytes!
+  affiliate: Affiliate!
+  price: BigInt!
+  commission: BigInt!
+  status: Int!
+}
+
+type Campaign @entity {
+  id: ID!
+  txHash: Bytes!
+  blockTimestamp: BigInt!
+  merchantAddress: Bytes!
+  name: String!
+  productName: String!
+  productId: BigInt!
+  price: BigInt!
+  commission: Int!
+  stock: Int!
+  maxFID: BigInt!
+  minFollowers: BigInt!
+  minPostsLastWeek: BigInt!
+  permalink: String!
+  productImage: String!
+  receiptAddress: Bytes!
+  orders: [Order!]!
+  participants: [Affiliate!]!
+  status: Int!
+}
+
+type Payment @entity {
+  id: ID!
+  txHash: Bytes!
+  blockTimestamp: BigInt!
+  customer: Bytes!
+  amount: BigInt!
+}
