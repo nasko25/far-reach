@@ -58,7 +58,7 @@ export default function AffiliateProfile() {
       .query({
         query: gql`
           query {
-            campaigns(first: 3, where: { status: 0 }) {
+            campaigns(first: 3, where: { status: 0 }, orderBy: blockTimestamp, orderDirection: desc) {
               id
               name
               merchantAddress
@@ -135,7 +135,6 @@ export default function AffiliateProfile() {
         </div>
         <div className="mt-5 md:mt-5">
           <div className="flex flex-col">
-            <h3 className="text-xl md:text-2xl font-bold pb-4">{`Your Campaigns`}</h3>
             {profile ? <CampaignsParticipated profile={profile} /> : <div>Loading...</div>}
           </div>
         </div>

@@ -51,25 +51,29 @@ export function CampaignsParticipated({ profile }: { profile: UserProfile }) {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (profileData) {
+  if (profileData && campaignsParticipated.length > 0) {
     return (
-      <div className="grid md:grid-cols-3 gap-4">
-        {campaignsParticipated.map((campaign: any) => {
-          console.log("Promoteusrl", campaign.id, campaign.permalink);
-          return (
-            <OfferCard
-              campaignId={campaign.id}
-              from={campaign.merchantAddress}
-              price={campaign.price}
-              name={campaign.name}
-              image={campaign.productImage}
-              commission={campaign.commission}
-              status={campaign.status.toString()}
-              promoteUrl={campaign.permalink}
-              affiliateFID={profileData.Socials.Social[0].userId}
-            />
-          );
-        })}
+      <div>
+        <h3 className="text-xl md:text-2xl font-bold pb-4">{`Your Campaigns`}</h3>
+
+        <div className="grid md:grid-cols-3 gap-4">
+          {campaignsParticipated.map((campaign: any) => {
+            console.log("Promoteusrl", campaign.id, campaign.permalink);
+            return (
+              <OfferCard
+                campaignId={campaign.id}
+                from={campaign.merchantAddress}
+                price={campaign.price}
+                name={campaign.name}
+                image={campaign.productImage}
+                commission={campaign.commission}
+                status={campaign.status.toString()}
+                promoteUrl={campaign.permalink}
+                affiliateFID={profileData.Socials.Social[0].userId}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }

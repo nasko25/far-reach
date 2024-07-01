@@ -19,7 +19,7 @@ export default function AffiliateOffers() {
       .query({
         query: gql`
           query {
-            campaigns(first: 3, where: { status: 0 }) {
+            campaigns(first: 50, where: { status: 0 }, orderBy: blockTimestamp, orderDirection: desc) {
               id
               merchantAddress
               name
