@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import { contractAbi } from '../abi';
 import { useCapabilities, useWriteContracts } from 'wagmi/experimental';
-import { contractAddress } from '../config';
+import { contractAddress, paymasterUrl } from '../config';
 import { zeroAddress } from 'viem';
 import { DeleteIcon, ShareIcon } from '@shopify/polaris-icons';
 
@@ -31,13 +31,13 @@ export default function OpenCampaigns() {
         ) {
             return {
                 paymasterService: {
-                    url: process.env.GADGET_PUBLIC_PAYMASTER_PROXY_SERVER_URL || `${document.location.origin}/api/paymaster`,
+                    url: paymasterUrl || `${document.location.origin}/api/paymaster`,
                 },
             };
         }
     }, [availableCapabilities]);
 
-    const handleSubmit = useCallback((campaignId: bigint) => {
+    const handleSubmit = useCallback((campaignId) => {
         writeContracts({
             contracts: [{
                 abi: contractAbi,
@@ -99,6 +99,7 @@ export default function OpenCampaigns() {
                                             <List.Item>Max FID: {campaign.maxFID.toString()}</List.Item>
                                             <List.Item>Min Followers: {campaign.minFollowers.toString()}</List.Item>
                                             <List.Item>Min Posts Last Week: {campaign.minPostsLastWeek.toString()}</List.Item>
+                                            <List.Item>Status: {campaign.status}</List.Item>
                                         </List>
                                     </BlockStack>
                                 </InlineGrid>

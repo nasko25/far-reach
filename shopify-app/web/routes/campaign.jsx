@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Layout, LegacyCard, Page, Tabs, Text } from "@shopify/polaris";
+import { Layout, Page, Tabs, Text } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 import CreateCampaign from "../components/CreateCampaign";
 import OpenCampaigns from "../components/OpenCampaigns";
@@ -22,7 +22,7 @@ export default function () {
     const [selected, setSelected] = useState(0);
 
     const handleTabChange = useCallback(
-        (selectedTabIndex: number) => setSelected(selectedTabIndex),
+        (selectedTabIndex) => setSelected(selectedTabIndex),
         [],
     );
 
@@ -42,7 +42,7 @@ export default function () {
             id: 'open-campaigns',
             title: 'Open Campaigns',
             content: 'Open Campaigns',
-            badge: openCampaigns?.length.toString() ?? '0',
+            badge: openCampaigns?.filter((campaign) => campaign.status == 0).length.toString() ?? '0',
         },
     ];
 

@@ -15,10 +15,24 @@ export default function OnchainPayouts() {
         args: [address ?? zeroAddress],
     });
 
+    const { data: campaigns, isLoading: isCampaignsLoading } = useReadContract({
+        abi: contractAbi,
+        address: contractAddress,
+        functionName: 'getCampaignsForMerchant',
+        args: [address ?? zeroAddress],
+    });
+
     const formattedRevenue = useMemo(() => {
         console.log('merchantData', merchantData)
         if (merchantData) {
-            return (merchantData[4] / 1000000n).toString();
+            return (Number(merchantData[4]) / 1000000).toString();
+        }
+        return '0'
+    }, [merchantData]);
+
+    const formattedAffiliateEarnings = useMemo(() => {
+        if (merchantData) {
+            return (Number(merchantData[5]) / 1000000).toString();
         }
         return '0'
     }, [merchantData]);
@@ -37,8 +51,8 @@ export default function OnchainPayouts() {
                                 isLoading
                                     ? <Spinner accessibilityLabel="Spinner example" size="large" />
                                     : merchantData && (
-                                        <Text alignment='center' variant="heading3xl" as="h2">
-                                            {merchantData[3].toString()}
+                                        <Text alignment='center' variant="heading2xl" as="h2">
+                                            {merchantData[3].toString()} Sales
                                         </Text>
                                     )
                             }
@@ -53,7 +67,7 @@ export default function OnchainPayouts() {
                                 isLoading
                                     ? <Spinner accessibilityLabel="Spinner example" size="large" />
                                     : merchantData && (
-                                        <Text alignment='center' variant="heading3xl" as="h2">
+                                        <Text alignment='center' variant="heading2xl" as="h2">
                                             {formattedRevenue} USDC
                                         </Text>
                                     )
@@ -76,11 +90,11 @@ export default function OnchainPayouts() {
                                 Number of Campaigns to Date
                             </Text>
                             {
-                                isLoading
+                                isCampaignsLoading
                                     ? <Spinner accessibilityLabel="Spinner example" size="large" />
-                                    : merchantData && (
-                                        <Text alignment='center' variant="headingSm" as="h2">
-                                            Coming soon...
+                                    : campaigns && (
+                                        <Text alignment='center' variant="heading2xl" as="h2">
+                                            {campaigns.length.toString()} Campaigns
                                         </Text>
                                     )
                             }
@@ -95,8 +109,8 @@ export default function OnchainPayouts() {
                                 isLoading
                                     ? <Spinner accessibilityLabel="Spinner example" size="large" />
                                     : merchantData && (
-                                        <Text alignment='center' variant="headingSm" as="h2">
-                                            Coming soon...
+                                        <Text alignment='center' variant="heading2xl" as="h2">
+                                            {formattedAffiliateEarnings} USDC
                                         </Text>
                                     )
                             }

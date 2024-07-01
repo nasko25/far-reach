@@ -4,7 +4,7 @@ import type { GadgetPermissions } from "gadget-server";
  * This metadata describes the access control configuration available in your application.
  * Grants that are not defined here are set to false by default.
  *
- * View and edit your roles and permissions in the Gadget editor at https://far-reacher.gadget.app/edit/settings/permissions
+ * View and edit your roles and permissions in the Gadget editor at https://farreach.gadget.app/edit/settings/permissions
  */
 export const permissions: GadgetPermissions = {
   type: "gadget/permissions/v1",
@@ -26,12 +26,6 @@ export const permissions: GadgetPermissions = {
           read: {
             filter:
               "accessControl/filters/shopify/shopifyProduct.gelly",
-          },
-        },
-        shopifyProductVariant: {
-          read: {
-            filter:
-              "accessControl/filters/shopify/shopifyProductVariant.gelly",
           },
         },
         shopifyShop: {

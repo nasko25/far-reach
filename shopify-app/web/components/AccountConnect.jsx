@@ -1,18 +1,17 @@
 import React, { useCallback, useMemo } from 'react';
 import { InlineGrid, Button, Text, Card, BlockStack, List } from '@shopify/polaris';
 import { useAccount, useDisconnect, useConnect, useReadContract } from 'wagmi';
-import { shortenEthereumAddress } from '../helpers/shorten-ethereum-address';
 import {
+  ExitIcon,
   EnterIcon,
-  ExitIcon
 } from '@shopify/polaris-icons';
 import { CoinbaseWalletLogo } from './CoinbaseWalletLogo';
-import { contractAbi } from '../abi';
-import { zeroAddress } from 'viem';
 import { useCapabilities, useWriteContracts } from 'wagmi/experimental';
-import { contractAddress } from '../config';
+import { contractAddress, paymasterUrl } from '../config';
 import { useFindFirst } from '@gadgetinc/react';
 import { api } from '../api';
+import { zeroAddress } from 'viem';
+import { contractAbi } from '../abi';
 
 export function AccountConnect() {
   const { address, isConnected, chainId } = useAccount();
@@ -35,19 +34,21 @@ export function AccountConnect() {
     ) {
       return {
         paymasterService: {
-          url: process.env.GADGET_PUBLIC_PAYMASTER_PROXY_SERVER_URL || `${document.location.origin}/api/paymaster`,
+          url: paymasterUrl,
         },
       };
     }
   }, [availableCapabilities]);
 
   const createWallet = useCallback(() => {
+    connect({ connector: connectors[1] });
     const coinbaseWalletConnector = connectors.find(
       (connector) => connector.id === 'coinbaseWalletSDK'
     );
     if (coinbaseWalletConnector) {
       connect({ connector: coinbaseWalletConnector });
     }
+
   }, [connectors, connect]);
 
   const handleRegister = useCallback(() => {
@@ -57,13 +58,12 @@ export function AccountConnect() {
           address: contractAddress,
           abi: contractAbi,
           functionName: "createMerchant",
-          args: [data?.name],
+          args: ["Shopify Merchant"],
         },
       ],
       capabilities,
     });
   }, []);
-
 
   const {
     data: isRegistered,
@@ -86,7 +86,6 @@ export function AccountConnect() {
               !isRegistered ? (
                 <Button
                   onClick={handleRegister}
-                  disabled={!data?.name}
                   accessibilityLabel='Register as a merchant'
                   icon={EnterIcon}
                 >
@@ -100,8 +99,7 @@ export function AccountConnect() {
                 >
                   Disconnect
                 </Button>
-              )
-            ) : (
+              )) : (
               <Button
                 variant='primary'
                 onClick={createWallet}
@@ -113,7 +111,7 @@ export function AccountConnect() {
           }
         </InlineGrid>
         {
-          isConnected && isRegistered ? shortenEthereumAddress(address) : (
+          isConnected && isRegistered ? address : (
             <List type='number'>
               <List.Item>
                 Connect or Create your wallet.

@@ -591,6 +591,11 @@ export const contractAbi = [
                         "name": "totalEarned",
                         "type": "uint256",
                         "internalType": "uint256"
+                    },
+                    {
+                        "name": "totalPaidToAffiliates",
+                        "type": "uint256",
+                        "internalType": "uint256"
                     }
                 ]
             }
@@ -859,6 +864,30 @@ export const contractAbi = [
     },
     {
         "type": "function",
+        "name": "merchantPayoutForAffiliate",
+        "inputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
         "name": "merchants",
         "inputs": [
             {
@@ -892,103 +921,11 @@ export const contractAbi = [
                 "name": "totalEarned",
                 "type": "uint256",
                 "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "numberOfCampaigns",
-        "inputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "numberOfOrders",
-        "inputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "orders",
-        "inputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "id",
-                "type": "uint256",
-                "internalType": "uint256"
             },
             {
-                "name": "campaignId",
+                "name": "totalPaidToAffiliates",
                 "type": "uint256",
                 "internalType": "uint256"
-            },
-            {
-                "name": "productId",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "affiliateFID",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "buyer",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "price",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "affiliateComission",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "buyerHash",
-                "type": "bytes32",
-                "internalType": "bytes32"
-            },
-            {
-                "name": "status",
-                "type": "uint8",
-                "internalType": "enum IRegistry.OrderStatus"
             }
         ],
         "stateMutability": "view"
@@ -1059,6 +996,19 @@ export const contractAbi = [
     },
     {
         "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
         "name": "registerAffiliateInCampaign",
         "inputs": [
             {
@@ -1072,6 +1022,13 @@ export const contractAbi = [
                 "internalType": "uint256"
             }
         ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "renounceOwnership",
+        "inputs": [],
         "outputs": [],
         "stateMutability": "nonpayable"
     },
@@ -1110,6 +1067,26 @@ export const contractAbi = [
             }
         ],
         "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+            {
+                "name": "newOwner",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "withdrawRevenue",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
     },
     {
         "type": "event",
@@ -1242,6 +1219,12 @@ export const contractAbi = [
                 "type": "address",
                 "indexed": false,
                 "internalType": "address"
+            },
+            {
+                "name": "status",
+                "type": "uint8",
+                "indexed": false,
+                "internalType": "enum IRegistry.CampaignStatus"
             }
         ],
         "anonymous": false
@@ -1306,9 +1289,15 @@ export const contractAbi = [
                 "internalType": "address"
             },
             {
+                "name": "buyerHash",
+                "type": "bytes32",
+                "indexed": false,
+                "internalType": "bytes32"
+            },
+            {
                 "name": "affiliateFID",
                 "type": "uint256",
-                "indexed": true,
+                "indexed": false,
                 "internalType": "uint256"
             },
             {
@@ -1322,6 +1311,31 @@ export const contractAbi = [
                 "type": "uint256",
                 "indexed": false,
                 "internalType": "uint256"
+            },
+            {
+                "name": "status",
+                "type": "uint8",
+                "indexed": false,
+                "internalType": "enum IRegistry.OrderStatus"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+            {
+                "name": "previousOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "newOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
             }
         ],
         "anonymous": false
@@ -1357,9 +1371,9 @@ export const contractAbi = [
             },
             {
                 "name": "affiliateFID",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
             },
             {
                 "name": "maxFID",
@@ -1431,5 +1445,27 @@ export const contractAbi = [
             }
         ],
         "anonymous": false
+    },
+    {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+            {
+                "name": "owner",
+                "type": "address",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ]
     }
-] as const;
+];
