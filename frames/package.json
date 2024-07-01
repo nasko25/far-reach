@@ -1,0 +1,38 @@
+{
+  "name": "far-reach",
+  "version": "0.0.17",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@airstack/frames": "^1.1.10",
+    "@airstack/node": "^0.0.7",
+    "@apollo/client": "^3.10.8",
+    "@vercel/postgres": "^0.9.0",
+    "frames.js": "^0.16.5",
+    "moralis": "^2.26.7",
+    "next": "^14.1.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@frames.js/debugger": "^0.2.12",
+    "@types/node": "^18.17.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.4.5",
+    "vercel": "^34.2.6"
+  },
+  "scripts": {
+    "dev": "concurrently \"next dev\" \"frames --url http://localhost:3000\"",
+    "start": "next start",
+    "build": "next build",
+    "lint": "next lint",
+    "deploy": "vercel --prod --token $(grep VERCEL_TOKEN .env | cut -d '=' -f2)",
+    "init": "vercel env pull .env.development.local --token $(grep VERCEL_TOKEN .env | cut -d '=' -f2) && cat .env.development.local >> .env && rm .env.development.local"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
