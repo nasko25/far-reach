@@ -55,7 +55,7 @@ const handleRequest = frames(async (ctx) => {
           View on block explorer
         </Button>,
         <Button action="link" target={product.permalink}>
-          Open on shitify to complete order
+          Open on shopify to complete order
         </Button>,
       ],
     };
