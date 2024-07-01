@@ -107,7 +107,7 @@ const handleRequest = frames(async (ctx) => {
         ></img>
         <NavBar />
         <div tw="text-black w-140 h-140 justify-center items-center flex relative mt-20">
-          <img src={product.productImage}></img>
+          <img src={product.productImage} width={400}></img>
         </div>
         <p tw="mx-10 mt-20 text-center">
           If you'd like to order this {product.productName}, you will first need
